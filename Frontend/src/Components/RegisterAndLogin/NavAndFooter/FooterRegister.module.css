@@ -1,0 +1,53 @@
+.FooterRegisterDiv {
+	margin: 5% 0 5% 0;
+	padding: 5px 0 5px 0;;
+	text-align: center;
+	border-top: 2px solid rgba(0, 0, 0, 0.438);
+}
+
+.FooterRegisterUl {
+	display: flex;
+	justify-content: space-between;
+	list-style-type: none;
+	font-size: 18px;
+}
+
+.FooterRegisterUl li {
+	color: #dadce6;
+}
+.FooterRegisterUl li span {
+	color: blue;
+	margin-left: 20px;
+	cursor: pointer;
+}
+
+.FooterRegisterDiv p {
+	text-align: center;
+	font-size: 16px;
+	color: #7f87b1;
+	margin-top: 5px;
+}
+
+
+
+
+@media screen and (max-width: 720px) and (min-width: 401px) {
+	.FooterRegisterDiv {
+		margin: 10% 0;
+		text-align: center;
+		width: 720px;
+	}
+
+	.FooterRegisterUl {
+		display: flex;
+		list-style-type: none;
+		font-size: 10px;
+	}
+
+	.FooterRegisterDiv p {
+		font-size: 14px;
+		color: #7f87b1;
+		text-align: left;
+		font-size: 10px;
+	}
+}
