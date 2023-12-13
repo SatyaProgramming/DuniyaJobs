@@ -1,6 +1,6 @@
 .lb1{
     /* padding-top: 50px; */
-    padding-top: 100px;
+    padding: 100px 0px;
     text-align: center;
     background-color: rgb(228, 242, 248);
 }
@@ -161,6 +161,27 @@ option>span{
     font-weight: 500;
     margin-bottom: 10px;
 
+}
+.stateNcity{
+    position: relative;
+}
+.stateSuggestionList{
+    position: absolute;
+    top:123%;
+    left:0%;
+    box-shadow: 0px 8px 5px 2px #CCC;
+    background-color: white;
+    list-style-type: none;
+    max-height:225px;
+    overflow-y: auto;
+    display: none;
+}
+.stateSuggestionList li{
+    padding:10px 20px;
+    cursor: pointer;
+}
+.stateSuggestionList li:hover{
+    background-color: rgb(225, 225, 225);
 }
 @media all and (min-width:401px) and (max-width:720px){
 

@@ -1,80 +1,113 @@
-import React, { useState } from "react";
-import NavbarRegister from "../NavAndFooter/NavbarRegister";
-import FooterRegister from "../NavAndFooter/FooterRegister";
-import LeftPane from "../register/LeftPane";
-import style from "./OtpPage.module.css";
-import { HStack, PinInput, PinInputField, Button } from "@chakra-ui/react";
-import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { VStack, Input, Button, FormControl, FormLabel, Heading, Text } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 const OtpPage = () => {
-  const location = useLocation();
-  const email = new URLSearchParams(location.search).get("email") || "Default Email";
-  const [otpEntered, setOtpEntered] = useState("");
+  const [email, setEmail] = useState('');
+  const [otp, setOTP] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [verificationResult, setVerificationResult] = useState('');
+  const [showPasswordFields, setShowPasswordFields] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const handleVerify = () => {
-    // Assuming you want to send the email and OTP to the API using Axios
-    axios
-      .post("http://localhost:8081/verify-otp", { email, otp: otpEntered })
-      .then((response) => {
-        console.log("API response:", response.data);
+  const queryString = window.location.search;
+const searchParams = new URLSearchParams(queryString);
+const emailValue = searchParams.get('email');
 
-        // Navigate after successful API call
-        navigate("/home");
-      })
-      .catch((error) => {
-        console.error("Error sending data to API:", error);
+  const handleVerifyOTP = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.post('http://localhost:8081/verify-otp', null, {
+        params: { email: emailValue, otp },
       });
+
+      if (response.status === 200) {
+        setVerificationResult(response.data);
+
+        // If OTP verification is successful, show password fields
+        setShowPasswordFields(true);
+      } else {
+        setVerificationResult(`Error: ${response.data}`);
+      }
+    } catch (error) {
+      console.error('Error during OTP verification:', error);
+      setVerificationResult('An error occurred during OTP verification.');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleSkip = () => {
-    // Navigate to the desired route when the "Skip" button is clicked
-    navigate("/some-other-route");
+  const handlePasswordSubmit = async () => {
+    // Check if password and confirmPassword match
+    if (password !== confirmPassword) {
+      setVerificationResult('Password and Confirm Password do not match.');
+      return;
+    }
+  
+    try {
+      setLoading(true);
+      // Send the password to another endpoint if password and confirmPassword match
+      const response = await axios.post('http://localhost:8081/set-password', null, {
+        params: { email: emailValue, password },
+      });
+  
+      if (response.status === 200) {
+        setVerificationResult('Password set successfully.');
+  
+        // Navigate to the login page upon successful password submission
+        navigate('/login');
+      } else {
+        setVerificationResult(`Error setting password: ${response.data}`);
+      }
+    } catch (error) {
+      console.error('Error setting password:', error);
+      setVerificationResult('An error occurred while setting the password.');
+    } finally {
+      setLoading(false);
+    }
   };
-
+  
   return (
-    <div>
-      <NavbarRegister />
-      <div className={style.otpPanes}>
-        <LeftPane />
+    <VStack align="center" m={5} spacing={4}>
+      <Heading>OTP Verification</Heading>
 
-        <div className={style.otpRightPane}>
-          <div className={style.otpRightPaneDiv}>
-            <h2>Email passed to this: {email}</h2>
-            <HStack>
-              <PinInput placeholder="" onChange={(e) => setOtpEntered(e)}>
-                <PinInputField />
-                <PinInputField />
-                <PinInputField />
-                <PinInputField />
-                <PinInputField />
-                <PinInputField />
-              </PinInput>
-            </HStack>
+      
+      <FormControl>
+        <FormLabel>OTP</FormLabel>
+        <Input type="text" value={otp} onChange={(e) => setOTP(e.target.value)} />
+      </FormControl>
 
-            <HStack pt={5}>
-              <Button
-                colorScheme="blue"
-                borderRadius="20px"
-                p="5"
-                onClick={handleVerify}
-              >
-                Verify
-              </Button>
-              <Button
-                colorScheme="blue"
-                variant="link"
-                onClick={handleSkip} // Call the handleSkip function on "Skip" button click
-              >
-                Skip
-              </Button>
-            </HStack>
-          </div>
-          <FooterRegister />
-        </div>
-      </div>
-    </div>
+      <Button colorScheme="teal" onClick={handleVerifyOTP} disabled={loading}>
+        {loading ? 'Verifying...' : 'Verify OTP'}
+      </Button>
+
+      {verificationResult && <Text>{verificationResult}</Text>}
+
+      {showPasswordFields && (
+        <>
+          <FormControl>
+            <FormLabel>Password</FormLabel>
+            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Confirm Password</FormLabel>
+            <Input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </FormControl>
+
+          <Button colorScheme="teal" onClick={handlePasswordSubmit} disabled={loading}>
+        {loading ? 'Setting Password...' : 'Set Password'}
+      </Button>
+        </>
+      )}
+    </VStack>
   );
 };
 

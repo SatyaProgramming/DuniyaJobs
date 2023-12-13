@@ -31,6 +31,7 @@ const CompanyLoginForm = () => {
       [name]: value,
     }));
   };
+  
 
   const validateForm = () => {
     const errors = {};
@@ -54,9 +55,9 @@ const CompanyLoginForm = () => {
         console.log('Server Response:', response.data);
         setIsLoginSuccess(true);
         setLoginError(null);
-        
+        sessionStorage.setItem('companyId', response.data.srno);
         // Use navigate to redirect upon successful login
-        navigate('/');
+        navigate('/company-home');
       } catch (error) {
         console.error('Error:', error.message);
         setIsLoginSuccess(false);
