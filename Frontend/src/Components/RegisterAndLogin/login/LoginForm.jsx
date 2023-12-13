@@ -55,13 +55,13 @@ const LoginForm = () => {
 	
 	
 
-	const { isAuth } = useSelector((state) => state.login);
+	// const { isAuth } = useSelector((state) => state.login);
 
-	useEffect(() => {
-		if (isAuth) {
-			navigate("/home");
-		}
-	}, [navigate, isAuth]);
+	// useEffect(() => {
+	// 	if (isAuth) {
+	// 		navigate("/home");
+	// 	}
+	// }, [navigate, isAuth]);
 
 	return (
 		<div>

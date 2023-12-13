@@ -48,10 +48,6 @@ const JobList = () => {
             <Text fontSize="lg" fontWeight="bold">
               Recent Job Post
             </Text>
-
-           
-
-
             {/* Job list with Chakra UI Accordion */}
             <Accordion allowToggle mt={4}>
               {jobs.map((job) => (
@@ -68,7 +64,7 @@ const JobList = () => {
         </Box>
 
         {/* Right side - Job Description */}
-        <Box flex="2" p="4">
+        <Box flex="2" p="4" textAlign='center' borderLeft='2px solid black'>
           <Text fontSize="lg" fontWeight="bold">
             Job Description
           </Text>

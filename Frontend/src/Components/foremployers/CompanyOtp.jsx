@@ -1,100 +1,109 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Input,
-  Button,
-  FormControl,
-  FormLabel,
-  Heading,
-  Alert,
-  AlertIcon,
-} from "@chakra-ui/react";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { VStack, Input, Button, FormControl, FormLabel, Heading, Text } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 const CompanyOtp = () => {
-  const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
-  const [status, setStatus] = useState({ success: false, message: "" });
+  const [email, setEmail] = useState('');
+  const [otp, setOTP] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [verificationResult, setVerificationResult] = useState('');
+  const [showPasswordFields, setShowPasswordFields] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSendOtp = async () => {
+  const queryString = window.location.search;
+  const searchParams = new URLSearchParams(queryString);
+  const emailValue = searchParams.get('email');
+
+  const makeServerRequest = async (url, params, successMessage, errorMessage) => {
     try {
-      await axios.post("http://localhost:8081/send-otp", { email });
-      setStatus({ success: true, message: "OTP sent successfully" });
+      setLoading(true);
+      const response = await axios.post(url, null, { params });
+
+      if (response.status === 200) {
+        setVerificationResult(successMessage);
+
+        // Additional logic based on the success of the request
+        // ...
+
+      } else {
+        setVerificationResult(`Error: ${response.data}`);
+      }
     } catch (error) {
-      setStatus({ success: false, message: error.response.data });
+      console.error(errorMessage, error);
+      setVerificationResult(`An error occurred during ${errorMessage.toLowerCase()}.`);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleVerifyOtp = async () => {
-    try {
-      await axios.post("http://localhost:8081/verify-otp", { email, enteredOtp: otp });
-      setStatus({ success: true, message: "OTP verified successfully" });
-    } catch (error) {
-      setStatus({ success: false, message: error.response.data });
-    }
+  const handleVerifyOTP = async () => {
+    const url = 'http://localhost:8081/company-verify-otp';
+    const successMessage = 'OTP verification successful.';
+    const errorMessage = 'OTP verification';
+    
+    await makeServerRequest(url, { email: emailValue, otp }, successMessage, errorMessage);
+
+    // If OTP verification is successful, show password fields
+    setShowPasswordFields(true);
   };
 
+  const handlePasswordSubmit = async () => {
+    // Check if password and confirmPassword match
+    if (password !== confirmPassword) {
+      setVerificationResult('Password and Confirm Password do not match.');
+      return;
+    }
+
+    const url = 'http://localhost:8081/company-set-password';
+    const successMessage = 'Password set successfully.';
+    const errorMessage = 'Setting password';
+
+    await makeServerRequest(url, { email: emailValue, password }, successMessage, errorMessage);
+
+    // Navigate to the login page upon successful password submission
+    navigate('/employer-login');
+  };
+  
   return (
-    <Box p={4}>
-      <Heading mb={4}>OTP Verification</Heading>
+    <VStack align="center" m={5} spacing={4}>
+      <Heading>OTP Verification</Heading>
+      
+      <FormControl>
+        <FormLabel>OTP</FormLabel>
+        <Input type="text" value={otp} onChange={(e) => setOTP(e.target.value)} />
+      </FormControl>
 
-      {!status.success && (
-        <FormControl id="email" mb={4} isRequired>
-          <FormLabel>Email</FormLabel>
-          <Input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </FormControl>
-      )}
+      <Button colorScheme="teal" onClick={handleVerifyOTP} disabled={loading}>
+        {loading ? 'Verifying...' : 'Verify OTP'}
+      </Button>
 
-      {!status.success && (
-        <Button
-          colorScheme="teal"
-          onClick={handleSendOtp}
-          mr={2}
-          mb={4}
-        >
-          Send OTP
-        </Button>
-      )}
+      {verificationResult && <Text>{verificationResult}</Text>}
 
-      {!status.success && (
-        <FormControl id="otp" mb={4} isRequired>
-          <FormLabel>Enter OTP</FormLabel>
-          <Input
-            type="text"
-            placeholder="Enter OTP"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-          />
-        </FormControl>
-      )}
+      {showPasswordFields && (
+        <>
+          <FormControl>
+            <FormLabel>Password</FormLabel>
+            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </FormControl>
 
-      {!status.success && (
-        <Button
-          colorScheme="blue"
-          onClick={handleVerifyOtp}
-          mr={2}
-          mb={4}
-        >
-          Verify OTP
-        </Button>
-      )}
+          <FormControl>
+            <FormLabel>Confirm Password</FormLabel>
+            <Input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </FormControl>
 
-      {status.message && (
-        <Alert
-          status={status.success ? "success" : "error"}
-          variant="subtle"
-          mt={4}
-        >
-          <AlertIcon />
-          {status.message}
-        </Alert>
+          <Button colorScheme="teal" onClick={handlePasswordSubmit} disabled={loading}>
+            {loading ? 'Setting Password...' : 'Set Password'}
+          </Button>
+        </>
       )}
-    </Box>
+    </VStack>
   );
 };
 
