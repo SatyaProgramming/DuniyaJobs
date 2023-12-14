@@ -37,8 +37,23 @@ public class CompanyController {
         LoginMessage loginResponse = service.loginEmployer(companyLogin);
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
     }
+    
+    @PostMapping("/company-verify-otp")
+	public ResponseEntity<String> verifyOTP(@RequestParam("email") String email, @RequestParam("otp") String otp) {
+	    // Perform OTP verification logic here
+	    Boolean flag = service.getOtp(email, otp);
 
-   
+	    if (flag) {
+	        return ResponseEntity.ok("OTP verification successful");
+	    } else {
+	        return ResponseEntity.badRequest().body("Invalid OTP");
+	    }
+	}
+    @PostMapping("/company-set-password")
+    public ResponseEntity<String> setPassword(@RequestParam("contactEmail") String contactEmail, @RequestParam("password") String password) {
+        String result = service.setPassword(contactEmail, password);
+        return ResponseEntity.ok(result);
+    }
 
    
 }

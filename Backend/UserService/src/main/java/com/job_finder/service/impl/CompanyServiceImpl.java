@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.job_finder.entity.Company;
+import com.job_finder.entity.UserDtls;
 import com.job_finder.helperClass.CompanyLogin;
 import com.job_finder.helperClass.CompanyRegister;
 import com.job_finder.repository.CompanyRepository;
@@ -24,13 +25,13 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Autowired
 	private CompanyRepository repository;
+	
 	@Autowired
 	private EmailUtils emailUtils;
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
 	
-
 	@Override
 	
 	public Boolean addEmployer(CompanyRegister form) {
@@ -63,8 +64,8 @@ public class CompanyServiceImpl implements CompanyService {
 		if (cmp != null) {
 			String password = loginForm.getPassword();
 			String encodedPassword = cmp.getPassword();
-			Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
-			if (isPwdRight) {
+//			Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
+			if (encodedPassword.equals(password)) {
 				Optional<Company> employer = repository.findOneByContactEmailAndPassword(loginForm.getContactEmail(),
 						encodedPassword);
 				if (employer.isPresent()) {
@@ -80,7 +81,29 @@ public class CompanyServiceImpl implements CompanyService {
 		}
 	}
 
+	@Override
+	public String setPassword(String email, String password) {
+		Company cmp = repository.findByContactEmail(email);
+        if (cmp != null) {
+            cmp.setPassword(password);
+            repository.save(cmp);
+            return "Password set successfully";
+        } else {
+            return "User not found";
+        }
+	}
 
-
-	
+	@Override
+	public Boolean getOtp(String email, String otp) {
+		 Company cmp = repository.findByContactEmail(email);
+		    if (cmp != null) {
+		        // Check if the OTP matches the expected OTP (sent to the user)
+		        if (otp.equals(cmp.getPassword()) && !"".equals(otp)) {
+		            cmp.setAccStatus("UNLOCKED");
+		            repository.save(cmp);
+		            return true;
+		    }
+		}
+		return false;
+	}
 }
