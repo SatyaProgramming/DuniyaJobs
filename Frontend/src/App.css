@@ -56,6 +56,11 @@ body {
   .menu-icon {
     display: none;
   }
+  .header-left{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
   .header-search-bar-div{
     display: flex;
     width:500px;

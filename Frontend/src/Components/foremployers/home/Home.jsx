@@ -111,7 +111,7 @@ const Home = () => {
         </Box>
       </SimpleGrid>
 
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} mt={8} spacing={4} width="100%">
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} mt={8} spacing={4} width="100%">
         <Stat bg="purple.500" p={4} borderRadius="md" color="white">
           <StatLabel>Total Applicants</StatLabel>
           <StatNumber>{apiData.applicants}</StatNumber>

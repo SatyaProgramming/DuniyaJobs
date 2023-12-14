@@ -13,7 +13,7 @@ function Header({OpenSidebar}) {
         <div className='header-left'>
           <div className="header-search-bar-div">
             <input type="text" className="search-bar" />
-            <BsSearch  className='icon'/>
+            <BsSearch  className='icon iconSearch'/>
           </div>
           
         </div>
