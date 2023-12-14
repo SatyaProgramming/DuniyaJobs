@@ -12,13 +12,16 @@ const LandingBody = ({ changealltohide }) => {
   const countries = Countries;
   const states = States;
   const cities = Cities;
-  var [selectedCountry, setSelectedCountry] = useState('');
+  var [selectedCountry, setSelectedCountry] = useState('India');
   var [inputText, setInputText] = useState('');
+  var [locationInputText, setLocationInputText] = useState('');
   var [selectedState, setSelectedState] = useState('');
   var [selectedCities, setSelectedCities] = useState([]);
   var [filteredCities, setFilteredCities] = useState([]);
   var [filteredStates, setFilteredStates] = useState([]);
   var [selectedExperience, setSelectedExperience] = useState(''); 
+  const [jobListData, setJobListData] = useState(null);
+
   const handleSearchButtonClick = async () => {
     // Prepare the data you want to send
     const searchData = {
@@ -33,6 +36,7 @@ const LandingBody = ({ changealltohide }) => {
       // Replace 'your-api-endpoint' with the actual URL of your Spring Boot endpoint
       const response = await axios.post('http://localhost:8081/search', searchData);
 
+      setJobListData(response.data);
       // Handle the response if needed
       console.log(response.data);
     } catch (error) {
@@ -58,8 +62,8 @@ const LandingBody = ({ changealltohide }) => {
       if (selectedCountry.length > 0) {
         //if we do have selectes state and seleceted cities
         if (selectedState.length > 0 && selectedCities.length > 0) {
-          setInputText(inputText.slice(0, -1));
-          let tempText = inputText.slice(0, -1);
+          setLocationInputText(locationInputText.slice(0, -1));
+          let tempText = locationInputText.slice(0, -1);
           let x = tempText.split("-");
           x = x[1];
           if (x.includes(",")) {
@@ -74,8 +78,8 @@ const LandingBody = ({ changealltohide }) => {
         }
         //if we have only selected state but no cities where selected
         else if (selectedState.length > 0 && selectedCities.length <= 0) {
-          setInputText(inputText.slice(0, -1));
-          let tempText = inputText.slice(0, -1);
+          setLocationInputText(locationInputText.slice(0, -1));
+          let tempText = locationInputText.slice(0, -1);
           let x = tempText.split("-");
           x = x.filter(function (item) { return item !== ""; })
           if (x.length > 1) {
@@ -89,16 +93,16 @@ const LandingBody = ({ changealltohide }) => {
           }
         }
         // Case where we don't have both selected state and cities
-        else if (selectedState.length <= 0 && selectedCities.length <= 0 && inputText === "") {
+        else if (selectedState.length <= 0 && selectedCities.length <= 0 && locationInputText === "") {
           setSelectedState('');
           setSelectedCities([]);
           setFilteredCities([]);
-          setInputText('');
+          setLocationInputText('');
           return;
         }
         else {
-          text = inputText.slice(0, -1);
-          setInputText(text);
+          text = locationInputText.slice(0, -1);
+          setLocationInputText(text);
           if (text.length === 0) {
             setSelectedState('');
             setFilteredCities([]);
@@ -118,8 +122,8 @@ const LandingBody = ({ changealltohide }) => {
     else if (hitKey >= 65 && hitKey <= 90) {
       if (selectedCountry.length > 0) {
         if (selectedState.length > 0 && selectedCities.length > 0) {
-          text = inputText + event.key;
-          setInputText(text);
+          text = locationInputText + event.key;
+          setLocationInputText(text);
           let x = text.split("-");
           x = x.filter(function (item) { return item !== ""; })
           x = x[1];
@@ -131,15 +135,15 @@ const LandingBody = ({ changealltohide }) => {
         }
         //if we have only selected state but no cities where selected
         else if (selectedState.length > 0 && selectedCities.length <= 0) {
-          text = inputText + event.key;
+          text = locationInputText + event.key;
           let x = text.split("-");
-          setInputText(text);
+          setLocationInputText(text);
           cityFiltering(x[1]);
         }
         // Case where we don't have both selected state and cities
         else if (selectedState.length <= 0 && selectedCities.length <= 0) {
-          text = inputText + event.key;
-          setInputText(text);
+          text = locationInputText + event.key;
+          setLocationInputText(text);
           StateFiltering(text);
         }
       }
@@ -180,7 +184,7 @@ const LandingBody = ({ changealltohide }) => {
   const handleStateClick = (stateName) => {
     const stateSuggestionList = document.getElementById("stateSuggestionList");
     // Update the input text with the selected state and add a comma
-    setInputText(`${stateName}-`);
+    setLocationInputText(`${stateName}-`);
     setSelectedState(stateName);
     // Filter cities based on the selected state
     const selectedStateCities = cities.filter(
@@ -192,11 +196,11 @@ const LandingBody = ({ changealltohide }) => {
   };
   const handleSearchBoxClick = () => {
     if (selectedState.length > 0 && selectedCities.length > 0) {
-      setInputText(`${selectedState}-${selectedCities},`);
+      setLocationInputText(`${selectedState}-${selectedCities},`);
       ToggleCitySuggestionListDisplay();
     }
     else if (selectedState.length > 0 && selectedCities.length === 0) {
-      setInputText(`${selectedState}-`);
+      setLocationInputText(`${selectedState}-`);
     }
   }
   const handleCityClick = (cityName) => {
@@ -204,20 +208,20 @@ const LandingBody = ({ changealltohide }) => {
     let City = [cityName];
     if (selectedCities.length === 0) {
       setSelectedCities(City);
-      setInputText(`${selectedState}-${cityName}`);
+      setLocationInputText(`${selectedState}-${cityName}`);
       CityList.style.display = "none";
     }
     else {
       let isSelected = selectedCities.includes(cityName);
       if (isSelected) {
         selectedCities = selectedCities.filter((city) => city !== cityName);
-        setInputText(`${selectedState}-${selectedCities}`)
+        setLocationInputText(`${selectedState}-${selectedCities}`)
         setSelectedCities(selectedCities);
         CityList.style.display = "none";
       }
       else {
         selectedCities = [...selectedCities, cityName];
-        setInputText(`${selectedState}-${selectedCities}`)
+        setLocationInputText(`${selectedState}-${selectedCities}`)
         setSelectedCities(selectedCities);
         CityList.style.display = "none";
       }
@@ -290,7 +294,7 @@ const LandingBody = ({ changealltohide }) => {
             ))}
           </select>
           <div id="stateNcity" className={style.stateNcity}>
-            <input type="text" id="bxStateSearch" placeholder='State/City' onClick={handleSearchBoxClick} className={style.lbinp2} value={inputText} onKeyDown={handleInputTextChange} />
+            <input type="text" id="bxStateSearch" placeholder='State/City' onClick={handleSearchBoxClick} className={style.lbinp2} value={locationInputText} onKeyDown={handleInputTextChange} />
             <ul id="stateSuggestionList" className={style.stateSuggestionList}>
               {filteredStates.map(state => (
                 <li key={state.id} className={style.listitem} onClick={() => handleStateClick(state.name)}>
@@ -318,7 +322,7 @@ const LandingBody = ({ changealltohide }) => {
         </div> */}
 
       {/* <Landingslider1/> */}
-      <JobList />
+      <JobList jobData={jobListData} />
       <Faqs />
     </div>
   )
