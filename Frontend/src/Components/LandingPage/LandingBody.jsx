@@ -31,7 +31,7 @@ const LandingBody = ({ changealltohide }) => {
     try {
       // Use Axios or fetch to send a POST request
       // Replace 'your-api-endpoint' with the actual URL of your Spring Boot endpoint
-      const response = await axios.post('your-api-endpoint', searchData);
+      const response = await axios.post('http://localhost:8081/search', searchData);
 
       // Handle the response if needed
       console.log(response.data);
@@ -258,8 +258,14 @@ const LandingBody = ({ changealltohide }) => {
         <h1>Find your dream job now with Meri Job</h1>
         <p>5 lakh+ jobs for you to explore</p>
         <div className={style.searchcarrier}>
-          <i class="fas fa-search"></i>
-          <input type="text" placeholder='skills / designations / companies' className={style.lbinp1} />
+          <i className="fas fa-search"></i>
+          <input
+  type="text"
+  placeholder='skills / designations / companies'
+  className={style.lbinp1}
+  value={inputText}
+  onChange={(e) => setInputText(e.target.value)}
+/>
           <select className={style.lbinp2}>
             <option value="" disabled selected hidden>
               Select experience
