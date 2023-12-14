@@ -1,0 +1,45 @@
+.LPBanner{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: url('../Assets/LPBanner1.png');
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: top;
+}
+.navBtnsDiv{
+    width:30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.LPBannerBtns{
+    background-image:linear-gradient(to bottom, rgb(69,126,255),  rgb(99, 143, 246));
+    color:white;
+    padding: 10px 25px;
+    outline:none;
+    border:none;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    width:200px;
+}
+@media screen and (max-width:999px) and (min-width:700px){
+    .navBtnsDiv{
+        width:80%;
+        flex-direction: column;
+        row-gap:20px;
+    }
+}
+@media screen and (max-width:700px){
+    .navBtnsDiv{
+        flex-direction: column;
+        width:60%;
+        row-gap:20px;
+    }
+    .LPBannerBtns{
+        width:100%;
+    }
+}
