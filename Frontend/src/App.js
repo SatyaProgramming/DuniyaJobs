@@ -25,7 +25,7 @@ import CompanyRegisterForm from "./Components/foremployers/CompanyRegisterForm";
 import CompanyLoginForm from "./Components/foremployers/CompanyLoginForm";
 import CompanyOtp from "./Components/foremployers/CompanyOtp";
 import CompanyHome from "./Components/foremployers/home/CompanyHome";
-import JobPostings from "./Components/foremployers/home/JobPostings";
+
 
 // use StyleSheet.module for css
 
@@ -62,11 +62,7 @@ function App() {
 				<Route path="/employer-otp" element={<CompanyOtp />}></Route>
 				
 				<Route path="/employer-login" element={<CompanyLoginForm />}></Route>
-				<Route
-					path="/company-home"
-					element={<CompanyHome />}
-				/>
-				<Route path="/job-postings" element={<JobPostings />}></Route>
+				<Route path="/company-home" element={<CompanyHome />}/>
 
 				
 				<Route path="/recruter" element={<Recruters />}></Route>

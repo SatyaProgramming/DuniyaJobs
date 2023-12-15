@@ -1,0 +1,213 @@
+{
+  "jobs": [
+    {
+      "title": "Software Engineer",
+      "description": "Design, develop, test, and maintain software solutions. Collaborate with cross-functional teams to analyze requirements and deliver high-quality software products. Develop innovative solutions to complex technical challenges. Write efficient and reusable code, conduct code reviews, and stay updated on the latest industry trends.",
+      "average_salary": "$90,000",
+      "required_experience": "2-5 years",
+      "skills_required": ["Java", "JavaScript", "SQL"],
+      "education_required": "Bachelor's degree in Computer Science"
+    },
+    {
+      "title": "Data Scientist",
+      "description": "Utilize statistical techniques to analyze large datasets and extract meaningful insights. Develop machine learning models and algorithms to solve complex business problems. Collaborate with data engineers to ensure data quality and implement scalable data solutions. Present findings to stakeholders and provide actionable recommendations.",
+      "average_salary": "$100,000",
+      "required_experience": "3-7 years",
+      "skills_required": ["Python", "R", "Machine Learning"],
+      "education_required": "Master's degree in Data Science or related field"
+    },
+    {
+      "title": "Marketing Manager",
+      "description": "Create and execute marketing strategies to promote products or services. Oversee advertising campaigns, analyze market trends, and collaborate with creative teams to develop compelling content. Use data analytics to measure campaign effectiveness and optimize marketing strategies. Stay abreast of industry changes and competitor activities.",
+      "average_salary": "$80,000",
+      "required_experience": "5-8 years",
+      "skills_required": ["Marketing Strategy", "Digital Marketing", "Analytics"],
+      "education_required": "Bachelor's degree in Marketing or related field"
+    },
+    {
+      "title": "Customer Support Representative",
+      "description": "Provide excellent customer service through various channels such as phone, email, and chat. Address customer inquiries, resolve issues, and escalate complex problems to higher-level support as needed. Maintain a positive and empathetic attitude. Collaborate with internal teams to improve customer satisfaction and product knowledge.",
+      "average_salary": "$40,000",
+      "required_experience": "1-3 years",
+      "skills_required": ["Customer Service", "Communication", "Problem Solving"],
+      "education_required": "High school diploma or equivalent"
+    },
+    {
+      "title": "Project Manager",
+      "description": "Plan, execute, and close projects within scope, budget, and schedule. Coordinate with team members, stakeholders, and vendors to ensure project success. Monitor and report on project progress. Lead project meetings and communicate effectively with all project stakeholders. Identify and mitigate project risks.",
+      "average_salary": "$95,000",
+      "required_experience": "4-8 years",
+      "skills_required": ["Project Management", "Leadership", "Communication"],
+      "education_required": "Bachelor's degree in Project Management or related field"
+    },
+    {
+      "title": "UX/UI Designer",
+      "description": "Create visually appealing and intuitive user interfaces. Conduct user research, collaborate with cross-functional teams, and prototype design solutions. Stay updated on design trends and emerging technologies. Solicit feedback and iterate on designs to enhance user experience. Proficient in design tools such as Sketch, Figma, or Adobe XD.",
+      "average_salary": "$85,000",
+      "required_experience": "3-6 years",
+      "skills_required": ["UI/UX Design", "Prototyping", "User Research"],
+      "education_required": "Bachelor's degree in Design or related field"
+    },
+    {
+      "title": "Financial Analyst",
+      "description": "Analyze financial data, prepare reports, and provide insights to support decision-making. Conduct budgeting, forecasting, and financial modeling. Collaborate with finance and accounting teams to ensure accurate financial reporting. Communicate financial results to stakeholders and assist in strategic financial planning.",
+      "average_salary": "$75,000",
+      "required_experience": "2-4 years",
+      "skills_required": ["Financial Analysis", "Excel", "Budgeting"],
+      "education_required": "Bachelor's degree in Finance or related field"
+    },
+    {
+      "title": "Network Administrator",
+      "description": "Install, configure, and maintain computer networks. Troubleshoot network issues, implement security measures, and ensure network performance. Collaborate with IT teams to deploy and upgrade network infrastructure. Monitor network traffic and optimize network resources.",
+      "average_salary": "$70,000",
+      "required_experience": "3-5 years",
+      "skills_required": ["Network Administration", "Security", "Troubleshooting"],
+      "education_required": "Associate degree or equivalent experience"
+    },
+    {
+      "title": "Human Resources Manager",
+      "description": "Oversee HR functions, including recruitment, employee relations, and performance management. Develop and implement HR policies and procedures. Conduct employee onboarding and training programs. Ensure compliance with labor laws and regulations.",
+      "average_salary": "$90,000",
+      "required_experience": "5-10 years",
+      "skills_required": ["HR Management", "Recruitment", "Employee Relations"],
+      "education_required": "Bachelor's degree in Human Resources or related field"
+    },
+    {
+      "title": "Electrical Engineer",
+      "description": "Design, develop, and test electrical systems. Collaborate with cross-functional teams, troubleshoot issues, and ensure compliance with safety standards. Conduct feasibility studies and recommend design improvements. Stay updated on industry standards and emerging technologies.",
+      "average_salary": "$85,000",
+      "required_experience": "3-7 years",
+      "skills_required": ["Electrical Engineering", "Circuit Design", "Testing"],
+      "education_required": "Bachelor's degree in Electrical Engineering"
+    },
+    {
+      "title": "Content Writer",
+      "description": "Create engaging and informative content for various platforms. Conduct research, follow style guides, and collaborate with stakeholders to develop compelling content. Proofread and edit content for accuracy and consistency. Stay updated on industry trends and adapt writing style to target audiences.",
+      "average_salary": "$55,000",
+      "required_experience": "2-4 years",
+      "skills_required": ["Content Writing", "Research", "Editing"],
+      "education_required": "Bachelor's degree in English, Journalism, or related field"
+    },
+    {
+      "title": "Sales Representative",
+      "description": "Identify and pursue sales opportunities, build relationships with clients, and achieve sales targets. Provide product demonstrations and presentations. Collaborate with marketing teams to develop sales strategies. Maintain accurate records of sales activities and customer interactions.",
+      "average_salary": "$65,000",
+      "required_experience": "1-3 years",
+      "skills_required": ["Sales", "Communication", "Negotiation"],
+      "education_required": "Bachelor's degree in Business or related field"
+    },
+    {
+      "title": "Mechanical Engineer",
+      "description": "Design, analyze, and test mechanical systems and components. Collaborate with multidisciplinary teams, solve engineering problems, and ensure product compliance. Use CAD software for design and simulation. Conduct product testing and iterate on design improvements.",
+      "average_salary": "$80,000",
+      "required_experience": "3-6 years",
+      "skills_required": ["Mechanical Engineering", "CAD", "Simulation"],
+      "education_required": "Bachelor's degree in Mechanical Engineering"
+    },
+    {
+      "title": "Nurse Practitioner",
+      "description": "Provide primary healthcare services, diagnose and treat illnesses, and collaborate with healthcare professionals. Educate patients on health and wellness. Conduct health assessments and develop personalized care plans. Stay updated on medical advancements and best practices.",
+      "average_salary": "$100,000",
+      "required_experience": "2-5 years",
+      "skills_required": ["Nursing", "Health Assessment", "Patient Education"],
+      "education_required": "Master's degree in Nursing and Nurse Practitioner certification"
+    },
+    {
+      "title": "Graphic Designer",
+      "description": "Create visual concepts and designs for print and digital media. Collaborate with clients and stakeholders, use design software, and stay updated on industry trends. Present design concepts and incorporate feedback into final designs. Manage multiple design projects and meet deadlines.",
+      "average_salary": "$60,000",
+      "required_experience": "2-4 years",
+      "skills_required": ["Graphic Design", "Adobe Creative Suite", "Creativity"],
+      "education_required": "Bachelor's degree in Graphic Design or related field"
+    },
+    {
+      "title": "IT Security Analyst",
+      "description": "Monitor and analyze security threats, implement security measures, and ensure the integrity of IT systems. Conduct security audits and provide recommendations. Collaborate with IT teams to implement and update security protocols. Stay informed about cybersecurity trends and vulnerabilities.",
+      "average_salary": "$85,000",
+      "required_experience": "4-7 years",
+      "skills_required": ["IT Security", "Firewall Management", "Security Auditing"],
+      "education_required": "Bachelor's degree in Information Technology or related field"
+    },
+    {
+      "title": "Architect",
+      "description": "Design and plan architectural projects, create blueprints, and oversee construction. Collaborate with clients, engineers, and construction teams. Use architectural software and tools for design. Ensure compliance with building codes and zoning regulations.",
+      "average_salary": "$90,000",
+      "required_experience": "5-10 years",
+      "skills_required": ["Architectural Design", "AutoCAD", "Project Management"],
+      "education_required": "Bachelor's or Master's degree in Architecture"
+    },
+    {
+      "title": "Social Media Manager",
+      "description": "Develop and implement social media strategies, create engaging content, and monitor social media channels. Analyze metrics to measure the success of campaigns. Collaborate with marketing teams to align social media efforts with overall marketing goals. Stay updated on social media trends and platform algorithms.",
+      "average_salary": "$70,000",
+      "required_experience": "3-5 years",
+      "skills_required": ["Social Media Management", "Content Creation", "Analytics"],
+      "education_required": "Bachelor's degree in Marketing or related field"
+    },
+    {
+      "title": "Chemical Engineer",
+      "description": "Design and optimize chemical processes, conduct experiments, and ensure compliance with safety and environmental regulations. Develop and test new chemical formulations. Collaborate with research teams to innovate and improve existing processes.",
+      "average_salary": "$85,000",
+      "required_experience": "3-6 years",
+      "skills_required": ["Chemical Engineering", "Process Optimization", "Safety Regulations"],
+      "education_required": "Bachelor's degree in Chemical Engineering"
+    },
+    {
+      "title": "Physician Assistant",
+      "description": "Assist physicians in patient care, conduct examinations, and prescribe medications. Collaborate with healthcare teams to provide comprehensive healthcare services. Stay updated on medical advancements and best practices in patient care. Educate patients on treatment plans and medications.",
+      "average_salary": "$95,000",
+      "required_experience": "2-4 years",
+      "skills_required": ["Medical Knowledge", "Patient Care", "Collaboration"],
+      "education_required": "Master's degree in Physician Assistant Studies"
+    },
+    {
+      "title": "Technical Writer",
+      "description": "Create clear and concise technical documentation for software, products, or processes. Collaborate with subject matter experts and ensure accuracy and completeness of documentation. Translate technical information into user-friendly content. Revise and update documentation as needed.",
+      "average_salary": "$75,000",
+      "required_experience": "2-5 years",
+      "skills_required": ["Technical Writing", "Documentation", "Attention to Detail"],
+      "education_required": "Bachelor's degree in Technical Communication or related field"
+    },
+    {
+      "title": "Biomedical Engineer",
+      "description": "Design and develop medical devices and equipment. Conduct research, analyze data, and ensure compliance with regulatory standards. Collaborate with healthcare professionals and research teams to develop innovative medical solutions.",
+      "average_salary": "$80,000",
+      "required_experience": "3-7 years",
+      "skills_required": ["Biomedical Engineering", "Regulatory Compliance", "Medical Device Design"],
+      "education_required": "Bachelor's degree in Biomedical Engineering"
+    },
+    
+    {
+      "title": "Legal Counsel",
+      "description": "Provide legal advice, draft legal documents, and represent clients in legal proceedings. Stay informed about changes in laws and regulations.",
+      "average_salary": "$110,000",
+      "required_experience": "5-10 years",
+      "skills_required": ["Legal Research", "Contract Drafting", "Litigation"],
+      "education_required": "Juris Doctor (JD) degree and Bar admission"
+    },
+    {
+      "title": "Environmental Scientist",
+      "description": "Conduct environmental research, collect and analyze data, and develop solutions to environmental issues. Prepare reports and communicate findings to stakeholders.",
+      "average_salary": "$70,000",
+      "required_experience": "3-6 years",
+      "skills_required": ["Environmental Science", "Data Analysis", "Problem Solving"],
+      "education_required": "Bachelor's or Master's degree in Environmental Science or related field"
+    },
+    {
+      "title": "Supply Chain Manager",
+      "description": "Manage the end-to-end supply chain process, from procurement to distribution. Optimize logistics, reduce costs, and ensure efficient supply chain operations.",
+      "average_salary": "$90,000",
+      "required_experience": "5-8 years",
+      "skills_required": ["Supply Chain Management", "Logistics", "Procurement"],
+      "education_required": "Bachelor's degree in Supply Chain Management or related field"
+    },
+    {
+      "title": "Pharmacist",
+      "description": "Dispense medications, provide drug information, and ensure compliance with pharmacy regulations. Collaborate with healthcare professionals to optimize patient care.",
+      "average_salary": "$110,000",
+      "required_experience": "3-5 years",
+      "skills_required": ["Pharmacy", "Medication Dispensing", "Patient Consultation"],
+      "education_required": "Doctor of Pharmacy (Pharm.D.) degree"
+    }
+  ]
+}
