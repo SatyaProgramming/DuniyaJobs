@@ -1,0 +1,40 @@
+/*Job list and description box styling*/
+.JobsListUL{
+    list-style-type: none;
+}
+.JobsListUL li{
+    padding: 8px 5px;
+    border-bottom: solid 1px #CCCC;
+}
+.JobsListUL li:hover{
+    background-color: #CCCC;
+    cursor: pointer;
+}
+.BoldClass{
+    font-weight: bold;
+    font-size: 16px;
+}
+.InfoClass{
+    color:#2a2929cc;
+    font-size: 14px;
+}
+.jobSearcBox{
+    width:99%;
+    margin: 10px 0px;
+    box-shadow: 0px 0px 5px 0px #CCCC;
+    border-radius: 30px;
+    padding:3px 30px 3px 15px;
+    outline:none;
+    font-size: 14px;
+}
+.jobSearchIcon{
+    font-size: 16px;
+    margin-left:-4.5%;
+}
+.DisplayCard{
+    transition: all ease 0.5s;
+}
+.DisplayCard:hover{
+    transform: scale(1.05);
+    box-shadow: 3px 3px 10px 0px #CCCC;
+}
