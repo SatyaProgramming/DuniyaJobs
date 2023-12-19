@@ -6,7 +6,7 @@ import Faqs from '../FAQs/Faqs'
 import Countries from '../Assets/countries.json'
 import States from '../Assets/states.json'
 import Cities from '../Assets/cities.json'
-import axios from 'axios'; 
+import axios from 'axios';
 
 const LandingBody = ({ changealltohide }) => {
   const countries = Countries;
@@ -19,7 +19,7 @@ const LandingBody = ({ changealltohide }) => {
   var [selectedCities, setSelectedCities] = useState([]);
   var [filteredCities, setFilteredCities] = useState([]);
   var [filteredStates, setFilteredStates] = useState([]);
-  var [selectedExperience, setSelectedExperience] = useState(''); 
+  var [selectedExperience, setSelectedExperience] = useState('');
   const handleSearchButtonClick = async () => {
     // Prepare the data you want to send
     const searchData = {
@@ -259,14 +259,10 @@ const LandingBody = ({ changealltohide }) => {
         <h1>Find your dream job now with Meri Job</h1>
         <p>5 lakh+ jobs for you to explore</p>
         <div className={style.searchcarrier}>
-          <i className="fas fa-search"></i>
-          <input
-  type="text"
-  placeholder='skills / designations / companies'
-  className={style.lbinp1}
-  value={inputText}
-  onChange={(e) => setInputText(e.target.value)}
-/>
+          <div className={style.lbinp1div}>
+            <i className="fas fa-search"></i>
+            <input type="text" placeholder='skills / designations / companies' className={style.lbinp1} value={inputText} onChange={(e) => setInputText(e.target.value)} />
+          </div>
           <select className={style.lbinp2}>
             <option value="" disabled selected hidden>
               Select experience

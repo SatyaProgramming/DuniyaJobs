@@ -82,15 +82,13 @@ const JobList = () => {
           )}
         </Box>
       </Flex>
-      <Container>
-       <Button onClick={() => setPage(page - 1)} disabled={page === 0}>
-              Previous
-            </Button>
-            <span>Page {page + 1}</span>
-            <Button onClick={() => setPage(page + 1)}>Next</Button>
-       {/* Pagination controls */}
-       </Container>
-      </>
+      <Container textAlign='center'>
+        <Button onClick={() => setPage(page - 1)} disabled={page === 0}>Previous</Button>
+        <span>Page {page + 1}</span>
+        <Button onClick={() => setPage(page + 1)}>Next</Button>
+        {/* Pagination controls */}
+      </Container>
+    </>
   );
 };
 
