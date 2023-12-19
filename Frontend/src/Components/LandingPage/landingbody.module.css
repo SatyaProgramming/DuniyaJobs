@@ -42,11 +42,12 @@
     color: grey;
 }
 .lbinp1{
-    width: 40%;
+    width: 35%;
     padding: 10px 2px;
     outline: none;
 }
 .lbinp2{
+    width:17.5%;
     padding: 10px 2px;
     outline: none;
 }
@@ -164,6 +165,10 @@ option>span{
 }
 .stateNcity{
     position: relative;
+    width:25%;
+}
+.stateNcity .lbinp2{
+    width:100%;
 }
 .stateSuggestionList{
     position: absolute;
@@ -211,7 +216,7 @@ option>span{
         width: 80%;
     }
     .lbbtn1{
-        width: 25%;
+        width: 10%;
         font-size: small;
     }
     .lbinp2{
