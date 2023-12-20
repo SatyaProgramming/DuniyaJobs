@@ -9,6 +9,7 @@ import {
   AccordionItem,
   AccordionButton,
   Button,
+  Select,
   Container,
 } from "@chakra-ui/react";
 
@@ -17,7 +18,6 @@ const JobList = () => {
   const [selectedJob, setSelectedJob] = useState(null);
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(5);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -25,7 +25,6 @@ const JobList = () => {
 
   const fetchData = async () => {
     try {
-      setLoading(true);
       const response = await axios.get(
         `http://localhost:8081/get-job-list?page=${page}&size=${size}`
       );
@@ -33,8 +32,6 @@ const JobList = () => {
       setJobs(response.data);
     } catch (error) {
       console.error("Error fetching job list:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -67,7 +64,7 @@ const JobList = () => {
         </Box>
 
         {/* Right side - Job Description */}
-        <Box flex="2" p="4" textAlign="center" borderLeft="2px solid black">
+        <Box flex="2" p="4" textAlign='center' borderLeft='2px solid black'>
           <Text fontSize="lg" fontWeight="bold">
             Job Description
           </Text>
@@ -85,24 +82,11 @@ const JobList = () => {
           )}
         </Box>
       </Flex>
-
-      <Container>
-        <Button onClick={() => setPage(page - 1)} disabled={page === 0 || loading}>
-          Previous
-        </Button>
-        <span style={{ margin: "0 10px" }}>Page {page + 1}</span>
-        <Button onClick={() => setPage(page + 1)} disabled={loading}>
-          Next
-        </Button>
-        {/* Loading indicator */}
-        {loading && <Text>Loading...</Text>}
-
       <Container textAlign='center'>
         <Button onClick={() => setPage(page - 1)} disabled={page === 0}>Previous</Button>
         <span>Page {page + 1}</span>
         <Button onClick={() => setPage(page + 1)}>Next</Button>
         {/* Pagination controls */}
-
       </Container>
     </>
   );

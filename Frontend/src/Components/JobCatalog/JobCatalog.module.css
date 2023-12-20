@@ -1,80 +1,98 @@
 .job_card {
     border: solid 1px #CCCC;
-    padding:10px;
-    border-radius:10px;
+    padding: 10px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: ease 0.2s all;
+    background-color: white;
+}
+
+.job_card:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 0px 5px 0px #CCCC;
+    cursor: pointer;
 }
 
 .job_listings_container {
     display: grid;
     grid-template-columns: repeat(3, 32.33%);
     column-gap: 15px;
-    row-gap:10px;
-    margin:0 auto;
-    max-width:1200px;
+    row-gap: 10px;
+    margin: 0 auto;
+    max-width: 1200px;
 }
-.cardtop img{
+
+.cardtop img {
     border-radius: 10px;
 }
-.cardtop{
+
+.cardtop {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     column-gap: 5px;
 }
-.cardtop i{
-    margin:0;
-    color:#696868cc;
+
+.cardtop i {
+    margin: 0;
+    color: #696868cc;
 }
-.cardFooter{
+
+.cardFooter {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline;
 }
-.ApplyBtn{
-    padding:4px 10px;
-    color:white;
-    border:none;
-    outline:none;
-    border-radius:20px;
-    background-color:#3dbbf3;
+
+.ApplyBtn {
+    padding: 4px 10px;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    background-color: #3dbbf3;
     font-weight: 600;
     font-size: 12px;
 }
-.socialLinks i{
-    margin: 0px;
-    font-size:14px;
-}
-.facebookIcon{
-    border:solid 2px #4267B2;
-    border-radius: 10px;
+
+.icon{
     margin: 0px 5px;
 }
+
+.facebookIcon {
+    color: #4267B2;
+}
+
 .twitterIcon {
-    border:solid 2px #1DA1F2;
-    border-radius: 10px;
-    margin: 0px 5px;
+    color: #1DA1F2;
 }
-.linkedInIcon{
-    border:solid 2px #0077b5;
-    border-radius: 10px;
-    margin: 0px 5px;
-}
-.twitterIcon i{
-    padding:2px;
-    color:#1DA1F2;
-    font-size: 13px;
-}
-.facebookIcon i{
-    padding:4px;
-    color:#4267B2;
-    font-size: 13px;
-}
-.linkedInIcon i{
-    padding: 0px 3px;
+
+.linkedInIcon {
     color:#0077b5;
-    font-size: 13px;
+}
+
+@media screen and (min-width: 600px) and (max-width: 999px) {
+    .job_listings_container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .job_card {
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 600px){
+    .job_listings_container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .job_card {
+        font-size: 14px;
+    }
 }
