@@ -28,6 +28,7 @@ import com.job_finder.helperClass.UpdateProfile;
 import com.job_finder.repository.UserRepository;
 import com.job_finder.response.LoginMessage;
 import com.job_finder.response.ProfileData;
+import com.job_finder.response.UserProfileList;
 import com.job_finder.service.UserService;
 
 @RestController
@@ -51,11 +52,11 @@ public class UserController {
 		return userService.addEmployee(form);
 	}
 
-	@GetMapping("/unlock-user")
-	public Boolean getUnlockAccount() {
-
-		return false;
-	}
+	@PostMapping("/set-password")
+    public ResponseEntity<String> setPassword(@RequestParam("email") String email, @RequestParam("password") String password) {
+        String result = userService.setPassword(email, password);
+        return ResponseEntity.ok(result);
+    }
 
 	@PostMapping("/verify-otp")
 	public ResponseEntity<String> verifyOTP(@RequestParam("email") String email, @RequestParam("otp") String otp) {
@@ -173,4 +174,12 @@ public class UserController {
 		String updatedProfile = userService.updateProfile(profileId, updateProfile);
 		return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
 	}
+	
+	 @GetMapping("/profiles")
+	    public List<UserProfileList> getUserProfiles(
+	            @RequestParam(defaultValue = "0") int page,
+	            @RequestParam(defaultValue = "10") int size
+	    ) {
+	        return userService.getUserProfileList(page, size);
+	    }
 }

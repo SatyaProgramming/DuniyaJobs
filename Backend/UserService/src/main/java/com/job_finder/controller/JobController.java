@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.job_finder.entity.JobEntity;
+import com.job_finder.response.JobDesc;
+import com.job_finder.search.JobSearchCriteria;
 import com.job_finder.service.JobsService;
 
 @RestController
@@ -43,6 +45,14 @@ public class JobController {
 	    List<JobEntity> jobsList = jobService.getAllJobs(page, size);
 	    return new ResponseEntity<>(jobsList, HttpStatus.OK);
 	}
+	
+	@PostMapping("/search")
+	public ResponseEntity<List<JobEntity>> searchJobs(@RequestBody JobSearchCriteria searchCriteria) {
+	    List<JobEntity> jobsList = jobService.searchJobs(searchCriteria);
+	    return new ResponseEntity<>(jobsList, HttpStatus.OK);
+	}
+	
+	
 	@GetMapping("/get-job/{id}")
 	public ResponseEntity<JobEntity> getJobById(@PathVariable Long id) {
 		Optional<JobEntity> job = jobService.getJobById(id);
@@ -55,7 +65,10 @@ public class JobController {
 		JobEntity savedJob = jobService.saveJob(job);
 		return new ResponseEntity<>(savedJob, HttpStatus.CREATED);
 	}
-	
+	@GetMapping("dashboard-data")
+	public ResponseEntity<JobDesc> getJobDesc(){
+		return new ResponseEntity<>(jobService.getJobDesc(),HttpStatus.ACCEPTED);
+	}
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Void> deleteJob(@PathVariable Long id) {
 		jobService.deleteJob(id);

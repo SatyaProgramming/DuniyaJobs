@@ -45,19 +45,19 @@ const Empbody = ({ hideall }) => {
             </p>
             <div className={style.sb2grid}>
               <div className={style.sb2flex}>
-                <i class="fa-solid fa-stopwatch"></i>
+                <i className="fa-solid fa-stopwatch"></i>
                 <p>2 Minutes to Post</p>
               </div>
               <div className={style.sb2flex}>
-                <i class="fa-solid fa-address-book"></i>
+                <i className="fa-solid fa-address-book"></i>
                 <p>Unlimited Applies</p>
               </div>
               <div className={style.sb2flex}>
-                <i class="fa-solid fa-user-group"></i>
+                <i className="fa-solid fa-user-group"></i>
                 <p>Attract Audience</p>
               </div>
               <div className={style.sb2flex}>
-                <i class="fa-solid fa-calendar"></i>
+                <i className="fa-solid fa-calendar"></i>
                 <p>30 Day Visibility</p>
               </div>
             </div>
@@ -82,19 +82,19 @@ const Empbody = ({ hideall }) => {
             </p>
             <div className={style.sb2grid}>
               <div className={style.sb2flex}>
-              <i class="fa-solid fa-id-badge"></i>
+              <i className="fa-solid fa-id-badge"></i>
                 <p>Over 8.27 crore Jobseekers</p>
               </div>
               <div className={style.sb2flex}>
-              <i class="fa-solid fa-magnifying-glass-location"></i>
+              <i className="fa-solid fa-magnifying-glass-location"></i>
                 <p>Smart Talent Search</p>
               </div>
               <div className={style.sb2flex}>
-              <i class="fa-solid fa-phone"></i>
+              <i className="fa-solid fa-phone"></i>
                 <p>Contact Directly</p>
               </div>
               <div className={style.sb2flex}>
-              <i class="fa-solid fa-calendar-check"></i>
+              <i className="fa-solid fa-calendar-check"></i>
                 <p>Verified Candidates</p>
               </div>
             </div>

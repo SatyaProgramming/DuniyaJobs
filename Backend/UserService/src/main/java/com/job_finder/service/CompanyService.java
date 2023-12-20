@@ -14,5 +14,9 @@ public interface CompanyService {
     
     LoginMessage loginEmployer(CompanyLogin loginForm);
 
+	String setPassword(String email, String password);
+
+	Boolean getOtp(String email, String otp);
+
   
 }

@@ -3,6 +3,7 @@ package com.job_finder.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.job_finder.entity.JobEntity;
 import com.job_finder.entity.UserDtls;
 import com.job_finder.helperClass.EducationData;
 import com.job_finder.helperClass.Employment;
@@ -11,6 +12,7 @@ import com.job_finder.helperClass.RegistrationForm;
 import com.job_finder.helperClass.UpdateProfile;
 import com.job_finder.response.LoginMessage;
 import com.job_finder.response.ProfileData;
+import com.job_finder.response.UserProfileList;
 
 public interface UserService {
 	List<UserDtls> getAllUsers();
@@ -43,5 +45,11 @@ public interface UserService {
 	String updateProfile(Long profileId, UpdateProfile updateProfile);
 
 	Boolean getOtp(String email, String otp);
+
+	String setPassword(String email, String password);
+	
+
+	List<UserProfileList> getUserProfileList(int page, int size);
+
 
 }
