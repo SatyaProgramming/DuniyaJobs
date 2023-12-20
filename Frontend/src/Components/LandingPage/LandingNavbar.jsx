@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom"
 import React, { useState } from 'react'
 import Company from './Company'
-import Drawer from './Drawer'
+
 
 import Employer from './Employer'
 import Job from './Job'
@@ -10,23 +10,14 @@ import style from "./landingnav.module.css"
 import Resources from './Resources'
 import Services from './Services'
 import Footer from "../HomePageFooter/Footer"
-import { background } from "@chakra-ui/react"
-
 const LandingNavbar = () => {
     const [isjob, setisjob] = useState(false)
     const [iscompany, setiscompany] = useState(false)
     const [isservices, setisservices] = useState(false)
     const [isresources, setisresources] = useState(false)
     const [isemployer, setisemployer] = useState(false)
-    const [isflag, setisflag] = useState(false)
-    let navigate = useNavigate()
-
-    let changeflagtotrue=()=>{
-        setisflag(true)
-    }
-    let changeflagtofalse=()=>{
-        setisflag(false)
-    }
+    
+    let navigate = useNavigate();
 
     let changealltohide=()=>{
         setisjob(false)
@@ -58,12 +49,7 @@ const LandingNavbar = () => {
         setisjob(false)
     }
    
-    let changeresourcestodisplay=()=>{
-        setisresources(true)
-        setisservices(false)
-        setiscompany(false)
-        setisjob(false)
-    }
+   
     let changeemployertodisplay=()=>{
         setisresources(false)
         setisservices(false)
@@ -85,10 +71,15 @@ const LandingNavbar = () => {
         navigate("/register")
     }
 
+    let navigatetologin=(event)=>{
+        event.preventDefault();
+        navigate("/login")
+    }
+
   return (
     <div>
-    {isflag?<Drawer changeflagtofalse={changeflagtofalse}/>:""}
-    <div className={isflag?style.blur:""}>
+    
+    <div>
         
 
     <div className={style.lnavbar}>
@@ -104,7 +95,7 @@ const LandingNavbar = () => {
         </div>
         <div className={style.sublnav2}  onMouseEnter={changealltohide}>
             <div className={style.btncarrier} onMouseEnter={changealltohide}>
-                <button className={style.loginbutton} onClick={changeflagtotrue} >Login</button>
+                <button className={style.loginbutton} onClick={navigatetologin} >Login</button>
               
                 <button className={style.registerbutton} onClick={navigatetoregister}>Register</button>
             </div>
