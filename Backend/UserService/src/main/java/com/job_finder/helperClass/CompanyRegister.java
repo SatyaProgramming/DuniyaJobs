@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class CompanyRegister {
 
-	private String CompanyName;
+	private String companyName;
     private String contactEmail;
     private String contactPhone;
 }

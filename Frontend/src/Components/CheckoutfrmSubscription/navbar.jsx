@@ -11,7 +11,7 @@ const Navbar = () => {
      </div>
      <div className={style.navbarsub1}>
         <div className={style.navbarsub11} >1. SHOPPING CART</div>
-        <div><span><i class="fa-solid fa-check"></i></span> 2. LOGIN</div>
+        <div><span><i className="fa-solid fa-check"></i></span> 2. LOGIN</div>
         <div>3. PAYMENT</div>
      </div>
 

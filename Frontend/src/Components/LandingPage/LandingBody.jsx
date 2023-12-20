@@ -12,14 +12,20 @@ const LandingBody = ({ changealltohide }) => {
   const countries = Countries;
   const states = States;
   const cities = Cities;
-  var [selectedCountry, setSelectedCountry] = useState('');
+  var [selectedCountry, setSelectedCountry] = useState('India');
   var [inputText, setInputText] = useState('');
   var [locationInputText, setLocationInputText] = useState('');
   var [selectedState, setSelectedState] = useState('');
   var [selectedCities, setSelectedCities] = useState([]);
   var [filteredCities, setFilteredCities] = useState([]);
   var [filteredStates, setFilteredStates] = useState([]);
+
+  var [selectedExperience, setSelectedExperience] = useState(''); 
+  const [jobListData, setJobListData] = useState(null);
+
+=======
   var [selectedExperience, setSelectedExperience] = useState('');
+
   const handleSearchButtonClick = async () => {
     // Prepare the data you want to send
     const searchData = {
@@ -34,6 +40,7 @@ const LandingBody = ({ changealltohide }) => {
       // Replace 'your-api-endpoint' with the actual URL of your Spring Boot endpoint
       const response = await axios.post('http://localhost:8081/search', searchData);
 
+      setJobListData(response.data);
       // Handle the response if needed
       console.log(response.data);
     } catch (error) {
@@ -315,7 +322,7 @@ const LandingBody = ({ changealltohide }) => {
         </div> */}
 
       {/* <Landingslider1/> */}
-      <JobList />
+      <JobList jobData={jobListData} />
       <Faqs />
     </div>
   )

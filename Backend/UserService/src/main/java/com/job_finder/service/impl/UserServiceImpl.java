@@ -1,14 +1,20 @@
 package com.job_finder.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.job_finder.entity.Company;
+import com.job_finder.entity.JobEntity;
 import com.job_finder.entity.UserDtls;
 import com.job_finder.helperClass.CompanyRegister;
 import com.job_finder.helperClass.EducationData;
@@ -19,6 +25,7 @@ import com.job_finder.helperClass.UpdateProfile;
 import com.job_finder.repository.UserRepository;
 import com.job_finder.response.LoginMessage;
 import com.job_finder.response.ProfileData;
+import com.job_finder.response.UserProfileList;
 import com.job_finder.service.UserService;
 import com.job_finder.utility.EmailUtils;
 import com.job_finder.utility.PasswordUtils;
@@ -60,7 +67,6 @@ public class UserServiceImpl implements UserService {
 			existingUser.setFullName(updatedUser.getFullName());
 			existingUser.setEmailId(updatedUser.getEmailId());
 			existingUser.setMobileNumber(updatedUser.getMobileNumber());
-			existingUser.setUsername(updatedUser.getUsername());
 			existingUser.setPassword(updatedUser.getPassword());
 			existingUser.setDescription(updatedUser.getDescription());
 			existingUser.setWorkStatus(updatedUser.getWorkStatus());
@@ -87,7 +93,6 @@ public class UserServiceImpl implements UserService {
 			userDtls.setFullName(user.getFullName());
 			userDtls.setEmailId(user.getEmailId());
 			userDtls.setMobileNumber(user.getMobileNumber());
-			userDtls.setUsername(user.getUsername());
 			userDtls.setDescription(user.getDescription());
 			userDtls.setWorkStatus(user.getWorkStatus());
 			return userDtls;
@@ -145,6 +150,16 @@ public class UserServiceImpl implements UserService {
 	    return false;
 	}
 
+	public String setPassword(String email, String password) {
+        UserDtls user = userRepository.findByEmailId(email);
+        if (user != null) {
+            user.setPassword(password);
+            userRepository.save(user);
+            return "Password set successfully";
+        } else {
+            return "User not found";
+        }
+    }
 
 	@Override
 	public LoginMessage loginEmployee(LoginForm loginForm) {
@@ -280,5 +295,34 @@ public class UserServiceImpl implements UserService {
 		}
 		return null;
 	}
+
+	@Override
+	public List<UserProfileList> getUserProfileList(int page, int size) {
+	    Sort sort = Sort.by("createdDate").descending();
+	    Pageable pageable = PageRequest.of(page, size, sort);
+	    Page<UserDtls> userProfileListPage = userRepository.findAll(pageable);
+
+	    // Convert UserDtls entities to UserProfileList objects
+	    List<UserProfileList> userProfileList = convertToUserProfileList(userProfileListPage.getContent());
+
+	    return userProfileList;
+	}
+
+	private List<UserProfileList> convertToUserProfileList(List<UserDtls> userDtlsList) {
+	    List<UserProfileList> userProfileList = new ArrayList<>();
+
+	    for (UserDtls userDtls : userDtlsList) {
+	        UserProfileList userProfile = new UserProfileList();
+	        userProfile.setFullName(userDtls.getFullName());
+	        userProfile.setSpecialize(userDtls.getSpecialize());
+	        userProfile.setUni(userDtls.getUni());
+
+	        userProfileList.add(userProfile);
+	    }
+
+	    return userProfileList;
+	}
+
+
 
 }
