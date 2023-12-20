@@ -8,6 +8,7 @@ import {
   Accordion,
   AccordionItem,
   AccordionButton,
+  AccordionPanel,
   Button,
   Container,
 } from "@chakra-ui/react";
@@ -60,6 +61,10 @@ const JobList = () => {
                       {job.title}
                     </Box>
                   </AccordionButton>
+                  <AccordionPanel>
+                    {/* Content inside the AccordionPanel */}
+                    {/* ... */}
+                  </AccordionPanel>
                 </AccordionItem>
               ))}
             </Accordion>
@@ -86,7 +91,7 @@ const JobList = () => {
         </Box>
       </Flex>
 
-      <Container>
+      <Container textAlign='center'>
         <Button onClick={() => setPage(page - 1)} disabled={page === 0 || loading}>
           Previous
         </Button>
@@ -96,13 +101,6 @@ const JobList = () => {
         </Button>
         {/* Loading indicator */}
         {loading && <Text>Loading...</Text>}
-
-      <Container textAlign='center'>
-        <Button onClick={() => setPage(page - 1)} disabled={page === 0}>Previous</Button>
-        <span>Page {page + 1}</span>
-        <Button onClick={() => setPage(page + 1)}>Next</Button>
-        {/* Pagination controls */}
-
       </Container>
     </>
   );
