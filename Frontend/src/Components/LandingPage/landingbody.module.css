@@ -22,31 +22,36 @@
     font-weight: bold;
 }
 .searchcarrier{
-   
     display: flex;
     gap: 5px;
     align-items: center;
     background-color: white;
     border-radius: 30px;
-   
-    /* border: 2px solid red; */
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    padding: 10px ;
-    width: 65%;
+    padding: 10px 15px ;
+    width: 90%;
     margin: auto;
-    margin-top: 30px;
+    margin-top:30px;
+    margin-bottom: 30px;
 }
-.searchcarrier>i{
+.searchcarrier i{
     margin-right: 10px;
     font-size: 20px;
     color: grey;
 }
+.lbinp1div{
+    width: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
 .lbinp1{
-    width: 40%;
+    width:100%;
     padding: 10px 2px;
     outline: none;
 }
 .lbinp2{
+    width:17.5%;
     padding: 10px 2px;
     outline: none;
 }
@@ -164,6 +169,10 @@ option>span{
 }
 .stateNcity{
     position: relative;
+    width:25%;
+}
+.stateNcity .lbinp2{
+    width:100%;
 }
 .stateSuggestionList{
     position: absolute;
@@ -183,7 +192,7 @@ option>span{
 .stateSuggestionList li:hover{
     background-color: rgb(225, 225, 225);
 }
-@media all and (min-width:401px) and (max-width:720px){
+@media all and (min-width:401px) and (max-width:990px){
 
     .lastsubdiv{
         display: block;
@@ -211,7 +220,7 @@ option>span{
         width: 80%;
     }
     .lbbtn1{
-        width: 25%;
+        width: 10%;
         font-size: small;
     }
     .lbinp2{
@@ -223,5 +232,32 @@ option>span{
     .lb2grid{
         justify-content: center;
     }
+    .searchcarrier{
+        flex-direction: column;
+        align-items: center;
+    }
+    .searchcarrier div, .searchcarrier select{
+        width:100%;
+        border-bottom: solid 1px #CCCC;
+        font-size: 14px;
+    }
+    .searchcarrier button{
+        width:50%;
+    }
 
+}
+@media all and (max-width:401px){
+    .searchcarrier{
+        flex-direction: column;
+        align-items: center;
+        width:99%;
+    }
+    .searchcarrier div, .searchcarrier select{
+        width:100%;
+        border-bottom: solid 1px #CCCC;
+        font-size: 14px;
+    }
+    .searchcarrier button{
+        width:50%;
+    }
 }

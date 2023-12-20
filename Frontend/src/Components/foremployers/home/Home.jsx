@@ -12,6 +12,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import EmployeeProfileList from './EmployeeProfileList';
+import SearchSuggestions from './SearchSuggestions';
 
 const Home = () => {
   const [apiData, setApiData] = useState({
@@ -81,22 +82,22 @@ const Home = () => {
       </Heading>
 
       <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={4} width="100%">
-        <Stat bg="teal.500" p={4} borderRadius="md" color="white">
+        <Stat bg="teal.500" p={4} borderRadius="md" color="white" className='DisplayCard'>
           <StatLabel>Job Postings</StatLabel>
           <StatNumber>{apiData.jobposts}</StatNumber>
         </Stat>
 
-        <Stat bg="blue.500" p={4} borderRadius="md" color="white">
+        <Stat bg="blue.500" p={4} borderRadius="md" color="white" className='DisplayCard'>
           <StatLabel>Job Views</StatLabel>
           <StatNumber>{apiData.jobview}</StatNumber>
         </Stat>
 
-        <Stat bg="green.500" p={4} borderRadius="md" color="white">
+        <Stat bg="green.500" p={4} borderRadius="md" color="white" className='DisplayCard'>
           <StatLabel>Applications</StatLabel>
           <StatNumber>{apiData.applications}</StatNumber>
         </Stat>
 
-        <Stat bg="orange.500" p={4} borderRadius="md" color="white">
+        <Stat bg="orange.500" p={4} borderRadius="md" color="white" className='DisplayCard'>
           <StatLabel>Interviews</StatLabel>
           <StatNumber>{apiData.interviews}</StatNumber>
         </Stat>
@@ -111,17 +112,18 @@ const Home = () => {
         </Box>
       </SimpleGrid>
 
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} mt={8} spacing={4} width="100%">
-        <Stat bg="purple.500" p={4} borderRadius="md" color="white">
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} mt={8} spacing={4} width="100%">
+        <Stat bg="purple.500" p={4} borderRadius="md" color="white" className='DisplayCard'>
           <StatLabel>Total Applicants</StatLabel>
           <StatNumber>{apiData.applicants}</StatNumber>
         </Stat>
 
-        <Stat bg="yellow.500" p={4} borderRadius="md" color="white">
+        <Stat bg="yellow.500" p={4} borderRadius="md" color="white" className='DisplayCard'>
           <StatLabel>Total Scheduled Interviews</StatLabel>
           <StatNumber>{apiData.scheduledInterviews}</StatNumber>
         </Stat>
       </SimpleGrid>
+      <SearchSuggestions/>
     </Container>
   );
 };

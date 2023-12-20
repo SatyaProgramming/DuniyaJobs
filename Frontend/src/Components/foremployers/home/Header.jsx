@@ -5,6 +5,9 @@ import
  from 'react-icons/bs'
 
 function Header({OpenSidebar}) {
+  const hanleSearchboxChange = (event) => {
+    
+  };
   return (
     <header className='header'>
         <div className='menu-icon'>
@@ -12,8 +15,8 @@ function Header({OpenSidebar}) {
         </div>
         <div className='header-left'>
           <div className="header-search-bar-div">
-            <input type="text" className="search-bar" />
-            <BsSearch  className='icon'/>
+            <input type="text" className="search-bar" onChange={hanleSearchboxChange} />
+            <BsSearch  className='icon iconSearch'/>
           </div>
           
         </div>
