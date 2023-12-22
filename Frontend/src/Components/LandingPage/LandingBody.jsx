@@ -20,7 +20,7 @@ const LandingBody = ({ changealltohide }) => {
   var [filteredCities, setFilteredCities] = useState([]);
   var [filteredStates, setFilteredStates] = useState([]);
 
-  var [selectedExperience, setSelectedExperience] = useState(''); 
+  var [selectedExperience, setSelectedExperience] = useState('');
   const [jobListData, setJobListData] = useState(null);
 
   var [selectedExperience, setSelectedExperience] = useState('');
@@ -312,6 +312,46 @@ const LandingBody = ({ changealltohide }) => {
           <button className={style.lbbtn1} onClick={handleSearchButtonClick}>
             Search
           </button>
+        </div>
+        <div className={style.slidingContiner}>
+          <ul className={style.sldingLinksContainer}>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Fresher</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Fullstack</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Engineers</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for HR managers</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Business Development managers</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Recruiting managers</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Cinematographers</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Directors</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Clerks</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Admins</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Telecallers</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Fitters</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Winders</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Plumbers</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Electricians</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Doctors</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Free lancers</a></li>
+          </ul>
+          <ul className={style.sldingLinksContainer}>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Fresher</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Fullstack</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Engineers</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for HR managers</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Business Development managers</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Recruiting managers</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Cinematographers</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Directors</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Clerks</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Admins</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Telecallers</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Fitters</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Winders</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Plumbers</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Electricians</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Doctors</a></li>
+            <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Free lancers</a></li>
+          </ul>
         </div>
       </div>
 
