@@ -23,7 +23,6 @@ const LandingBody = ({ changealltohide }) => {
   var [selectedExperience, setSelectedExperience] = useState(''); 
   const [jobListData, setJobListData] = useState(null);
 
-
   var [selectedExperience, setSelectedExperience] = useState('');
 
   const handleSearchButtonClick = async () => {

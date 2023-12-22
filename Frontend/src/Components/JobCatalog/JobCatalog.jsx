@@ -2,16 +2,19 @@ import React from 'react'
 import jobCatalogData from '../Assets/jobCatalogData.json'
 import Logo from '../Assets/Mahindra.png'
 import styles from './JobCatalog.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebook, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import classNames from 'classnames';
 
 const JobCatalog = () => {
     const jobListing = jobCatalogData.jobListing;
-    const hanldeFavClick = (event) =>{
+    const hanldeFavClick = (event) => {
         var x = event.currentTarget;
         var y = x.children[0].className;
-        if(y === "fa fa-star-o"){
+        if (y === "fa fa-star-o") {
             event.currentTarget.children[0].className = "fa fa-star";
         }
-        else{
+        else {
             event.currentTarget.children[0].className = "fa fa-star-o";
         }
         //Remaining favourites logic over here
@@ -44,9 +47,9 @@ const JobCatalog = () => {
                     <div className={styles.cardFooter}>
                         <button className={styles.ApplyBtn}>Apply</button>
                         <div className={styles.socialLinks}>
-                            <a href='#' className={styles.facebookIcon}><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href='#' className={styles.twitterIcon}><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href='#' className={styles.linkedInIcon}><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                            <a href='https://www.facebook.com/' target='blank' className={styles.facebookIcon}><FontAwesomeIcon icon={faFacebook} className={classNames(styles.facebookIcon, styles.icon)} /></a>
+                            <a href='https://twitter.com/i/flow/login' target='blank' className={styles.twitterIcon}><FontAwesomeIcon icon={faTwitter} className={classNames(styles.twitterIcon, styles.icon)} /></a>
+                            <a href='https://in.linkedin.com/' target='blank' className={styles.linkedInIcon}><FontAwesomeIcon icon={faLinkedin} className={classNames(styles.linkedInIcon, styles.icon)} /></a>
                         </div>
                         <button onClick={hanldeFavClick}><i class="fa fa-star-o" aria-hidden="true"></i></button>
                     </div>
