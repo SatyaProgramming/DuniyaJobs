@@ -28,7 +28,7 @@ const JobList = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:8081/get-job-list?page=${page}&size=${size}`
+        `http://localhost:8081/latest-job-list?page=${page}&size=${size}`
       );
       console.log('API Response:', response.data);
       setJobs(response.data);
