@@ -10,44 +10,32 @@ const CompanyOtp = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [verificationResult, setVerificationResult] = useState('');
   const [showPasswordFields, setShowPasswordFields] = useState(false);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const queryString = window.location.search;
-  const searchParams = new URLSearchParams(queryString);
-  const emailValue = searchParams.get('email');
+const searchParams = new URLSearchParams(queryString);
+const emailValue = searchParams.get('email');
 
-  const makeServerRequest = async (url, params, successMessage, errorMessage) => {
+  const handleVerifyOTP = async () => {
     try {
       setLoading(true);
-      const response = await axios.post(url, null, { params });
+      const response = await axios.post('http://localhost:8081/company-verify-otp', null, {
+        params: { email: emailValue, otp },
+      });
 
       if (response.status === 200) {
-        setVerificationResult(successMessage);
-
-        // Additional logic based on the success of the request
-        // ...
-
+        setVerificationResult(response.data);
+        setShowPasswordFields(true);
       } else {
         setVerificationResult(`Error: ${response.data}`);
       }
     } catch (error) {
-      console.error(errorMessage, error);
-      setVerificationResult(`An error occurred during ${errorMessage.toLowerCase()}.`);
+      console.error('Error during OTP verification:', error);
+      setVerificationResult('An error occurred during OTP verification. Please try again.');
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleVerifyOTP = async () => {
-    const url = 'http://localhost:8081/company-verify-otp';
-    const successMessage = 'OTP verification successful.';
-    const errorMessage = 'OTP verification';
-    
-    await makeServerRequest(url, { email: emailValue, otp }, successMessage, errorMessage);
-
-    // If OTP verification is successful, show password fields
-    setShowPasswordFields(true);
   };
 
   const handlePasswordSubmit = async () => {
@@ -56,20 +44,32 @@ const CompanyOtp = () => {
       setVerificationResult('Password and Confirm Password do not match.');
       return;
     }
+  
+    try {
+      setLoading(true);
+      // Send the password to another endpoint if password and confirmPassword match
+      const response = await axios.post('http://localhost:8081/company-set-password', null, {
+        params: { email: emailValue, password },
+      });
 
-    const url = 'http://localhost:8081/company-set-password';
-    const successMessage = 'Password set successfully.';
-    const errorMessage = 'Setting password';
-
-    await makeServerRequest(url, { email: emailValue, password }, successMessage, errorMessage);
-
-    // Navigate to the login page upon successful password submission
-    navigate('/employer-login');
+      if (response.status === 200) {
+        setVerificationResult('Password set successfully.');
+        navigate('/employer-login'); // Redirect to login page upon success
+      } else {
+        setVerificationResult(`Error setting password: ${response.data}`);
+      }
+    } catch (error) {
+      console.error('Error setting password:', error);
+      setVerificationResult('An error occurred while setting the password. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
   
   return (
     <VStack align="center" m={5} spacing={4}>
       <Heading>OTP Verification</Heading>
+
       
       <FormControl>
         <FormLabel>OTP</FormLabel>
@@ -99,8 +99,8 @@ const CompanyOtp = () => {
           </FormControl>
 
           <Button colorScheme="teal" onClick={handlePasswordSubmit} disabled={loading}>
-            {loading ? 'Setting Password...' : 'Set Password'}
-          </Button>
+        {loading ? 'Setting Password...' : 'Set Password'}
+      </Button>
         </>
       )}
     </VStack>
