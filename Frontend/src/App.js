@@ -29,6 +29,7 @@ import CompanyHome from "./Components/foremployers/home/CompanyHome";
 import AvailableJobs from "./Components/LandingPage/AvailableJobs";
 
 import JobCatalog from "./Components/JobCatalog/JobCatalog";
+import AdminRouts from "./Components/Admin/AdminRouts";
 
 
 
@@ -84,6 +85,11 @@ function App() {
 					path="/applyjobsuccessfull"
 					element={<SuccessFullapply />}
 				></Route>
+				<Route
+					path="/admin/*"
+					element={<AdminRouts />}
+				></Route>
+				
 			</Routes>
 		</div>
 	);
