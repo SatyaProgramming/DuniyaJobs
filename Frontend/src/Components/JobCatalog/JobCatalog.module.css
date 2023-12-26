@@ -8,13 +8,15 @@
     transition: ease 0.2s all;
     background-color: white;
 }
-.CatalogContainer{
+
+.CatalogContainer {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: flex-start;
     column-gap: 10px;
 }
+
 .job_card:hover {
     transform: scale(1.02);
     box-shadow: 0px 0px 5px 0px #CCCC;
@@ -26,7 +28,21 @@
     grid-template-columns: repeat(3, 32.33%);
     column-gap: 15px;
     row-gap: 10px;
-    width:80%;
+    width: 80%;
+}
+.stateSuggestionList{
+    background-color: rgb(225, 225, 225);;
+    list-style-type: none;
+    max-height:225px;
+    overflow-y: auto;
+    display: none;
+}
+.stateSuggestionList li{
+    padding:10px 20px;
+    cursor: pointer;
+}
+.stateSuggestionList li:hover{
+    background-color: #CCCC;
 }
 
 .cardtop img {
@@ -52,7 +68,9 @@
     align-items: baseline;
 }
 
-.ApplyBtn {
+.ApplyBtn,
+.Filterbtns,
+.Filterbtns1 {
     padding: 4px 10px;
     color: white;
     border: none;
@@ -63,7 +81,7 @@
     font-size: 12px;
 }
 
-.icon{
+.icon {
     margin: 0px 5px;
 }
 
@@ -76,13 +94,99 @@
 }
 
 .linkedInIcon {
-    color:#0077b5;
+    color: #0077b5;
 }
-.filterContainer{
-    width:20%;
+
+.filterContainer {
+    width: 20%;
     display: flex;
     flex-direction: column;
 }
+
+/*Filter box styling*/
+.FilterItem {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0px;
+    padding: 10px 15px;
+    border: solid 2px #CCCC;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.Filterbtns1 {
+    float: right;
+}
+.CheckbXDiv{
+    width:100%;
+    text-align: left;
+}
+.popUpHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 1px #CCCC;
+    padding: 8px 0px;
+    margin-bottom: 10px;
+}
+
+.filterSpecificResetBtn {
+    color: #3dbbf3;
+    font-weight: 600;
+}
+
+.countryFilter,
+.bxStateSearch {
+    width: 100%;
+    padding: 10px 10px;
+    outline: none;
+    border: solid 2px #CCCC;
+    border-radius: 15px;
+}
+
+.filterEntity {
+    position: relative;
+}
+
+.FilterPopUpContainer {
+    display: none;
+    position: absolute;
+    top: -10px;
+    left: 103%;
+    background-color: white;
+    border: solid 2px #CCCC;
+    padding: 10px 20px;
+    border-radius: 15px;
+    z-index: 10;
+    width: 350px;
+    height: auto;
+}
+
+.FilterPopUpContainer::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    left: -5.5%;
+    margin-left: -5px;
+    border-width: 11px;
+    border-style: solid;
+    border-color: transparent #CCCC transparent transparent;
+}
+
+.stateNcity {
+    width: 100%;
+}
+
+.popUpBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 10px;
+}
+
 
 @media screen and (min-width: 600px) and (max-width: 999px) {
     .job_listings_container {
@@ -95,7 +199,8 @@
         font-size: 16px;
     }
 }
-@media screen and (max-width: 600px){
+
+@media screen and (max-width: 600px) {
     .job_listings_container {
         display: grid;
         grid-template-columns: 1fr;
