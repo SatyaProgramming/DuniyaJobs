@@ -45,9 +45,7 @@ public class JobServiceImpl implements JobsService {
 	        jobEntity.setDescription(searchCriteria.getSkills());
 	        jobEntity.setTitle(searchCriteria.getSkills());
 	    }
-	    if (searchCriteria.getCountry() != null && !searchCriteria.getCountry().isEmpty()) {
-	        jobEntity.setLocation(searchCriteria.getCountry());
-	    }
+	   
 	    if (searchCriteria.getExperience() != null && !searchCriteria.getExperience().isEmpty()) {
 	        jobEntity.setExperience(searchCriteria.getExperience());
 	    }

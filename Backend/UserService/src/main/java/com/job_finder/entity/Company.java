@@ -1,6 +1,9 @@
 package com.job_finder.entity;
 
 import lombok.Data;
+
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Data
@@ -18,5 +21,9 @@ public class Company {
     private String contactPhone;
     private String description;
     private String industry;
-    private String accStatus; // Adjust field name if needed
+    
+    private String accStatus; 
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<JobEntity> jobs;
+
 }

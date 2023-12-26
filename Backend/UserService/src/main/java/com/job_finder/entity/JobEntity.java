@@ -22,13 +22,19 @@ public class JobEntity {
 
     private String title;
     private String description;
-    private String location;
+    private String type;
+    private String experience;
+    private int positions;
+    private String skills;
+    private String duration;
+    private String annualSalary;
+    private String dailyRate;
+    private boolean remoteWork;
+    private boolean onsite;
 
     @ManyToOne
     @JoinColumn(name = "companyId")
     private Company company;
-
-    private String experience;
     @CreationTimestamp
     @Column(name = "created_date", updatable = false)
     private LocalDateTime createdDate;

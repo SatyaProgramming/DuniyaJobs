@@ -2,7 +2,6 @@ package com.job_finder.helperClass;
 
 import java.util.List;
 
-import jakarta.persistence.ElementCollection;
 import lombok.Data;
 
 @Data
