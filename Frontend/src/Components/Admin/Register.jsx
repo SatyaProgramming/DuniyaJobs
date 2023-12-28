@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Input,
-  Button,
-  FormControl,
-  FormLabel,
-  VStack,
-  Box,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Input, Button, FormControl, FormLabel, Heading, VStack, useToast, Text } from '@chakra-ui/react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,7 +13,6 @@ const Register = () => {
   const [registrationStatus, setRegistrationStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
   const [errors, setErrors] = useState({
     name: '',
     emailId: '',
@@ -31,23 +22,22 @@ const Register = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: '' });
-    console.log(formData);
   };
 
   const validateForm = () => {
     let isValid = true;
-    const newErrors = { ...errors };
+    const newErrors = { name: '', emailId: '', mobileNumber: '' };
 
     if (formData.name.trim() === '') {
-      newErrors.name = 'Company Name is required';
+      newErrors.name = 'Name is required';
       isValid = false;
     }
 
     if (formData.emailId.trim() === '') {
       newErrors.emailId = 'Email is required';
       isValid = false;
-    } else if (!/^\S+@\S+\.\S+$/.test(formData.contactEmail)) {
-      newErrors.contactEmail = 'Invalid email address';
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.emailId)) {
+      newErrors.emailId = 'Invalid email address';
       isValid = false;
     }
 
@@ -62,37 +52,32 @@ const Register = () => {
     setErrors(newErrors);
     return isValid;
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    
     if (!validateForm()) {
       return;
     }
-  
+    
     setLoading(true);
-  
+
     try {
-      console.log('Sending data:', formData); // Add this line for debugging
-      const response = await axios.post(
-        'http://localhost:8082/admins/register',
-        formData
-      );
-  
-      console.log('Response:', response.data); // Add this line for debugging
-  
+      const response = await axios.post('http://localhost:8082/admins/register', formData);
+
       if (response.status === 200) {
         setRegistrationStatus(true);
-        console.log('User registered successfully');
+        console.log('Admin registered successfully');
         setFormData({
           name: '',
           emailId: '',
           mobileNumber: '',
         });
         alert('Registration successful! Press OK to proceed to OTP page.');
-        navigate(`/otp?email=${formData.emailId}`);
+        navigate(`/admin/otp?email=${formData.emailId}`);
       } else {
         setRegistrationStatus(false);
-        console.error('Failed to register user');
+        console.error('Failed to register Admin');
       }
     } catch (error) {
       setRegistrationStatus(false);
@@ -101,9 +86,9 @@ const Register = () => {
       setLoading(false);
     }
   };
-  
+
   return (
-    <Box>
+    <Box p={4} borderWidth="1px" borderRadius="lg">
       {registrationStatus === true && (
         <Text color="green.500" mb="4">
           Registration successful! Check your email for the OTP.
@@ -115,38 +100,28 @@ const Register = () => {
         </Text>
       )}
 
-      <VStack spacing={4} align="stretch">
-        <FormControl isInvalid={errors.companyName !== ''}>
+      <VStack spacing={4}>
+        <Heading as="h2" size="lg">
+          Admin Registration
+        </Heading>
+        <FormControl id="name">
           <FormLabel>Name</FormLabel>
-          <Input
-            type="text"
-            name="companyName"
-            value={formData.companyName}
-            onChange={handleChange}
-          />
-          <Text color="red.500">{errors.companyName}</Text>
+          <Input type="text" name="name" value={formData.name} onChange={handleChange} />
+          <Text color="red.500">{errors.name}</Text>
         </FormControl>
-        <FormControl isInvalid={errors.contactEmail !== ''}>
+        <FormControl id="emailId">
           <FormLabel>Email</FormLabel>
-          <Input
-            type="email"
-            name="emailId"
-            value={formData.emailId}
-            onChange={handleChange}
-          />
-          <Text color="red.500">{errors.contactEmail}</Text>
+          <Input type="email" name="emailId" value={formData.emailId} onChange={handleChange} />
+          <Text color="red.500">{errors.emailId}</Text>
+        
         </FormControl>
-        <FormControl isInvalid={errors.mobileNumber !== ''}>
+        <FormControl id="mobileNumber">
           <FormLabel>Mobile Number</FormLabel>
-          <Input
-            type="text"
-            name="mobileNumber"
-            value={formData.mobileNumber}
-            onChange={handleChange}
-          />
+          <Input type="tel" name="mobileNumber" value={formData.mobileNumber} onChange={handleChange} />
           <Text color="red.500">{errors.mobileNumber}</Text>
+          
         </FormControl>
-        <Button colorScheme="teal" onClick={handleSubmit} isLoading={loading}>
+        <Button colorScheme="blue" onClick={handleSubmit}>
           Register
         </Button>
       </VStack>

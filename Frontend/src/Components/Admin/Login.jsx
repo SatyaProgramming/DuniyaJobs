@@ -16,8 +16,8 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const Login = () => {
   const navigate = useNavigate(); // Initialize useNavigate
-  const [companyLogin, setCompanyLogin] = useState({
-    contactEmail: '',
+  const [login, setlogin] = useState({
+    email: '',
     password: '',
   });
   const [formErrors, setFormErrors] = useState({});
@@ -26,7 +26,7 @@ const Login = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCompanyLogin((prevData) => ({
+    setlogin((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -36,11 +36,11 @@ const Login = () => {
   const validateForm = () => {
     const errors = {};
 
-    if (!companyLogin.contactEmail.trim()) {
-      errors.contactEmail = 'Email is required';
+    if (!login.email.trim()) {
+      errors.email = 'Email is required';
     }
 
-    if (!companyLogin.password.trim()) {
+    if (!login.password.trim()) {
       errors.password = 'Password is required';
     }
 
@@ -51,13 +51,13 @@ const Login = () => {
   const handleLogin = async () => {
     if (validateForm()) {
       try {
-        const response = await axios.post('http://localhost:8081/company-login', companyLogin);
+        const response = await axios.post('http://localhost:8082/admins/login', login);
         console.log('Server Response:', response.data);
         setIsLoginSuccess(true);
         setLoginError(null);
-        sessionStorage.setItem('companyId', response.data.srno);
+        sessionStorage.setItem('id', response.data.id);
         // Use navigate to redirect upon successful login
-        navigate('/company-home');
+        navigate('/admin/home');
       } catch (error) {
         console.error('Error:', error.message);
         setIsLoginSuccess(false);
@@ -85,15 +85,15 @@ const Login = () => {
           </Alert>
         )}
         <form onSubmit={(e) => e.preventDefault()}>
-          <FormControl mb={4} isInvalid={!!formErrors.contactEmail}>
+          <FormControl mb={4} isInvalid={!!formErrors.email}>
             <FormLabel>Contact Email</FormLabel>
-            <Input type="email" name="contactEmail" value={companyLogin.contactEmail} onChange={handleChange} />
-            <FormErrorMessage>{formErrors.contactEmail}</FormErrorMessage>
+            <Input type="email" name="email" value={login.email} onChange={handleChange} />
+            <FormErrorMessage>{formErrors.email}</FormErrorMessage>
           </FormControl>
 
           <FormControl mb={4} isInvalid={!!formErrors.password}>
             <FormLabel>Password</FormLabel>
-            <Input type="password" name="password" value={companyLogin.password} onChange={handleChange} />
+            <Input type="password" name="password" value={login.password} onChange={handleChange} />
             <FormErrorMessage>{formErrors.password}</FormErrorMessage>
           </FormControl>
 

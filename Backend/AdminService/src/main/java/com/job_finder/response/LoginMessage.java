@@ -1,16 +1,16 @@
 package com.job_finder.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class LoginMessage {
 
 	public String message;
 	public Boolean status;
-	public long srno;
-	public LoginMessage(String message, Boolean status,Long srno) {
-        this.message = message;
-        this.status = status;
-        this.srno=srno;
-    }
+	public Long id;
+	
 }

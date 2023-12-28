@@ -4,18 +4,18 @@ import { VStack, Input, Button, FormControl, FormLabel, Heading, Text } from '@c
 import { useNavigate } from 'react-router-dom';
 
 const Otp = () => {
-  const [email, setEmail] = useState('');
-  const [otp, setOTP] = useState('');
+  const [otp, setOtp] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [verificationResult, setVerificationResult] = useState('');
   const [showPasswordFields, setShowPasswordFields] = useState(false);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   const queryString = window.location.search;
-const searchParams = new URLSearchParams(queryString);
-const emailValue = searchParams.get('email');
+  const searchParams = new URLSearchParams(queryString);
+  const emailValue = searchParams.get('email');
 
   const handleVerifyOTP = async () => {
     try {
@@ -44,17 +44,17 @@ const emailValue = searchParams.get('email');
       setVerificationResult('Password and Confirm Password do not match.');
       return;
     }
-  
+
     try {
       setLoading(true);
       // Send the password to another endpoint if password and confirmPassword match
-      const response = await axios.post('http://localhost:8081/admins/set-password', null, {
+      const response = await axios.post('http://localhost:8082/admins/set-password', null, {
         params: { email: emailValue, password },
       });
 
       if (response.status === 200) {
         setVerificationResult('Password set successfully.');
-        navigate('/admin/login'); // Redirect to login page upon success
+        navigate('/admin/'); // Redirect to login page upon success
       } else {
         setVerificationResult(`Error setting password: ${response.data}`);
       }
@@ -65,15 +65,14 @@ const emailValue = searchParams.get('email');
       setLoading(false);
     }
   };
-  
+
   return (
     <VStack align="center" m={5} spacing={4}>
       <Heading>OTP Verification</Heading>
 
-      
       <FormControl>
         <FormLabel>OTP</FormLabel>
-        <Input type="text" value={otp} onChange={(e) => setOTP(e.target.value)} />
+        <Input type="text" value={otp} onChange={(e) => setOtp(e.target.value)} />
       </FormControl>
 
       <Button colorScheme="teal" onClick={handleVerifyOTP} disabled={loading}>
@@ -99,8 +98,8 @@ const emailValue = searchParams.get('email');
           </FormControl>
 
           <Button colorScheme="teal" onClick={handlePasswordSubmit} disabled={loading}>
-        {loading ? 'Setting Password...' : 'Set Password'}
-      </Button>
+            {loading ? 'Setting Password...' : 'Set Password'}
+          </Button>
         </>
       )}
     </VStack>

@@ -51,65 +51,71 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Boolean getOtp(String email, String otp) {
-		Admin admin = adminRepository.findByEmailId(email);
+	    Optional<Admin> adminOptional = adminRepository.findByEmailId(email);
 
-		// Check if the user is found
-		if (admin != null) {
-			// Check if the OTP matches the expected OTP (sent to the user)
-			if (otp.equals(admin.getPassword()) && !"".equals(otp)) {
+	    // Check if the user is found
+	    if (adminOptional.isPresent()) {
+	        Admin admin = adminOptional.get();
 
-				// Update account status (if needed)
-				admin.setAccStatus("UNLOCKED");
+	        // Check if the OTP matches the expected OTP (sent to the user)
+	        if (otp.equals(admin.getPassword()) && !"".equals(otp)) {
 
-				// Save the updated user entity to the database
-				adminRepository.save(admin);
+	            // Update account status (if needed)
+	            admin.setAccStatus("UNLOCKED");
 
-				return true;
-			}
-		}
+	            // Save the updated user entity to the database
+	            adminRepository.save(admin);
 
-		// If any of the conditions fail, return false
-		return false;
+	            return true;
+	        }
+	    }
+
+	    // If any of the conditions fail, return false
+	    return false;
 	}
 
 	@Override
 	public String setPassword(String email, String password) {
-		Admin admin = adminRepository.findByEmailId(email);
-		if (admin != null) {
-			admin.setPassword(password);
-			adminRepository.save(admin);
-			return "Password set successfully";
-		} else {
-			return "User not found";
-		}
+	    Optional<Admin> adminOptional = adminRepository.findByEmailId(email);
+	    
+	    if (adminOptional.isPresent()) {
+	        Admin admin = adminOptional.get();
+	        admin.setPassword(password);
+	        adminRepository.save(admin);
+	        return "Password set successfully";
+	    } else {
+	        return "User not found";
+	    }
 	}
+
 
 	@Override
 	public LoginMessage loginAdmin(LoginForm loginForm) {
-		Admin admin = adminRepository.findByEmailId(loginForm.getEmail());
+	    Optional<Admin> adminOptional = adminRepository.findByEmailId(loginForm.getEmail());
 
-		if (admin != null) {
-			return authenticateUser(loginForm, admin);
-		} else {
-			return new LoginMessage("Email not exists", false, null);
-		}
+	    if (adminOptional.isPresent()) {
+	        Admin admin = adminOptional.get();
+	        return authenticateUser(loginForm, admin);
+	    } else {
+	        return new LoginMessage("Email not exists", false, null);
+	    }
 	}
 
 	private LoginMessage authenticateUser(LoginForm loginForm, Admin admin) {
-		String encodedPassword = admin.getPassword();
+	    String encodedPassword = admin.getPassword();
 
-		if (passwordEncoder.matches(loginForm.getPassword(), encodedPassword)) {
-			Optional<Admin> authenticatedAdmin = adminRepository.findOneByEmailIdAndPassword(loginForm.getEmail(),
-					encodedPassword);
+	    if (passwordEncoder.matches(loginForm.getPassword(), encodedPassword)) {
+	        Optional<Admin> authenticatedAdmin = adminRepository.findOneByEmailIdAndPassword(
+	                loginForm.getEmail(), encodedPassword);
 
-			if (authenticatedAdmin.isPresent()) {
-				return new LoginMessage("Login Success", true, authenticatedAdmin.get().getId());
-			} else {
-				return new LoginMessage("Login Failed", false, null);
-			}
-		} else {
-			return new LoginMessage("Password Not Match", false, null);
-		}
+	        if (authenticatedAdmin.isPresent()) {
+	            return new LoginMessage("Login Success", true, authenticatedAdmin.get().getId());
+	        } else {
+	            return new LoginMessage("Login Failed", false, null);
+	        }
+	    } else {
+	        return new LoginMessage("Password Not Match", false, null);
+	    }
 	}
 
 }
