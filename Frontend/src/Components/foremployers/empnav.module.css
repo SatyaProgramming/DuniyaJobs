@@ -2,7 +2,7 @@
     display: flex;
     gap: 30px;
     align-items: center;
-    height: 10vh;
+    height: 6vh;
 }
 .subempnav1:hover{
     cursor: pointer;
@@ -29,7 +29,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0px 15%;
+    padding: 0 15%;
+    height: 70px;
     width: 100%;
     position: fixed;
     background-color: white;

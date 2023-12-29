@@ -1,6 +1,9 @@
 import React from "react";
 import Content from "./Content";
 import styles from "./Footer.module.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+import { faFacebook, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 // import Slider from "./Slider";
 // import SliderTest from "./SliderTest";
 
@@ -14,7 +17,7 @@ const Footer = () => {
     "Contact Us",
     "FAQs",
     "Summons / Notices",
-    "Grievances", 
+    "Grievances",
     "Fraud Alert",
     "Trust and Safety",
   ];
@@ -54,7 +57,7 @@ const Footer = () => {
   const footerD_1 = [
     "Interview Questions",
     "About Companies"
-   
+
   ];
 
   // let imgArr = [
@@ -101,7 +104,7 @@ const Footer = () => {
       <div className={styles.footer_content}>
         <div className={styles.footerA}>
           <Content data={footer} head={"Information"} />
-         
+
         </div>
 
         <div className={styles.footerA}>
@@ -119,26 +122,17 @@ const Footer = () => {
           <Content data={footerD_1} head={"Ambition Box"} />
           <div className={styles.followUs}>
             <h3>Follow Us</h3>
-            {/* <div className={styles.logoD}>
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Facebook_logo_%28square%29.png/900px-Facebook_logo_%28square%29.png?20140103173026"
-                alt="Facebook Logo"
-              />
-              <img
-                src="https://pnggrid.com/wp-content/uploads/2021/07/Twitter-Logo-Square.png"
-                alt="twiiter Logo"
-              />
-              <img
-                src="https://www.waengineering.com/wp-content/uploads/2019/04/linkedin-icon.png"
-                alt=""
-              />
-            </div> */}
+            <div className={styles.logoD}>
+              <a href='https://www.facebook.com/' target='blank' className={styles.facebookIcon}><FontAwesomeIcon icon={faFacebook} className={classNames(styles.facebookIcon, styles.icon)} /></a>
+              <a href='https://twitter.com/i/flow/login' target='blank' className={styles.twitterIcon}><FontAwesomeIcon icon={faTwitter} className={classNames(styles.twitterIcon, styles.icon)} /></a>
+              <a href='https://in.linkedin.com/' target='blank' className={styles.linkedInIcon}><FontAwesomeIcon icon={faLinkedin} className={classNames(styles.linkedInIcon, styles.icon)} /></a>
+            </div>
           </div>
         </div>
       </div>
       <div className={styles.bottomdiv}>
-       
-       
+
+
         <div className={styles.bottomFooter}>
           <p>All rights reserved @ 2022 MiroDen Software Solution Pvt. Ltd.</p>
         </div>
