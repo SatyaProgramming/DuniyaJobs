@@ -1,60 +1,84 @@
-.main{
-    height: 425px;
+.main {
     width: 100%;
     background-color: #2e3339;
 }
-.footer_content{
-    width: 63%;
-    height: 83.5%;
-    margin:auto;
+
+.footer_content {
+    width: 68%;
+    padding-bottom: 35px;
+    margin: auto;
     display: flex;
     justify-content: space-between;
 }
-.bottomdiv{
+
+.bottomdiv {
     width: 100%;
     height: 17.5%;
-    
+
     background-color: #fff;
 }
-.footerA{
+
+.footerA {
     height: 100%;
     width: 23%;
     color: #d8d7db;
     /* padding-top: 10px; */
 }
-.iconDiv{
+
+.facebookIcon {
+    font-size: 24px;
+    color: #4267B2;
+}
+
+.twitterIcon {
+    color: #1DA1F2;
+    font-size: 24px;
+}
+
+.linkedInIcon {
+    color: #0077b5;
+    font-size: 24px;
+}
+
+.iconDiv {
     margin-top: 15px;
     height: 150px;
     width: 80%;
 }
-.iconDiv> h3{
+
+.iconDiv>h3 {
     font-size: 18px;
     font-weight: 400;
 }
-.logo{
+
+.logo {
     /* border: 1px solid red; */
     height: 40px;
     width: 83%;
     cursor: pointer;
     margin-top: 3px;
 }
-.logoD{
+
+.logoD {
     height: 30px;
     width: 50%;
     display: flex;
     justify-content: space-between;
-    
+
 }
-.followUs{
+
+.followUs {
     margin-top: 25px;
 }
-.sliderLogo{
+
+.sliderLogo {
     height: 70%;
     width: 100%;
     padding: 20px;
-    
+
 }
-.logoSilder{
+
+.logoSilder {
     width: 55%;
     height: 60px;
     display: flex;
@@ -63,71 +87,108 @@
     justify-content: space-between;
     /* border: 1px solid red; */
 }
-.sliderLogo >p{
+
+.sliderLogo>p {
     color: rgb(170, 158, 158);
     font-weight: 300;
-    
+
 }
-.bottomFooter{
+
+.bottomFooter {
     height: 30%;
     width: 100%;
     background-color: #e2e2e2;
     padding-top: 20px;
     padding-bottom: 30px;
 }
-.bottomFooter > p{
+
+.bottomFooter>p {
     text-align: center;
     font-size: 13px;
     word-spacing: 1px;
 }
 
-@media all and (min-width:401px) and (max-width:720px) {
-    .main{
-        height: 500px;
+@media all and (min-width:351px) and (max-width:550px) {
+    .footer_content {
         width: 100%;
-        background-color: #2e3339;
-    }
-    .footer_content{
-        width: 100%;
-        height: 95%;
-        padding: 10px;
-        margin:auto;
-        display: flex;
-        justify-content: space-between;
-    }
-    .bottomdiv{
-        width: 100%;
-        height: 10%;
-        background-color: #fff;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 25px;
     }
 
-    .footerA{
-        height: 80%;
-        width: 18%;
+    .footerA {
+        width: 100%;
         color: #d8d7db;
         /* padding-top: 10px; */
     }
-    .followUs{
-        margin-top: 0px;
+}
+
+@media all and (min-width:551px) and (max-width:990px) {
+    .footer_content {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
     }
-   
-    .iconDiv> h3{
+
+    .footerA {
+        width: 100%;
+        color: #d8d7db;
+        /* padding-top: 10px; */
+    }
+}
+
+@media all and (min-width:274px) and (max-width:350px) {
+    .main {
+        width: 100%;
+        background-color: #2e3339;
+    }
+
+    .footer_content {
+        width: 100%;
+        padding: 10px;
+        margin: auto;
+        flex-direction: column;
+    }
+
+    .bottomdiv {
+        width: 100%;
+        background-color: #fff;
+    }
+
+    .footerA {
+        width: 100%;
+        color: #d8d7db;
+        /* padding-top: 10px; */
+    }
+
+    .followUs {
+        margin-top: 10px;
+    }
+
+    .followUs h3 {
+        margin-bottom: 10px;
+    }
+
+    .iconDiv>h3 {
         font-size: 10px;
         font-weight: 400;
     }
-    .logoD{
+
+    .logoD {
         height: 20px;
         width: 100%;
         display: flex;
-        justify-content: space-between;
-        
+        justify-content: space-around;
+
     }
-    .sliderLogo{
+
+    .sliderLogo {
         height: 100%;
         width: 100%;
-        
+
     }
-    .logoSilder{
+
+    .logoSilder {
         width: 100%;
         height: 30px;
         display: flex;
@@ -136,20 +197,21 @@
         justify-content: space-between;
         /* border: 1px solid red; */
     }
-    .sliderLogo >p{
+
+    .sliderLogo>p {
         font-size: 10px;
         color: rgb(170, 158, 158);
         width: 150px;
-        
+
     }
 
-    .bottomFooter{
-        height: 15%;
+    .bottomFooter {
         width: 100%;
         background-color: #e2e2e2;
         /* padding: 10px; */
     }
-    .bottomFooter > p{
+
+    .bottomFooter>p {
         text-align: center;
         font-size: 13px;
         word-spacing: 1px;

@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import Footer from '../HomePageFooter/Footer';
 import Filterbox from './Filterbox';
 import { Box } from '@chakra-ui/react';
+import CompanyNavbar from '../foremployers/EmpNavbar/CompanyNavbar'
 
 const JobCatalog = () => {
     const jobListing = jobCatalogData.jobListing;
@@ -25,6 +26,7 @@ const JobCatalog = () => {
     };
     return (
         <div>
+            <CompanyNavbar/>
             <div className={styles.CatalogContainer}>
                 <Filterbox/>
                 <div className={styles.job_listings_container}>

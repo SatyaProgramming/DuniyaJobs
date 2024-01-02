@@ -1,5 +1,7 @@
 .empbody{
     padding-top: 100px;
+    max-width:1350px;
+    margin: 0 auto;
 }
 .subbody1{
     display: flex;
@@ -188,21 +190,21 @@
     gap: 20px;
     align-items: center;
 }
-.sb2mainflex{
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 70px;
-    padding: 20px 10%;
-    
-}
 .sb2mainflex>img{
     height: 350px;
 }
 
 .sb2submain1{
-    padding-top: 5%;
+    padding-top: 2%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.sb2submain1>p{
+.sb2submain1>div, .sb2submain1>img{
+    width:45%;
+    padding: 25px;
+}
+.sb2submain1>div>p{
     margin-top: 20px;
 }
 .sb2{
@@ -215,7 +217,7 @@
   padding-top: 30px;
 }
 
-@media all and (min-width:401px) and (max-width:720px){
+@media all and (min-width:274px) and (max-width:720px){
 
     .subbody1{
         display: flex;
@@ -235,6 +237,13 @@
     .empform1{
         width: 380px;
         padding: 10px 0px;
+    }
+    .sb2submain1{
+        flex-direction: column-reverse;
+    }
+    .sb2submain1>div, .sb2submain1>img{
+        width:100%;
+        padding: 15px;
     }
 
 

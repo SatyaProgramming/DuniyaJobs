@@ -4,11 +4,15 @@ import { useState, useRef, useEffect } from 'react';
 import Countries from '../Assets/countries.json';
 import States from '../Assets/states.json';
 import Cities from '../Assets/cities.json'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import classNames from 'classnames';
 
 const Filterbox = () => {
   const countries = Countries;
   const states = States;
   const cities = Cities;
+  const totalSectors = ['accountAndFinance', 'Banking', 'civilEngineering', 'Engineering', 'HRandRecruitment', 'InfoTech', 'Insurance', 'lifeSciencesAndFood', 'pharmaAndMedical', 'salesAndMarketing', 'Others'];
   var [selectedCountry, setSelectedCountry] = useState('India');
   var [inputText, setInputText] = useState('');
   var [locationInputText, setLocationInputText] = useState('');
@@ -25,6 +29,8 @@ const Filterbox = () => {
     sectors: false,
   });
   const filterContainerRef = useRef(null);
+  const [selectedSectors, setSelectedSectors] = useState([]);
+  const allSectorsChecked = totalSectors.every(sector => selectedSectors.includes(`CB${sector}`));
 
   const handleFilterClick = (e, filter) => {
     var x = e.currentTarget;
@@ -302,8 +308,48 @@ const Filterbox = () => {
     // Implement your logic for applying filters here
     console.log('Applying Filters:', selectedFilters);
   };
+  const handleSelectAllChange = () => {
+    if (allSectorsChecked) {
+      // Unselect "All Sectors" without affecting other checkboxes
+      setSelectedSectors([]);
+    } else {
+      // Select "All Sectors" and all other checkboxes
+      setSelectedSectors([...totalSectors.map(sector => `CB${sector}`)]);
+    }
+  };
+  const handleCheckboxChange = (sector) => {
+    if (sector === 'CBAllSectors') {
+      // Handle the special case of "All Sectors" checkbox
+      handleSelectAllChange();
+    } else {
+      // Handle individual sector checkbox
+      const updatedSectors = [...selectedSectors];
+
+      if (updatedSectors.includes(sector)) {
+        updatedSectors.splice(updatedSectors.indexOf(sector), 1);
+      } else {
+        updatedSectors.push(sector);
+      }
+
+      setSelectedSectors(updatedSectors);
+    }
+  };
+  const ToggleFiltersDisplay = (e) => {
+    const filterDiv = filterContainerRef.current;
+    if (filterDiv.style.height === "45px" || filterDiv.style.height === "") {
+      filterDiv.style.height = "auto";
+      filterDiv.style.overflowY = "scroll";
+    }
+    else {
+      filterDiv.style.height = "45px";
+      filterDiv.style.overflowY = "hidden";
+    }
+  }
   return (
     <div ref={filterContainerRef} className={styles.filterContainer}>
+      <div className={styles.FilterBarResponsive}>
+        <button onClick={(e) => ToggleFiltersDisplay(e)} className={classNames(styles.filterbtn, styles.Filterbtns)}>Select Filters<FontAwesomeIcon icon={faFilter} size='1.5x' /></button>
+      </div>
       <div className={styles.FilterbtnsDiv}>
         <button className={styles.Filterbtns} onClick={handleResetFilters}>Reset Filters</button>
         <button className={styles.Filterbtns1} onClick={handleApplyFilters}>Apply Filters</button>
@@ -346,6 +392,7 @@ const Filterbox = () => {
                 </ul>
               </div>
             </div>
+            <button className={styles.Filterbtns} onClick={handleResetFilters}>Apply Filter</button>
           </div>
         </li>
         <li className={styles.filterEntity} onClick={(e) => handleFilterClick(e, 'skills')}>
@@ -359,6 +406,7 @@ const Filterbox = () => {
             <div className={styles.popUpBody}>
               <input type="text" id="bxSkillSearch" placeholder='Enter skills seperated by comma(,)' className={styles.bxStateSearch} />
             </div>
+            <button className={styles.Filterbtns} onClick={handleResetFilters}>Apply Filter</button>
           </div>
         </li>
         <li className={styles.filterEntity} onClick={(e) => handleFilterClick(e, 'expectedSalary')}>
@@ -385,6 +433,7 @@ const Filterbox = () => {
                 <option value="EUR">EUR</option>
               </select>
             </div>
+            <button className={styles.Filterbtns} onClick={handleResetFilters}>Apply Filter</button>
           </div>
         </li>
         <li className={styles.filterEntity} onClick={(e) => handleFilterClick(e, 'yearsOfExperience')}>
@@ -410,6 +459,7 @@ const Filterbox = () => {
                 <option value="">7 Year</option>
               </select>
             </div>
+            <button className={styles.Filterbtns} onClick={handleResetFilters}>Apply Filter</button>
           </div>
         </li>
         <li className={styles.filterEntity} onClick={(e) => handleFilterClick(e, 'jobType')}>
@@ -430,6 +480,7 @@ const Filterbox = () => {
                 <label htmlFor="CBpermanent" className="">Permanent</label>
               </div>
             </div>
+            <button className={styles.Filterbtns} onClick={handleResetFilters}>Apply Filter</button>
           </div>
         </li>
         <li className={styles.filterEntity} onClick={(e) => handleFilterClick(e, 'sectors')}>
@@ -442,59 +493,34 @@ const Filterbox = () => {
             </div>
             <div className={styles.popUpBody}>
               <div className={styles.CheckbXDiv}>
-                <input type="checkbox" name="CBAllSectors" id="CBAllSectors" />
-                <label htmlFor="CBAllSectors" className="">All Sectors</label>
+                <input
+                  type="checkbox"
+                  name="CBAllSectors"
+                  id="CBAllSectors"
+                  checked={allSectorsChecked}
+                  onChange={handleSelectAllChange}
+                />
+                <label htmlFor="CBAllSectors" className="">
+                  All Sectors
+                </label>
               </div>
-              <div className={styles.CheckbXDiv}>
-                <input type="checkbox" name="CBaccountAndFinance" id="CBaccountAndFinance" />
-                <label htmlFor="CBaccountAndFinance" className="">Accounting & Finance</label>
-              </div>
-              <div className={styles.CheckbXDiv}>
-                <input type="checkbox" name="CBBanking" id="CBBanking" />
-                <label htmlFor="CBBanking" className="">Banking</label>
-              </div>
-              <div className={styles.CheckbXDiv}>
-                <input type="checkbox" name="CBcivilEngineering" id="CBcivilEngineering" />
-                <label htmlFor="CBcivilEngineering" className="">Civil Engineering</label>
-              </div>
-              <div className={styles.CheckbXDiv}>
-                <input type="checkbox" name="CBEngineering" id="CBEngineering" />
-                <label htmlFor="CBEngineering" className="">Engineering</label>
-              </div>
-              <div className={styles.CheckbXDiv}>
-                <input type="checkbox" name="CBHRandRecruitment" id="CBHRandRecruitment" />
-                <label htmlFor="CBHRandRecruitment" className="">Human Resources & Recruitment</label>
-              </div>
-              <div className={styles.CheckbXDiv}>
-                <input type="checkbox" name="CBInfoTech" id="CBInfoTech" />
-                <label htmlFor="CBInfoTech" className="">Information Technology</label>
-              </div>
-              <div className={styles.CheckbXDiv}>
-                <input type="checkbox" name="CBInsurance" id="CBInsurance" />
-                <label htmlFor="CBInsurance" className="">Insurance</label>
-              </div>
-              <div className={styles.CheckbXDiv}>
-                <input type="checkbox" name="CBlifeSciencesAndFood" id="CBlifeSciencesAndFood" />
-                <label htmlFor="CBlifeSciencesAndFood" className="">Life Sciences & Food</label>
-              </div>
-              <div className={styles.CheckbXDiv}>
-                <input type="checkbox" name="CBpharmaAndMedical" id="CBpharmaAndMedical" />
-                <label htmlFor="CBpharmaAndMedical" className="">Pharmaceutical & Medical Devices</label>
-              </div>
-              <div className={styles.CheckbXDiv}>
-                <input type="checkbox" name="CBsalesAndMarketing" id="CBsalesAndMarketing" />
-                <label htmlFor="CBsalesAndMarketing" className="">Sales and Marketing</label>
-              </div>
-              <div className={styles.CheckbXDiv}>
-                <input type="checkbox" name="CBOthers" id="CBOthers" />
-                <label htmlFor="CBOthers" className="">Others</label>
-              </div>
-
+              {totalSectors.map((sector) => (
+                <div className={styles.CheckbXDiv} key={sector}>
+                  <input
+                    type="checkbox"
+                    name={`CB${sector}`}
+                    id={`CB${sector}`}
+                    checked={selectedSectors.includes(`CB${sector}`)}
+                    onChange={() => handleCheckboxChange(`CB${sector}`)}
+                  />
+                  <label htmlFor={`CB${sector}`} className="">{sector}</label>
+                </div>
+              ))}
             </div>
+            <button className={styles.Filterbtns} onClick={handleResetFilters}>Apply Filter</button>
           </div>
         </li>
       </ul>
-
     </div>
   )
 }
