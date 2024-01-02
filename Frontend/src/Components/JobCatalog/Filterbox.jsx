@@ -4,6 +4,9 @@ import { useState, useRef, useEffect } from 'react';
 import Countries from '../Assets/countries.json';
 import States from '../Assets/states.json';
 import Cities from '../Assets/cities.json'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import classNames from 'classnames';
 
 const Filterbox = () => {
   const countries = Countries;
@@ -331,8 +334,22 @@ const Filterbox = () => {
       setSelectedSectors(updatedSectors);
     }
   };
+  const ToggleFiltersDisplay = (e) => {
+    const filterDiv = filterContainerRef.current;
+    if (filterDiv.style.height === "45px" || filterDiv.style.height === "") {
+      filterDiv.style.height = "auto";
+      filterDiv.style.overflowY = "scroll";
+    }
+    else {
+      filterDiv.style.height = "45px";
+      filterDiv.style.overflowY = "hidden";
+    }
+  }
   return (
     <div ref={filterContainerRef} className={styles.filterContainer}>
+      <div className={styles.FilterBarResponsive}>
+        <button onClick={(e) => ToggleFiltersDisplay(e)} className={classNames(styles.filterbtn, styles.Filterbtns)}>Select Filters<FontAwesomeIcon icon={faFilter} size='1.5x' /></button>
+      </div>
       <div className={styles.FilterbtnsDiv}>
         <button className={styles.Filterbtns} onClick={handleResetFilters}>Reset Filters</button>
         <button className={styles.Filterbtns1} onClick={handleApplyFilters}>Apply Filters</button>
