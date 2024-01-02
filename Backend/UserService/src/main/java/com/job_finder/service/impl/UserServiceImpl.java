@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,8 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.job_finder.entity.Company;
-import com.job_finder.entity.JobEntity;
 import com.job_finder.entity.UserDtls;
 import com.job_finder.helperClass.CompanyRegister;
 import com.job_finder.helperClass.EducationData;
@@ -29,8 +26,6 @@ import com.job_finder.response.UserProfileList;
 import com.job_finder.service.UserService;
 import com.job_finder.utility.EmailUtils;
 import com.job_finder.utility.PasswordUtils;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class UserServiceImpl implements UserService {

@@ -7,13 +7,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.job_finder.controller.feign.CompanyFeignClient;
 import com.job_finder.entity.Admin;
+import com.job_finder.helperClass.Company;
 import com.job_finder.helperClass.LoginForm;
 import com.job_finder.helperClass.RegistrationForm;
 import com.job_finder.repository.AdminRepository;
@@ -25,6 +29,10 @@ import com.job_finder.service.AdminService;
 @RequestMapping("/admins")
 public class AdminController {
 
+	 @Autowired
+	    private CompanyFeignClient companyFeignClient;
+
+	
 	 @Autowired
 	 private AdminService adminService;
 @Autowired
@@ -63,4 +71,22 @@ private AdminRepository ar;
 			return new ResponseEntity<>(loginResponse, HttpStatus.OK);
 
 		}
+//	 feinClient for inner communication
+	 @GetMapping("company")
+	    public ResponseEntity<List<Company>> getCompanyDetails() {
+	     List<Company> companyDtls = companyFeignClient.getCompanyDtls();
+
+	
+	            return ResponseEntity.ok(companyDtls);
+	    }
+	
+	 @PutMapping("/status/{companyId}")
+	 public List<Company> updateUserStatus(
+	     @PathVariable Long companyId,
+	     @RequestParam String newStatus
+	 ) {
+	     return companyFeignClient.updateUserStatus(companyId, newStatus);
+	 }
+
+	 
 }

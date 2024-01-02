@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.job_finder.entity.Company;
-import com.job_finder.entity.UserDtls;
 
 public interface CompanyRepository extends JpaRepository<Company, Long>{
 
@@ -13,6 +12,9 @@ public interface CompanyRepository extends JpaRepository<Company, Long>{
 
 
 	Optional<Company> findOneByContactEmailAndPassword(String contactEmail, String encodedPassword);
+
+
+	Company findOneByContactEmail(String email);
 
 	
 }

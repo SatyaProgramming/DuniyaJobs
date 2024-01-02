@@ -10,17 +10,22 @@ const Sidebar = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/dashboard" className={styles.navLink}>
+            <Link to="/admin/home" className={styles.navLink}>
               Dashboard
             </Link>
           </li>
           <li>
-            <Link to="/users" className={styles.navLink}>
+            <Link to="/admin/home/users" className={styles.navLink}>
               Users
             </Link>
           </li>
           <li>
-            <Link to="/settings" className={styles.navLink}>
+            <Link to="/admin/home/company-action" className={styles.navLink}>
+              Company
+            </Link>
+          </li>
+          <li>
+            <Link to="/admin/home/settings" className={styles.navLink}>
               Settings
             </Link>
           </li>

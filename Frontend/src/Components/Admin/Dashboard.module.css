@@ -1,12 +1,7 @@
 /* Dashboard.module.css */
 .dashboard {
-    padding: 20px;
-  }
-  
-  h2 {
-    margin-bottom: 20px;
-  }
-  
+    padding: 10px;
+  }  
   .dataContainer {
     display: flex;
     gap: 20px;

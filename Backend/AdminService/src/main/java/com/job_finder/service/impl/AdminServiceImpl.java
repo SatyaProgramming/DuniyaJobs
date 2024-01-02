@@ -1,12 +1,15 @@
 package com.job_finder.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.job_finder.controller.feign.CompanyFeignClient;
 import com.job_finder.entity.Admin;
+import com.job_finder.helperClass.Company;
 import com.job_finder.helperClass.LoginForm;
 import com.job_finder.helperClass.RegistrationForm;
 import com.job_finder.repository.AdminRepository;
@@ -21,6 +24,9 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private AdminRepository adminRepository;
 
+	@Autowired
+	CompanyFeignClient client;
+	
 	@Autowired
 	private EmailUtils emailUtils;
 
@@ -116,6 +122,12 @@ public class AdminServiceImpl implements AdminService {
 	    } else {
 	        return new LoginMessage("Password Not Match", false, null);
 	    }
+	}
+
+	@Override
+	public List<Company> updateUserStatus(Long companyId, String newStatus) {
+		// TODO Auto-generated method stub
+		return client.updateUserStatus(companyId, newStatus);
 	}
 
 }

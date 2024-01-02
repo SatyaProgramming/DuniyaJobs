@@ -17,6 +17,7 @@ public interface CompanyService {
 	String setPassword(String email, String password);
 
 	Boolean getOtp(String email, String otp);
-
+	
+	List<Company> updateUserStatus(Long userId, String newStatus);
   
 }

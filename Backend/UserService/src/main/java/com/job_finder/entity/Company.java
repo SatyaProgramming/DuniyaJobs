@@ -21,7 +21,7 @@ public class Company {
     private String contactPhone;
     private String description;
     private String industry;
-    
+    private String status;
     private String accStatus; 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JobEntity> jobs;

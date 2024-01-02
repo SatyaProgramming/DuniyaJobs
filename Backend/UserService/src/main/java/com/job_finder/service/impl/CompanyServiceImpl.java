@@ -3,13 +3,11 @@ package com.job_finder.service.impl;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.job_finder.entity.Company;
-import com.job_finder.entity.UserDtls;
 import com.job_finder.helperClass.CompanyLogin;
 import com.job_finder.helperClass.CompanyRegister;
 import com.job_finder.repository.CompanyRepository;
@@ -17,8 +15,6 @@ import com.job_finder.response.LoginMessage;
 import com.job_finder.service.CompanyService;
 import com.job_finder.utility.EmailUtils;
 import com.job_finder.utility.PasswordUtils;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -36,10 +32,13 @@ public class CompanyServiceImpl implements CompanyService {
 	
 	public Boolean addEmployer(CompanyRegister form) {
 		Company cmp = new Company();
-		BeanUtils.copyProperties(form, cmp);
 		String tempPwd = PasswordUtils.generateRandomePWD();
+		cmp.setCompanyName(form.getCompanyName());
+		cmp.setContactEmail(form.getContactEmail());
+		cmp.setContactPhone(form.getContactPhone());
 		cmp.setPassword(tempPwd);
 		cmp.setAccStatus("LOCKED");
+		cmp.setStatus("inactive");
 		repository.save(cmp);
 		String to=form.getContactEmail();
 		
@@ -83,27 +82,52 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public String setPassword(String email, String password) {
-		Company cmp = repository.findByContactEmail(email);
-        if (cmp != null) {
-            cmp.setPassword(password);
-            repository.save(cmp);
-            return "Password set successfully";
-        } else {
-            return "User not found";
-        }
+	    if (password == null || password.isEmpty()) {
+	        return "Password cannot be null or empty";
+	    }
+
+	    Company cmp = repository.findOneByContactEmail(email);
+	    if (cmp != null) {
+	        // Implement password hashing here before setting
+	        // For example, using BCryptPasswordEncoder from Spring Security
+	        // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	        // cmp.setPassword(encoder.encode(password));
+
+	        // For illustration purposes, setting the plain text password
+	        cmp.setPassword(password);
+
+	        repository.save(cmp);
+	        return "Password set successfully";
+	    } else {
+	        return "User not found";
+	    }
 	}
+
 
 	@Override
 	public Boolean getOtp(String email, String otp) {
 		 Company cmp = repository.findByContactEmail(email);
-		    if (cmp != null) {
+		 if (cmp != null && !"".equals(otp)) {
 		        // Check if the OTP matches the expected OTP (sent to the user)
-		        if (otp.equals(cmp.getPassword()) && !"".equals(otp)) {
+			 if (otp.equals(cmp.getPassword()) && !cmp.getAccStatus().equals("UNLOCKED")) {
 		            cmp.setAccStatus("UNLOCKED");
 		            repository.save(cmp);
 		            return true;
 		    }
 		}
 		return false;
+	}
+
+	@Override
+	public List<Company> updateUserStatus(Long companyId, String newStatus) {
+		Company existingUser = repository.findById(companyId)
+	                .orElseThrow(() -> new RuntimeException("User not found with id: " + companyId));
+
+	        // Update company status fields based on the updatedUser
+	      existingUser.setStatus(newStatus);
+	       
+
+	      repository.save(existingUser);
+		return repository.findAll();
 	}
 }

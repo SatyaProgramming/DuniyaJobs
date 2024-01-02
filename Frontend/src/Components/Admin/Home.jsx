@@ -7,17 +7,18 @@ import MainSection from './MainSection';
 import styles from './Home.module.css';
 import Users from './SidebarComponents/Users';
 import Settings from './SidebarComponents/Settings';
+import CompanyAction from './SidebarComponents/CompanyAction';
 
 const Home = () => {
   return (
     <div className={styles.home}>
       <Sidebar />
       <MainSection>
-        {/* Update the parent route path to include "*" */}
         <Routes>
-          {/* <Route path="/*" element={<Dashboard />} /> */}
+          <Route path="/" element={<Dashboard />} />
           <Route path="/users" element={<Users />} />
-          <Route path="settings" element={<Settings />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/company-action" element={<CompanyAction />} />
         </Routes>
       </MainSection>
     </div>

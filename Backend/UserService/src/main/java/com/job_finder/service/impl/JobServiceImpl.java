@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.batch.BatchProperties.Job;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.job_finder.entity.Company;
 import com.job_finder.entity.JobApplication;
 import com.job_finder.entity.JobEntity;
 import com.job_finder.repository.JobApplicationRepository;
@@ -77,7 +79,14 @@ public class JobServiceImpl implements JobsService {
 
 	@Override
 	public JobEntity saveJob(JobEntity job) {
-		return jobRepository.save(job);
+		Company cmp = job.getCompany();
+		if(!cmp.getStatus().equals("inactive")) {
+			
+			return jobRepository.save(job);
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
