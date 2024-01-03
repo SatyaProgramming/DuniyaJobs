@@ -18,6 +18,7 @@ import Topcompany from "./Components/TopCompany/Topcompany";
 import Job from "./Components/JobsRecomndation/Job";
 import SuccessFullapply from "./Components/JobsRecomndation/SuccessFullapply";
 import RequiredAuth from "./hoc/RequiredAuth";
+// import AuthProvider from "./hoc/Au"
 import ResumePage from "./Components/ResumePage/ResumePage";
 import UpdateProfile from "./Components/HomePageBody/UpdateProfile";
 import Employment from "./Components/RegisterAndLogin/employement/Employment";
@@ -68,7 +69,10 @@ function App() {
 				<Route path="/employer-otp" element={<CompanyOtp />}></Route>
 				
 				<Route path="/employer-login" element={<CompanyLoginForm />}></Route>
+				{/* <AuthProvider> */}
+
 				<Route path="/company-home" element={<CompanyHome />}/>
+				{/* </AuthProvider> */}
 
 				
 				<Route path="/recruter" element={<Recruters />}></Route>
