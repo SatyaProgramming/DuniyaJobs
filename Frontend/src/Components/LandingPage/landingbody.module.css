@@ -192,6 +192,41 @@ option>span{
 .stateSuggestionList li:hover{
     background-color: rgb(225, 225, 225);
 }
+.slidingContiner{
+    box-shadow: 12px 0 15px -4px rgba(31, 73, 125, 0.8), -12px 0 8px -4px rgba(31, 73, 125, 0.8);
+    width:85%;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+}
+.slideLink:hover{
+    text-decoration: underline;
+}
+.sldingLinksContainer{
+    list-style-type: none;
+    display: flex;
+    transition: 0.5s ease;
+    animation: scroll 40s infinite linear;
+}
+.slidingContiner:hover .sldingLinksContainer{
+    animation-play-state: paused;
+}
+@keyframes scroll{
+    from{
+        transform: translateX(0%);
+    }
+    to{
+        transform: translateX(-100%);
+    }
+}
+.slideLink{
+    float: left;
+    white-space: nowrap;
+    padding: 0px 5px;
+    border-right:solid 1px black;
+    transition: ease 0.2s all;
+    text-shadow: 2px 2px 4px #CCC;
+}
 @media all and (min-width:401px) and (max-width:990px){
 
     .lastsubdiv{
