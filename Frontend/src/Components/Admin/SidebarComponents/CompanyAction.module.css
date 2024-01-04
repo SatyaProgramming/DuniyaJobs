@@ -1,0 +1,54 @@
+/* CompanyAction.css */
+*{
+    padding: 0px;
+    margin: 0px;
+}
+.companyAction {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 2px;
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #f2f2f2;
+  }
+  
+  .table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .activateBtn, .deactivateBtn {
+    padding: 3px 6px;
+    cursor: pointer;
+  }
+  
+  .activateBtn {
+    background-color: #5cb85c;
+    color: #fff;
+    border-radius: 5%;
+  }
+  
+  .deactivateBtn {
+    background-color: #d9534f;
+    color: #fff;
+    border-radius: 5%;
+  }
+  
+  .activateBtn:hover, .deactivateBtn:hover {
+    background-color: #4cae4c;
+  }
+  
+  .deactivateBtn:hover {
+    background-color: #c9302c;
+  }
+  

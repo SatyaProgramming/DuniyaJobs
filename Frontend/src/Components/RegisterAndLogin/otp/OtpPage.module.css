@@ -1,15 +1,58 @@
-.otpPanes {
-	display: flex;
-	gap: 100px;
-	margin: 10%;
-	margin-bottom: 10px;
-}
+/* OtpPage.css */
 
-.otpRightPane {
-	text-align: left;
-    width: 80%;
-}
-
-.otpRightPaneDiv{
-    margin-bottom: 200px;
-}
+.otp-container {
+	max-width: 400px;
+	margin: 0 auto;
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+	border-radius: 8px;
+  }
+  
+  h2 {
+	text-align: center;
+	color: #333;
+  }
+  
+  .form-control {
+	margin-bottom: 20px;
+  }
+  
+  label {
+	display: block;
+	margin-bottom: 8px;
+	font-weight: bold;
+  }
+  
+  input {
+	width: 100%;
+	padding: 8px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+  }
+  
+  .submit-button {
+	width: 100%;
+	padding: 10px;
+	background-color: #4caf50;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+  }
+  
+  .submit-button:disabled {
+	background-color: #a0a0a0;
+	cursor: not-allowed;
+  }
+  
+  p {
+	color: #333;
+	text-align: center;
+	margin-top: 10px;
+	font-size: 14px;
+  }
+  

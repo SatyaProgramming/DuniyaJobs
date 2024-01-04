@@ -1,0 +1,27 @@
+/* Dashboard.module.css */
+.dashboard {
+    padding: 10px;
+  }  
+  .dataContainer {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .dataItem {
+    background-color: #3498db;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    flex: 1;
+  }
+  
+  .label {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .value {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
