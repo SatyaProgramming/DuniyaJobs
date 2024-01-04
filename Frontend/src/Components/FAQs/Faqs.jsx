@@ -7,6 +7,7 @@ import FaqData from '../Assets/FAQQuesAndAns.json'
 const Faqs = () => {
     const faqData = FaqData;
     const [openQuestion, setOpenQuestion] = useState(null);
+    console.log("test");
 
     useEffect(() => {
         const handleClickOutside = () => {
