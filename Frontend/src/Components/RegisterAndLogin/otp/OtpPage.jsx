@@ -1,113 +1,87 @@
+// OtpPage.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { VStack, Input, Button, FormControl, FormLabel, Heading, Text } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';  // Change this line
+import { API_ENDPOINTS } from './../../../config/userConfig';
+import style from "./OtpPage.module.css";
 
 const OtpPage = () => {
-  const [email, setEmail] = useState('');
   const [otp, setOTP] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [verificationResult, setVerificationResult] = useState('');
   const [showPasswordFields, setShowPasswordFields] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate();  // Change this line
   const [loading, setLoading] = useState(false);
 
   const queryString = window.location.search;
-const searchParams = new URLSearchParams(queryString);
-const emailValue = searchParams.get('email');
+  const searchParams = new URLSearchParams(queryString);
+  const emailValue = searchParams.get('email');
 
-  const handleVerifyOTP = async () => {
+  const handleApiResponse = async (apiEndpoint, params) => {
     try {
       setLoading(true);
-      const response = await axios.post('http://localhost:8081/verify-otp', null, {
-        params: { email: emailValue, otp },
-      });
+      const { status, data } = await axios.post(apiEndpoint, null, { params });
 
-      if (response.status === 200) {
-        setVerificationResult(response.data);
-
-        // If OTP verification is successful, show password fields
-        setShowPasswordFields(true);
+      if (status === 200) {
+        setVerificationResult(data);
+        if (apiEndpoint === API_ENDPOINTS.VERIFY_OTP) {
+          setShowPasswordFields(true);
+        } else if (apiEndpoint === API_ENDPOINTS.SET_PASSWORD) {
+          navigate('/login');  // Change this line
+        }
       } else {
-        setVerificationResult(`Error: ${response.data}`);
+        setVerificationResult(`Error: ${data}`);
       }
     } catch (error) {
-      console.error('Error during OTP verification:', error);
-      setVerificationResult('An error occurred during OTP verification.');
+      console.error(`Error during API call to ${apiEndpoint}:`, error);
+      setVerificationResult(
+        `An error occurred during ${
+          apiEndpoint === API_ENDPOINTS.VERIFY_OTP ? 'OTP verification' : 'password setting'
+        }. Please try again.`
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  const handlePasswordSubmit = async () => {
-    // Check if password and confirmPassword match
-    if (password !== confirmPassword) {
-      setVerificationResult('Password and Confirm Password do not match.');
-      return;
-    }
-  
-    try {
-      setLoading(true);
-      // Send the password to another endpoint if password and confirmPassword match
-      const response = await axios.post('http://localhost:8081/set-password', null, {
-        params: { email: emailValue, password },
-      });
-  
-      if (response.status === 200) {
-        setVerificationResult('Password set successfully.');
-  
-        // Navigate to the login page upon successful password submission
-        navigate('/login');
-      } else {
-        setVerificationResult(`Error setting password: ${response.data}`);
-      }
-    } catch (error) {
-      console.error('Error setting password:', error);
-      setVerificationResult('An error occurred while setting the password.');
-    } finally {
-      setLoading(false);
-    }
-  };
-  
   return (
-    <VStack align="center" m={5} spacing={4}>
-      <Heading>OTP Verification</Heading>
+    <div className={style['otp-container']}>
+      <h2>OTP Verification</h2>
 
-      
-      <FormControl>
-        <FormLabel>OTP</FormLabel>
-        <Input type="text" value={otp} onChange={(e) => setOTP(e.target.value)} />
-      </FormControl>
+      <div className={style['form-control']}>
+        <label>OTP</label>
+        <input type="text" value={otp} onChange={(e) => setOTP(e.target.value)} />
+      </div>
 
-      <Button colorScheme="teal" onClick={handleVerifyOTP} disabled={loading}>
+      <button className={style['submit-button']} onClick={async () => await handleApiResponse(API_ENDPOINTS.VERIFY_OTP, { email: emailValue, otp })} disabled={loading}>
         {loading ? 'Verifying...' : 'Verify OTP'}
-      </Button>
+      </button>
 
-      {verificationResult && <Text>{verificationResult}</Text>}
+      {verificationResult && <p>{verificationResult}</p>}
 
       {showPasswordFields && (
         <>
-          <FormControl>
-            <FormLabel>Password</FormLabel>
-            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </FormControl>
+          <div className={style['form-control']}>
+            <label>Password</label>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
 
-          <FormControl>
-            <FormLabel>Confirm Password</FormLabel>
-            <Input
+          <div className={style['form-control']}>
+            <label>Confirm Password</label>
+            <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
-          </FormControl>
+          </div>
 
-          <Button colorScheme="teal" onClick={handlePasswordSubmit} disabled={loading}>
-        {loading ? 'Setting Password...' : 'Set Password'}
-      </Button>
+          <button className={style['submit-button']} onClick={async () => await handleApiResponse(API_ENDPOINTS.SET_PASSWORD, { email: emailValue, password })} disabled={loading}>
+            {loading ? 'Setting Password...' : 'Set Password'}
+          </button>
         </>
       )}
-    </VStack>
+    </div>
   );
 };
 

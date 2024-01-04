@@ -31,6 +31,8 @@ import AvailableJobs from "./Components/LandingPage/AvailableJobs";
 
 import JobCatalog from "./Components/JobCatalog/JobCatalog";
 import AdminRoutes from "./Components/Admin/AdminRouts";
+import RequiredCompanyAuth from "./hoc/RequiredCompanyAuth";
+import RequiredAdminAuth from "./hoc/RequiredAdminAuth";
 
 
 
@@ -49,11 +51,6 @@ function App() {
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/register" element={<RegisterPage />} />
 				<Route path="/otp" element={<OtpPage />} />
-				{/* <Route path="/employement" element={<Employement />} /> */}
-				<Route path="/employement" element={<Employment/>}/>
-				<Route path="/profile-update" element={<UpdateProfile/>}/>
-				<Route path="/education" element={<Education />} />
-				{/* REGISTRATION AND LOGIN */}
 				<Route
 					path="/home"
 					element={
@@ -62,6 +59,11 @@ function App() {
 						</RequiredAuth>
 					}
 				/>
+				{/* <Route path="/employement" element={<Employement />} /> */}
+				<Route path="/employement" element={<Employment/>}/>
+				<Route path="/profile-update" element={<UpdateProfile/>}/>
+				<Route path="/education" element={<Education />} />
+				{/* REGISTRATION AND LOGIN */}
 				<Route path="/" element={<LandingNavbar />}></Route>
 				<Route path="/employer" element={<Empnav />}></Route>
 				
@@ -69,11 +71,15 @@ function App() {
 				<Route path="/employer-otp" element={<CompanyOtp />}></Route>
 				
 				<Route path="/employer-login" element={<CompanyLoginForm />}></Route>
-				{/* <AuthProvider> */}
-
-				<Route path="/company-home" element={<CompanyHome />}/>
-				{/* </AuthProvider> */}
-
+				
+				<Route
+          path="/company-home"
+          element={
+            <RequiredCompanyAuth>
+              <CompanyHome />
+            </RequiredCompanyAuth>
+          }
+        />
 				
 				<Route path="/recruter" element={<Recruters />}></Route>
 				<Route path="/topcompany" element={<Topcompany />}></Route>
@@ -89,7 +95,15 @@ function App() {
 					path="/applyjobsuccessfull"
 					element={<SuccessFullapply />}
 				></Route>
-				 <Route path="/admin/*" element={<AdminRoutes />} />
+				 {/* Protected route for authenticated admin */}
+				 <Route
+          path="/admin/*"
+          element={
+            <RequiredAdminAuth>
+              <AdminRoutes />
+            </RequiredAdminAuth>
+          }
+        />
 			</Routes>
 		</div>
 	);
