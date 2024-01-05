@@ -3,7 +3,6 @@ package com.job_finder.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.job_finder.entity.JobEntity;
 import com.job_finder.entity.UserDtls;
 import com.job_finder.helperClass.EducationData;
 import com.job_finder.helperClass.Employment;

@@ -93,12 +93,6 @@ public class UserController {
 
 		return new ResponseEntity<>(ur.findAll(), HttpStatus.OK);
 	}
-
-	@GetMapping("/users")
-	public List<UserDtls> getAllUsers() {
-		return userService.getAllUsers();
-	}
-
 	@GetMapping("/{userId}")
 	public ResponseEntity<UserDtls> getUserById(@PathVariable Long userId) {
 		Optional<UserDtls> user = userService.getUserDetailsById(userId);
@@ -126,29 +120,12 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
-//	@GetMapping("/education-all")
-//    public ResponseEntity<List<EducationData>> getAllEducationDetails() {
-//        List<EducationData> educationDetails = userService.getAllEducationDetails();
-//        return new ResponseEntity<>(educationDetails, HttpStatus.OK);
-//    }
-
-//    @GetMapping("/education/{id}")
-//    public ResponseEntity<EducationData> getEducationDetailsById(@PathVariable Long id) {
-//        EducationData educationDetails = userService.getEducationDetailsById(id);
-//        return new ResponseEntity<>(educationDetails, HttpStatus.OK);
-//    }
-
 	@PostMapping("/education-save")
 	public ResponseEntity<String> saveEducationDetails(@RequestBody EducationData educationDetails) {
 		userService.saveEducationDetails(educationDetails);
 		return new ResponseEntity<>("Education details saved successfully", HttpStatus.OK);
 	}
 
-//    @DeleteMapping("/education/delete/{id}")
-//    public ResponseEntity<String> deleteEducationDetails(@PathVariable Long id) {
-//    	userService.deleteEducationDetails(id);
-//        return new ResponseEntity<>("Education details deleted successfully", HttpStatus.OK);
-//    }
 	@GetMapping("profile-update/{profileId}")
 	public ResponseEntity<UpdateProfile> getProfileById(@PathVariable Long profileId) {
 		UpdateProfile profile = userService.getProfileById(profileId);

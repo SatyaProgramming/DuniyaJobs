@@ -20,7 +20,7 @@ public class JobApplication {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private UserDtls user;
+   
 
     @CreationTimestamp
     private LocalDate applicationDate;
