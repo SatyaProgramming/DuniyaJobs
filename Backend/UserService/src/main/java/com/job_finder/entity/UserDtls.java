@@ -1,5 +1,6 @@
 package com.job_finder.entity;
 
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,7 +29,6 @@ public class UserDtls {
     @Column(name = "Serial_No")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long srno;
-
     private String fullName;
     private String emailId;
     private String mobileNumber;
