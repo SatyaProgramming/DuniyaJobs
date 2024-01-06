@@ -1,6 +1,9 @@
 package com.job_finder.service.impl;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,11 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.job_finder.entity.UserDtls;
-import com.job_finder.helperClass.CompanyRegister;
 import com.job_finder.helperClass.EducationData;
 import com.job_finder.helperClass.Employment;
 import com.job_finder.helperClass.LoginForm;
@@ -31,9 +32,6 @@ import com.job_finder.utility.PasswordUtils;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
-
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private EmailUtils emailUtils;
@@ -96,41 +94,59 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Boolean addEmployee(RegistrationForm form) {
-		String tempPwd = PasswordUtils.generateRandomePWD();
-		UserDtls user = new UserDtls();
-		user.setFullName(form.getName());
-		user.setEmailId(form.getEmailId());
-		user.setMobileNumber(form.getMobileNumber());
-		user.setPassword(tempPwd);
-		user.setAccStatus("LOCKED");
+	    String tempPwd = PasswordUtils.generateRandomePWD();
+	    MessageDigest digest;
+	    try {
+	        digest = MessageDigest.getInstance("SHA-256");
+	        digest.reset();
+	        digest.update(tempPwd.getBytes());
+	        byte[] encryptedPwd = digest.digest();
+	        // Use Base64 encoding correctly
+	        String encodedPwd = Base64.getEncoder().encodeToString(encryptedPwd);
 
-//		user.setPassword(this.passwordEncoder.encode(form.getPassword()));
-		userRepository.save(user);
-		String to = form.getEmailId();
-		String subject = "Verification YOUR ACCOUNT";
-		StringBuffer body = new StringBuffer();
-		body.append("<h1>OTP for verify your account</h1><br>");
-		body.append("<h3>" + tempPwd + "</h3>");
-		emailUtils.sendMail(to, subject, body.toString());
+	        // Update the user's password with the hashed value
+	        UserDtls user = new UserDtls();
+	        user.setFullName(form.getName());
+	        user.setEmailId(form.getEmailId());
+	        user.setMobileNumber(form.getMobileNumber());
+	        user.setPassword(encodedPwd);  // Update the user's password with the hashed value
+	        user.setAccStatus("LOCKED");
 
-		return true;
-	}
+	        userRepository.save(user);
 
-	public Boolean addEmployer(CompanyRegister form) {
+	        String to = form.getEmailId();
+	        String subject = "Verification YOUR ACCOUNT";
+	        StringBuffer body = new StringBuffer();
+	        body.append("<h1>OTP for verify your account</h1><br>");
+	        body.append("<h3>" + tempPwd + "</h3>");
+	        emailUtils.sendMail(to, subject, body.toString());
 
-		return true;
+	        return true;
+	    } catch (NoSuchAlgorithmException e) {
+	        // Handle the exception appropriately (log, throw, etc.)
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 
 	@Override
 	public Boolean getOtp(String email, String otp) {
 	    UserDtls user = userRepository.findByEmailId(email);
-
 	    // Check if the user is found
 	    if (user != null) {
-	        // Check if the OTP matches the expected OTP (sent to the user)
-	        if (otp.equals(user.getPassword()) && !"".equals(otp)) {
-	            
+	    	String pwd=user.getPassword();
+	    	MessageDigest digest;
+		    try {
+		        digest = MessageDigest.getInstance("SHA-256");
+		        digest.reset();
+		        digest.update(otp.getBytes());
+		        byte[] encryptedPwd = digest.digest();
+		        // Use Base64 encoding correctly
+		        String encodedPwd = Base64.getEncoder().encodeToString(encryptedPwd);
 
+	        // Check if the OTP matches the expected OTP (sent to the user)
+	        if (encodedPwd.equals(pwd) && !"".equals(encodedPwd)) {
+	            
 	            // Update account status (if needed)
 	            user.setAccStatus("UNLOCKED");
 
@@ -139,6 +155,11 @@ public class UserServiceImpl implements UserService {
 
 	            return true;
 	        }
+		    } catch (NoSuchAlgorithmException e) {
+		        // Handle the exception appropriately (log, throw, etc.)
+		        e.printStackTrace();
+		        return false;
+		    }
 	    }
 
 	    // If any of the conditions fail, return false
@@ -148,41 +169,58 @@ public class UserServiceImpl implements UserService {
 	public String setPassword(String email, String password) {
         UserDtls user = userRepository.findByEmailId(email);
         if (user != null) {
-            user.setPassword(password);
+        	MessageDigest digest;
+		    try {
+		        digest = MessageDigest.getInstance("SHA-256");
+		        digest.reset();
+		        digest.update(password.getBytes());
+		        byte[] encryptedPwd = digest.digest();
+		        // Use Base64 encoding correctly
+		        String encodedPwd = Base64.getEncoder().encodeToString(encryptedPwd);
+
+            user.setPassword(encodedPwd);
             userRepository.save(user);
             return "Password set successfully";
-        } else {
+		    } catch (NoSuchAlgorithmException e) {
+		        // Handle the exception appropriately (log, throw, etc.)
+		        e.printStackTrace();
+		        return "check password";
+		    }
+		    } 
+		    else {
             return "User not found";
         }
     }
 
 	@Override
 	public LoginMessage loginEmployee(LoginForm loginForm) {
+	    UserDtls user = userRepository.findByEmailId(loginForm.getEmail());
 
-		UserDtls user = userRepository.findByEmailId(loginForm.getEmail());
-		if (user != null) {
-			String password = loginForm.getPassword();
-//			System.out.println(password);
-			String encodedPassword = user.getPassword();
-//			System.out.println(encodedPassword);
-			Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
-			if (isPwdRight) {
-				Optional<UserDtls> usr = userRepository.findOneByEmailIdAndPassword(loginForm.getEmail(),
-						encodedPassword);
-				System.out.println(usr);
-				if (usr.isPresent()) {
-					return new LoginMessage("Login Success", true, user.getSrno());
-				} else {
-					return new LoginMessage("Login Failed", false, user.getSrno());
-				}
-			} else {
+	    if (user != null) {
+	        String password = loginForm.getPassword();
 
-				return new LoginMessage("password Not Match", false, user.getSrno());
-			}
-		} else {
-			return new LoginMessage("Email not exits", false, null);
-		}
-
+	        try {
+	            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+	            digest.reset();
+	            digest.update(password.getBytes());
+	            byte[] encryptedPwd = digest.digest();
+	            // Use Base64 encoding correctly
+	            String encodedPwd = Base64.getEncoder().encodeToString(encryptedPwd);
+	            
+	            // Compare the hashed password with the stored hashed password
+	            if (user.getPassword().equals(encodedPwd)) {
+	                return new LoginMessage("Login Success", true, user.getSrno());
+	            } else {
+	                return new LoginMessage("Password does not match", false, user.getSrno());
+	            }
+	        } catch (NoSuchAlgorithmException e) {
+	            // Handle the exception appropriately (log, throw, etc.)
+	            e.printStackTrace();
+	            return new LoginMessage("Error during login", false, null);
+	        }
+	    } else {
+	        return new LoginMessage("Email does not exist", false, null);
+	    }
 	}
 
 	@Override
