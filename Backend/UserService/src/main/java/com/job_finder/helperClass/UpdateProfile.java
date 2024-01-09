@@ -21,4 +21,7 @@ public class UpdateProfile {
 	private String prevJob;
 	private String city;
 	private String annualSalary;
+	
+	
+	private String profileImage;
 }

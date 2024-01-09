@@ -1,6 +1,5 @@
 package com.job_finder.entity;
 
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,6 +28,7 @@ public class UserDtls {
     @Column(name = "Serial_No")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long srno;
+
     private String fullName;
     private String emailId;
     private String mobileNumber;
@@ -67,5 +67,8 @@ public class UserDtls {
     @UpdateTimestamp
     @Column(name = "updated_date", insertable = false)
     private LocalDateTime updatedDate;
+    
+//    working with profile image 
+    private String profileImage;
     
 }

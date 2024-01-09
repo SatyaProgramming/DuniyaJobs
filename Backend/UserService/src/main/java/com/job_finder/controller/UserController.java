@@ -159,4 +159,11 @@ public class UserController {
 	    ) {
 	        return userService.getUserProfileList(page, size);
 	    }
+	 
+	 
+	 @PostMapping("/upload-img/{profileId}")
+	    public ResponseEntity<String> handleFileUpload(@PathVariable Long profileId, @RequestParam("file") MultipartFile file) {
+	        userService.uploadImage(profileId, file);
+	        return ResponseEntity.ok("Image uploaded successfully!");
+	    }
 }
