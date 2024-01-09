@@ -3,6 +3,8 @@ package com.job_finder.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.job_finder.entity.UserDtls;
 import com.job_finder.helperClass.EducationData;
 import com.job_finder.helperClass.Employment;
@@ -51,4 +53,5 @@ public interface UserService {
 	List<UserProfileList> getUserProfileList(int page, int size);
 
 
+	void uploadImage(Long profileId, MultipartFile file);
 }

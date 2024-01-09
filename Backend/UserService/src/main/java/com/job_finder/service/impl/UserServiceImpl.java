@@ -1,5 +1,9 @@
 package com.job_finder.service.impl;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -13,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.job_finder.entity.UserDtls;
 import com.job_finder.helperClass.EducationData;
@@ -357,5 +362,43 @@ public class UserServiceImpl implements UserService {
 	}
 
 
+	 @Override
+	    public void uploadImage(Long profileId, MultipartFile file) {
+	        try {
+	            Optional<UserDtls> optionalUser = userRepository.findById(profileId);
+
+	            if (optionalUser.isPresent()) {
+	                UserDtls user = optionalUser.get();
+
+	                // Customize the logic to associate the image with the user profile
+	                // For example, you might store the image in a directory named after the profileId
+	                Path uploadPath = Paths.get("src/main/webapp/images", String.valueOf(profileId));
+	                Files.createDirectories(uploadPath);
+
+	                // Use a unique name for the file, e.g., user_id_timestamp.ext
+	                String fileName = "user_" + profileId + "_" + System.currentTimeMillis() + getFileExtension(file);
+	                Path filePath = uploadPath.resolve(fileName);
+	                Files.copy(file.getInputStream(), filePath);
+
+	                // Update the user with the new image name in the database
+	                user.setProfileImage(fileName);
+	                userRepository.save(user);
+
+	                // Additional logic to associate the image with the user profile in the database
+	                // userService.associateImageWithUserProfile(profileId, fileName);
+	            } else {
+	                // Handle case where the user with the specified ID is not found
+	                // You might throw an exception or handle it according to your application's needs
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            // Handle exception appropriately
+	        }
+	    }
+
+	    private String getFileExtension(MultipartFile file) {
+	        String originalFileName = file.getOriginalFilename();
+	        return originalFileName.substring(originalFileName.lastIndexOf("."));
+	    }
 
 }
