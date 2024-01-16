@@ -47,29 +47,30 @@ const OtpPage = () => {
 
   return (
     <div className={style['otp-container']}>
-      <h2>OTP Verification</h2>
+      <h2 className={style.h2}>OTP Verification</h2>
 
       <div className={style['form-control']}>
-        <label>OTP</label>
-        <input type="text" value={otp} onChange={(e) => setOTP(e.target.value)} />
+        <label className={style.label}>OTP</label>
+        <input className={style.InputBx} type="text" value={otp} onChange={(e) => setOTP(e.target.value)} />
       </div>
 
       <button className={style['submit-button']} onClick={async () => await handleApiResponse(API_ENDPOINTS.VERIFY_OTP, { email: emailValue, otp })} disabled={loading}>
         {loading ? 'Verifying...' : 'Verify OTP'}
       </button>
 
-      {verificationResult && <p>{verificationResult}</p>}
+      {verificationResult && <p className={style.para}>{verificationResult}</p>}
 
       {showPasswordFields && (
         <>
           <div className={style['form-control']}>
-            <label>Password</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <label className={style.label}>Password</label>
+            <input className={style.InputBx} type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
 
           <div className={style['form-control']}>
             <label>Confirm Password</label>
             <input
+            className={style.InputBx}
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}

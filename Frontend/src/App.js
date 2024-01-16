@@ -75,9 +75,9 @@ function App() {
 				<Route
           path="/company-home"
           element={
-            <RequiredCompanyAuth>
+            // <RequiredCompanyAuth>
               <CompanyHome />
-            </RequiredCompanyAuth>
+            // </RequiredCompanyAuth>
           }
         />
 				

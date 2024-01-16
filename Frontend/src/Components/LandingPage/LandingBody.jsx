@@ -313,7 +313,7 @@ const LandingBody = ({ changealltohide }) => {
             Search
           </button>
         </div>
-        <div className={style.slidingContiner}>
+        {/* <div className={style.slidingContiner}>
           <ul className={style.sldingLinksContainer}>
             <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Fresher</a></li>
             <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Fullstack</a></li>
@@ -352,7 +352,7 @@ const LandingBody = ({ changealltohide }) => {
             <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Doctors</a></li>
             <li className={style.slideLink}><a href="#" className="qucikLink">Jobs for Free lancers</a></li>
           </ul>
-        </div>
+        </div> */}
       </div>
 
       {/* <div className={style.lb2}>

@@ -1,27 +1,27 @@
 /* Navbar.module.css */
-nav {
+.nav {
     background-color: #333;
     padding: 10px;
   }
   
-  ul {
+  .nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     display: flex;
   }
   
-  li {
+  .nav ul li {
     margin-right: 20px;
   }
   
-  a {
+  .nav ul li a {
     text-decoration: none;
     color: white;
     font-weight: bold;
   }
   
-  a:hover {
+  .nav ul li a:hover {
     color: #66c2ff;
   }
   

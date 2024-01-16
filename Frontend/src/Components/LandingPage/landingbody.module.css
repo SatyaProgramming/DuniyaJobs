@@ -49,11 +49,15 @@
     width:100%;
     padding: 10px 2px;
     outline: none;
+    border:none !important;
+    box-shadow: none !important;
 }
 .lbinp2{
     width:17.5%;
     padding: 10px 2px;
     outline: none;
+    border:none;
+    box-shadow: none !important;
 }
 .lbbtn1{
     background-color: rgb(69,126,255);
@@ -192,7 +196,7 @@ option>span{
 .stateSuggestionList li:hover{
     background-color: rgb(225, 225, 225);
 }
-.slidingContiner{
+/* .slidingContiner{
     box-shadow: 12px 0 15px -4px rgba(31, 73, 125, 0.8), -12px 0 8px -4px rgba(31, 73, 125, 0.8);
     width:85%;
     margin: 0 auto;
@@ -210,7 +214,7 @@ option>span{
 }
 .slidingContiner:hover .sldingLinksContainer{
     animation-play-state: paused;
-}
+} */
 @keyframes scroll{
     from{
         transform: translateX(0%);

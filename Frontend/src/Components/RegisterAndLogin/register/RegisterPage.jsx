@@ -99,8 +99,8 @@ const RegisterPage = () => {
         <div className={style['form-container']}>
           {['name', 'emailId', 'mobileNumber'].map((field) => (
             <div key={field} className={style['form-control']}>
-              <label>{field === 'emailId' ? 'Email' : field}</label>
-              <input type={field === 'emailId' ? 'email' : 'text'} name={field} value={state[field]} onChange={handleChange} />
+              <label className={style.label}>{field === 'emailId' ? 'Email' : field}</label>
+              <input className={style.InputBx} type={field === 'emailId' ? 'email' : 'text'} name={field} value={state[field]} onChange={handleChange} />
               <span className={style['error-message']}>{state.errors[field]}</span>
             </div>
           ))}
