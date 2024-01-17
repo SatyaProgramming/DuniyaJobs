@@ -11,7 +11,7 @@ const LoginNav = () => {
 				<span style={{ color: "blue", cursor: "pointer" }} onClick={() => navigate("/")}>MeriJob</span>
 
 				</Box>
-				<HStack gap="10" px="20">
+				<HStack gap="10">
 					<Text cursor="pointer" _hover={{ p:"3",bg:"gray.200",color:"blue" }} fontSize="sm">JOBS</Text>
 					<Text cursor="pointer" _hover={{ p:"3",bg:"gray.200",color:"blue" }} fontSize="sm">RECRUITERS</Text>
 					<Text cursor="pointer" _hover={{ p:"3",bg:"gray.200",color:"blue" }} fontSize="sm">COMPANIES</Text>

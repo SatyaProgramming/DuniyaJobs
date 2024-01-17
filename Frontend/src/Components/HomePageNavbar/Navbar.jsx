@@ -188,6 +188,7 @@ export default function WithSubnavigation() {
             Logo
           </Text> */}
 					<Text
+					cursor='pointer'
 						onClick={() => navigate("/home")}
 					>MeriJob</Text>
 

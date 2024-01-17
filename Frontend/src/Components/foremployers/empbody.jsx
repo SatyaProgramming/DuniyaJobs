@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import style from "./empbody.module.css";
 import CompanyRegisterForm from "./CompanyRegisterForm";
+import EarthLogo from "../Assets/EarthLogo.gif"
+import Meeting from "../Assets/meeting.svg"
+import PeopleSearch from "../Assets/peopleSearch.svg"
 
 const Empbody = ({ hideall }) => {
   const [issales, setissales] = useState(true);
@@ -15,32 +18,27 @@ const Empbody = ({ hideall }) => {
   };
   return (
     <div className={style.empbody} onMouseEnter={hideall}>
-      <div className={style.subbody1}>
+      {/* <div className={style.subbody1}>
         <div>
-
-          {/* here is the login and register form */}
-          {/* <CompanyRegisterForm/> */}
-
-
-
+          here is the login and register form
+          <CompanyRegisterForm />
         </div>
-      </div>
+      </div> */}
 
       <div className={style.subbody2}>
         <div>
           <div className={style.sb2}>
-            <p className={style.blue}>PRODUCTS & SERVICES</p>
-            <p className={style.large}>MeriJob is India’s No.1 Job Posting</p>
-            <p className={style.large}>& Recruitment Platform</p>
+            <h1 className={style.landingLogo}><span className={style.dLogo}>D</span>uniya J<span className={style.oLogo}><img src={EarthLogo} alt="" className={style.earthLogo} /></span>bs</h1>
+            <h2 className={style.landingTagLine}>Best Platform to Find Quality Job Seekers</h2>
           </div>
         </div>
         <div className={style.sb2mainflex}>
           <div className={style.sb2submain1}>
             <div>
-              <p className={style.jobposting}>
-                MeriJob Job Posting Services - Get Quality Applies
-              </p>
-              <p>
+              <h3 className={style.jobposting}>
+                DuniyaJob's Job Posting Services - Get Quality Jobseekers
+              </h3>
+              <p className={style.TagLines}>
                 Reach out to millions of jobseekers and hire quickly with our fast
                 and easy job posting services.
               </p>
@@ -51,11 +49,11 @@ const Empbody = ({ hideall }) => {
                 </div>
                 <div className={style.sb2flex}>
                   <i className="fa-solid fa-address-book"></i>
-                  <p>Unlimited Applies</p>
+                  <p>Unlimited number of Applies</p>
                 </div>
                 <div className={style.sb2flex}>
                   <i className="fa-solid fa-user-group"></i>
-                  <p>Attract Audience</p>
+                  <p>Attract Jobseekers</p>
                 </div>
                 <div className={style.sb2flex}>
                   <i className="fa-solid fa-calendar"></i>
@@ -64,26 +62,25 @@ const Empbody = ({ hideall }) => {
               </div>
               <button className={style.body1btn}>Know More</button>
             </div>
-            <img src="https://www.goteso.com/assets/images/training/banner/best-online-it-training.png" alt="" />
+            <img src={Meeting} alt="Image" />
           </div>
           <div className={style.sb2submain1}>
-            <img src="https://flow-online.co.uk/wp-content/uploads/2021/08/creating-online-courses.png" alt=""/>
+            <img src={PeopleSearch} alt="Image" />
             <div>
-              <p className={style.jobposting}>
-                Search Best Talent with MeriJob’s Resume Database Access - Resdex
-              </p>
-              <p>
-                Source candidates from Resdex − India’s largest Talent Pool and
-                find the perfect talent for your organisation.
+              <h3 className={style.jobposting}>
+                Search Best Talent with DuniyaJob’s Resume Database
+              </h3>
+              <p className={style.TagLines}>
+                Large Talent Pool of DuniyaJobs holds Profiles of the Perfect Candidates for your Organisation
               </p>
               <div className={style.sb2grid}>
                 <div className={style.sb2flex}>
                   <i className="fa-solid fa-id-badge"></i>
-                  <p>Over 8.27 crore Jobseekers</p>
+                  <p>Quality Profiles</p>
                 </div>
                 <div className={style.sb2flex}>
                   <i className="fa-solid fa-magnifying-glass-location"></i>
-                  <p>Smart Talent Search</p>
+                  <p>Smart Filters</p>
                 </div>
                 <div className={style.sb2flex}>
                   <i className="fa-solid fa-phone"></i>

@@ -6,19 +6,20 @@ import style from "./empnav.module.css"
 import Empnumber from "./Empnumber";
 import Empproduct from "./Empproduct";
 import { Text } from "@chakra-ui/react";
+import EarthLogo from "../Assets/EarthLogo.gif"
 
 const Empnav = () => {
     const [isproduct, setisproduct] = useState(false)
     const [isnumber, setisnumber] = useState(false)
     let navigate = useNavigate()
-    let showprod = () => {
-        setisproduct(true)
-        setisnumber(false)
-    }
-    let shownumber = () => {
-        setisnumber(true)
-        setisproduct(false)
-    }
+    // let showprod = () => {
+    //     setisproduct(true)
+    //     setisnumber(false)
+    // }
+    // let shownumber = () => {
+    //     setisnumber(true)
+    //     setisproduct(false)
+    // }
     let hideall = () => {
         setisnumber(false)
         setisproduct(false)
@@ -40,21 +41,21 @@ const Empnav = () => {
 
             <div className={style.empnav}>
                 <div className={style.subempnav1}>
-                    <Text onClick={navigatetohome}
-                    >Duniya Job</Text>
-                    <p onMouseEnter={hideall}>Home</p>
+                    <Text className={style.logoText} onClick={navigatetohome}
+                    ><h1 className={style.landingLogo}><span className={style.dLogo}>D</span>uniya J<span className={style.oLogo}><img src={EarthLogo} alt="" className={style.earthLogo} /></span>bs</h1></Text>
+                    {/* <p onMouseEnter={hideall}>Home</p>
                     <div className={style.subnav1} onMouseEnter={showprod}>
                         <p>Products</p>
                         <i class="fa-solid fa-angle-down"></i>
-                    </div>
+                    </div> */}
                 </div>
                 <div className={style.mediahide}>
-                    <div>
+                    {/* <div>
                         <p className={style.makesmall}>India Sales Toll Free (9:30 AM to 6:30PM)</p>
-                    </div>
+                    </div> */}
                     <div className={style.subempnav1}>
 
-                        <div>
+                        {/* <div>
 
                             <div className={style.subnav1} onMouseEnter={shownumber}>
                                 <i class="fa-solid fa-phone"></i>
@@ -67,7 +68,7 @@ const Empnav = () => {
                             <p>Cart</p>
                             <i class="fa-solid fa-angle-down"></i>
 
-                        </div>
+                        </div> */}
                         <div className={style.subnav3}>
                             <p onClick={navigateToLogin}>Login</p>
                             <i className="fa-solid fa-share-from-square"></i>
@@ -76,9 +77,9 @@ const Empnav = () => {
                     </div>
                 </div>
             </div>
-            <Empproduct isproduct={isproduct} hideall={hideall} />
+            {/* <Empproduct isproduct={isproduct} hideall={hideall} /> */}
 
-            <Empnumber isnumber={isnumber} hideall={hideall} />
+            {/* <Empnumber isnumber={isnumber} hideall={hideall} /> */}
             <Empbody hideall={hideall} />
             <Footer />
 

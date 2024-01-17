@@ -2,9 +2,9 @@ import {
   Avatar,
   Box,
   Button,
-  
+
   Flex,
-  
+
   Link,
   Stack,
   Text,
@@ -20,6 +20,7 @@ import WithSubnavigation from "../HomePageNavbar/Navbar";
 import Footer from "../HomePageFooter/Footer";
 import { useNavigate } from "react-router-dom";
 import MeriJobPulse from "./MeriJobPulse";
+import LandingBody from "../LandingPage/LandingBody";
 
 const Body = () => {
   const ref = useRef();
@@ -31,13 +32,11 @@ const Body = () => {
 
   return (
     <div>
-      <WithSubnavigation/>
+      <WithSubnavigation />
       <div className={styles.mainbody}>
-        <div className={styles.Topimg}></div>
         <div className={styles.boxes}>
-          <p className={styles.searchjob}>Search Jobs</p>
           <div className={styles.contentBoxes}>
-            {/* First Box of the body start from herer */}
+            {/* First Box of the body start from here */}
 
             <div className={styles.box1}>
               {/* Search Box */}
@@ -47,12 +46,12 @@ const Body = () => {
                     type="text"
                     placeholder="Search job by Skills,Designation,Companies"
                   />
-                  <button>SEARCH</button>
+                  <button>SEARCH JOBS</button>
                 </div>
                 {/* Components */}
               </div>
               <MeriJobPulse />
-             
+
               <Jobs />
               <Flex
                 w={"100%"}
@@ -60,8 +59,9 @@ const Body = () => {
                 mt={"6"}
                 justifyContent="space-between"
               >
-           
+
               </Flex>
+
 
             </div>
 
@@ -75,7 +75,7 @@ const Body = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

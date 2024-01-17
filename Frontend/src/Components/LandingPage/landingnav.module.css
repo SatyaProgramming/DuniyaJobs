@@ -9,24 +9,31 @@
 }
 .lphover{
     font-weight: bold;
-    color: whitesmoke;
+    color:#457eff; 
 }
 .lnavbar{
     display: flex;
-    
+    height:70px;
     justify-content: space-between;
     padding: 10px 70px;
     width: 100%;
     align-items: center;
     position: fixed;
-    
+    top:0;
     z-index: 999;
-    background: rgb(2,0,36);
-    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
-    
+    background-color: white;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    
-    
+}
+.earthLogo{
+    display: inline;
+    width:13px;
+}
+.landingLogo {
+    font-size: 22px;
+    font-weight: 900;
+    opacity: 1;
+    color: #2870C1;
+    width:150px;
 }
 .lnav1>img{
     height: 30px;
@@ -35,11 +42,23 @@
 .lnav1>img:hover{
     cursor: pointer;
 }
-.loginbutton{
+.LPBannerBtns{
+    background:linear-gradient(to bottom, rgb(69,126,255),  rgb(99, 143, 246));
+    color:white;
+    padding: 5px 10px;
+    outline:none;
+    border:none;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    width:100px;
+}
+/* .loginbutton{
     border-radius: 20px;
     border: 2px solid skyblue;
     padding: 5px 20px;
-    color: white;
+    color: black;
     font-weight: bold;
 }
 .loginbutton:hover{
@@ -49,7 +68,7 @@
 }
 .registerbutton{
     border-radius: 20px;
-    /* border: 2px solid blue; */
+    border: 2px solid blue;
     padding: 5px 20px;
     color: black;
     font-weight: bold;
@@ -61,7 +80,7 @@
     background-color: rgba(135, 207, 235, 0);
     color: white;
     
-}
+} */
 .btncarrier{
     display: flex;
     gap: 10px;
@@ -180,8 +199,6 @@
     padding-left:10px;
 }
 .lphover:hover{
-    border-bottom: 3px solid orangered;
-    color: black;
     cursor: pointer;
 }
 .lphover{

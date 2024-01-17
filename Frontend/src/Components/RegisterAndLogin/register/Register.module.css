@@ -1,8 +1,6 @@
 /* Register.module.css */
 
 .register-container {
-	max-width: 400px;
-	margin: auto;
 	padding: 20px;
   }
   
@@ -26,15 +24,16 @@
   
   .form-control {
 	margin-bottom: 15px;
+	text-align: left;
   }
   
-  label {
+  .label {
 	font-weight: bold;
 	margin-bottom: 5px;
 	display: block;
   }
   
-  input {
+  .InputBx {
 	padding: 8px;
 	width: 100%;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add shadow to the input fields */
