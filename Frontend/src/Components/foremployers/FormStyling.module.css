@@ -1,0 +1,28 @@
+/*Login Form Styling*/
+.LoginContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url("../Assets/map.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #f2f2f26d;
+    padding-top: 6%;
+}
+.earthLogo{
+    display: inline;
+    width:6.5%;
+}
+.landingLogo {
+    font-size: 75px;
+    font-weight: 900;
+    opacity: 1;
+    color: #2870C1;
+}
+.LoginBtn:hover{
+    background-color: #1966be !important;
+
+}

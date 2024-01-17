@@ -1,8 +1,6 @@
 /* Register.module.css */
 
 .register-container {
-	max-width: 400px;
-	margin: auto;
 	padding: 20px;
   }
   
@@ -26,6 +24,7 @@
   
   .form-control {
 	margin-bottom: 15px;
+	text-align: left;
   }
   
   .label {

@@ -6,6 +6,7 @@ import style from "./empnav.module.css"
 import Empnumber from "./Empnumber";
 import Empproduct from "./Empproduct";
 import { Text } from "@chakra-ui/react";
+import EarthLogo from "../Assets/EarthLogo.gif"
 
 const Empnav = () => {
     const [isproduct, setisproduct] = useState(false)
@@ -41,7 +42,7 @@ const Empnav = () => {
             <div className={style.empnav}>
                 <div className={style.subempnav1}>
                     <Text className={style.logoText} onClick={navigatetohome}
-                    >Duniya Job</Text>
+                    ><h1 className={style.landingLogo}><span className={style.dLogo}>D</span>uniya J<span className={style.oLogo}><img src={EarthLogo} alt="" className={style.earthLogo} /></span>bs</h1></Text>
                     {/* <p onMouseEnter={hideall}>Home</p>
                     <div className={style.subnav1} onMouseEnter={showprod}>
                         <p>Products</p>

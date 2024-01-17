@@ -71,7 +71,7 @@ const Empbody = ({ hideall }) => {
                 Search Best Talent with DuniyaJob’s Resume Database
               </h3>
               <p className={style.TagLines}>
-                Large Talent Pool of DuniyaJobs holds the Perfect Candidates for your Organisation
+                Large Talent Pool of DuniyaJobs holds Profiles of the Perfect Candidates for your Organisation
               </p>
               <div className={style.sb2grid}>
                 <div className={style.sb2flex}>

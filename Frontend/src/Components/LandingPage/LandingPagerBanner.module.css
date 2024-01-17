@@ -1,12 +1,14 @@
 .LPBanner{
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    background: url('../Assets/LPBanner1.png');
+    background: url('../Assets/map.svg');
     justify-content: center;
     background-repeat: no-repeat;
     background-size:cover;
-    background-position: top;
+    background-position: center;
+    row-gap: 10px;
 }
 .navBtnsDiv{
     width:30%;

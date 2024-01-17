@@ -20,6 +20,17 @@
 .subnav1:hover{
     cursor: pointer;
 }
+.earthLogo{
+    display: inline;
+    width:13px;
+}
+.landingLogo {
+    font-size: 22px;
+    font-weight: 900;
+    opacity: 1;
+    color: #2870C1;
+    width:150px;
+}
 .subnav2{
     display: flex;
     align-items: center;
@@ -33,7 +44,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 15%;
+    padding: 10px 70px;
     height: 70px;
     width: 100%;
     position: fixed;

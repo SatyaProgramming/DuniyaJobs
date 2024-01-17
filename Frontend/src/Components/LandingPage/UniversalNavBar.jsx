@@ -1,17 +1,10 @@
-import { useNavigate } from "react-router-dom"
-import React, { useState } from 'react'
-import Company from './Company'
-
-
-import Employer from './Employer'
-import Job from './Job'
-import LandingBody from './LandingBody'
-import style from "./landingnav.module.css"
-import Resources from './Resources'
-import Services from './Services'
-import Footer from "../HomePageFooter/Footer"
+import React from 'react'
 import EarthLogo from "../Assets/EarthLogo.gif"
-const LandingNavbar = () => {
+import style from "./landingnav.module.css"
+import { useNavigate } from "react-router-dom"
+import { useState } from 'react'
+
+const UniversalNavBar = () => {
     const [isjob, setisjob] = useState(false)
     const [iscompany, setiscompany] = useState(false)
     const [isservices, setisservices] = useState(false)
@@ -27,29 +20,6 @@ const LandingNavbar = () => {
         setisresources(false)
         setisemployer(false)
     }
-
-    // let changejobtodisplay = () => {
-    //     setisjob(true)
-    //     setiscompany(false)
-    //     setisservices(false)
-    //     setisresources(false)
-    // }
-
-    // let changecompanytodisplay = () => {
-    //     setiscompany(true)
-    //     setisservices(false)
-    //     setisresources(false)
-    //     setisjob(false)
-    // }
-
-
-    // let changeservicestodisplay = () => {
-    //     setisservices(true)
-    //     setiscompany(false)
-    //     setisresources(false)
-    //     setisjob(false)
-    // }
-
 
     let changeemployertodisplay = () => {
         setisresources(false)
@@ -76,23 +46,12 @@ const LandingNavbar = () => {
         event.preventDefault();
         navigate("/login")
     }
-
     return (
         <div>
-
             <div>
-
-
                 <div className={style.lnavbar}>
-
                     <div className={style.lnav1}>
                         <span className={`${style.logo} ${style.lphover}`} onMouseEnter={changealltohide} onClick={navigatetohome}><h1 className={style.landingLogo}><span className={style.dLogo}>D</span>uniya J<span className={style.oLogo}><img src={EarthLogo} alt="" className={style.earthLogo} /></span>bs</h1></span>
-                        {/* <div className={style.sublnav1}>
-                            <p onMouseEnter={changejobtodisplay} className={style.lphover}>Jobs</p>
-                            <p onMouseEnter={changecompanytodisplay} className={style.lphover}>Companies</p>
-                            <p onMouseEnter={changeservicestodisplay} className={style.lphover}>Services</p>
-                            
-                        </div> */}
                     </div>
                     <div className={style.sublnav2} onMouseEnter={changealltohide}>
                         <div className={style.btncarrier} onMouseEnter={changealltohide}>
@@ -105,20 +64,10 @@ const LandingNavbar = () => {
                             <i class="fa-solid fa-angle-down"></i>
                         </div>
                     </div>
-
                 </div>
-
-                {/* <Job isjob={isjob} changealltohide={changealltohide}/>
-        <Company iscompany={iscompany}  changealltohide={changealltohide}/>
-        <Services isservices={isservices}  changealltohide={changealltohide}/> */}
-                {/* <Resources isresources={isresources} changealltohide={changealltohide} />
-                <Employer isemployer={isemployer} changealltohide={changealltohide} /> */}
-                <LandingBody changealltohide={changealltohide} />
-
             </div>
-            <Footer />
         </div>
     )
 }
 
-export default LandingNavbar
+export default UniversalNavBar
