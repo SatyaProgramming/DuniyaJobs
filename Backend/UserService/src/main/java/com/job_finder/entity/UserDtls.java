@@ -15,9 +15,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+@Builder
 @Entity
 @Data
 @AllArgsConstructor
@@ -69,6 +70,11 @@ public class UserDtls {
     private LocalDateTime updatedDate;
     
 //    working with profile image 
-    private String profileImage;
+    private String imgName;
+    private String imgType;
+    private String imgPath;
+    @Lob
+    @Column(name="profile_img",length=1000)
+    private byte[] profileImage;
     
 }

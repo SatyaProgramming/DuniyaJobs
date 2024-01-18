@@ -20,6 +20,9 @@ public interface UserRepository extends JpaRepository<UserDtls, Long>{
 	UserDtls findBySrno(long srno);
 
 
+	Optional<UserDtls> findByImgName(String fileName);
+
+
 	
 
 }

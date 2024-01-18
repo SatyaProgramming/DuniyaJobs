@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Text, FormControl, RadioGroup, HStack, Radio, Container, FormLabel, Input } from '@chakra-ui/react';
-
+import { Button, Text, FormControl, RadioGroup, HStack, Radio, Container, FormLabel, Input, Box, IconButton, Center } from '@chakra-ui/react';
+import { FaEdit } from 'react-icons/fa';
+import style from "./UpdateProfile.module.css"
 const UpdateProfile = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingImage, setIsEditingImage] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageData, setImageData] = useState('');
   const [profile, setProfile] = useState({
     uid: 0,
     fullName: '',
@@ -23,8 +28,10 @@ const UpdateProfile = () => {
       const srno = sessionStorage.getItem('srno');
       if (srno) {
         const response = await axios.get(`http://localhost:8081/profile-update/${srno}`);
+        const ImageResponse = await axios.get(`http://localhost:8081/image/${srno}`);
         if (response.status === 200) {
           setProfile(response.data);
+          setImageData(ImageResponse.config.url);
         } else {
           console.error('Failed to fetch profile data.');
         }
@@ -54,30 +61,56 @@ const UpdateProfile = () => {
     }
   };
 
+
+  const uploadImage = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('file', selectedImage);
+
+      const response = await axios.post(`http://localhost:8081/upload-image/${profile.uid}`, formData);
+
+      if (response.status === 200) {
+        console.log('Image uploaded successfully:', response.data);
+      } else {
+        console.error('Failed to upload image.');
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
+
+
   // useEffect to fetch the data when the component mounts
   useEffect(() => {
     fetchProfileData();
-  }, []);
+  }, [imageData]);
 
   // Function to handle input changes in the form
   const handleInputChange = (e) => {
     const { name, value, type, checked, files } = e.target;
     const updatedValue = type === 'checkbox' ? checked : type === 'file' ? files[0] : value;
 
-  setProfile((prevProfile) => ({
-    ...prevProfile,
-    [name]: name === 'employed' ? (updatedValue === 'true') : updatedValue,
-  }));
+    setProfile((prevProfile) => ({
+      ...prevProfile,
+      [name]: name === 'employed' ? updatedValue === 'true' : updatedValue,
+    }));
+  };
+
+  const handleEditClick = () => {
+    setIsEditingImage(true);
   };
 
   // Function to handle the update button click
-  const handleUpdateProfile = () => {
+  const handleUpdateProfile = async () => {
+    if (selectedImage) {
+      await uploadImage();
+    }
     updateProfile();
   };
 
   return (
-    <Container>
-       {submissionStatus === 'success' && (
+    <Container textAlign="center">
+      {submissionStatus === 'success' && (
         <Text color="green" mt={2}>
           Profile updated successfully!
         </Text>
@@ -90,9 +123,65 @@ const UpdateProfile = () => {
       )}
       <Text
         fontSize="4xl"
-        fontWeight="extrabold" >Profile Information</Text>
+        fontWeight="extrabold" >Profile Information
+      </Text>
+      <Box
+        w="200px"
+        h="200px"
+        borderRadius="full"
+        position="relative"
+        overflow="hidden"
+        border="solid 2px #CCCC"
+        margin="0 auto"
+        onMouseEnter={() => setIsEditing(true)}
+        onMouseLeave={() => setIsEditing(false)}
+      >
+        <img className={style.user_prof} src={imageData} alt="none"/>
+        <Input
+          type="file"
+          accept="image/*"
+          opacity="0"
+          position="absolute"
+          top="0"
+          left="0"
+          width="100%"
+          height="100%"
+          cursor="pointer"
+          zIndex="1"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            setSelectedImage(file);
+          }}
+        />
+        {isEditing && (
 
-
+          <IconButton
+            icon={<FaEdit />}
+            aria-label="Edit"
+            position="absolute"
+            bottom="0"
+            left="0"
+            fontSize="18px"
+            color="black"
+            borderRadius="full"
+            width="200px"
+            backgroundColor="#00000029"
+            onClick={handleEditClick}
+          />
+        )}
+        {/* Display the selected image */}
+        {selectedImage && (
+          <Box
+            bgImage={`url(${imageData})`}
+            bgSize="cover"
+            bgPosition="center"
+            w="100%"
+            h="100%"
+            id="ProfileIcon"
+          >
+          </Box>
+        )}
+      </Box>
       <FormControl formEncType="multipart/form-data" >
         <FormLabel >Full Name:</FormLabel>
         <Input

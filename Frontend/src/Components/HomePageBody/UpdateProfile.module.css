@@ -1,0 +1,7 @@
+.user_prof {
+    height: 100%;
+}
+
+.user_prof:hover {
+    transform: scale(5);
+}

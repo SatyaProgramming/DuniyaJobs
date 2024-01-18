@@ -1,5 +1,6 @@
 package com.job_finder.service.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,12 +11,19 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +40,8 @@ import com.job_finder.response.UserProfileList;
 import com.job_finder.service.UserService;
 import com.job_finder.utility.EmailUtils;
 import com.job_finder.utility.PasswordUtils;
+
+import org.springframework.core.io.Resource;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -99,133 +109,132 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Boolean addEmployee(RegistrationForm form) {
-	    String tempPwd = PasswordUtils.generateRandomePWD();
-	    MessageDigest digest;
-	    try {
-	        digest = MessageDigest.getInstance("SHA-256");
-	        digest.reset();
-	        digest.update(tempPwd.getBytes());
-	        byte[] encryptedPwd = digest.digest();
-	        // Use Base64 encoding correctly
-	        String encodedPwd = Base64.getEncoder().encodeToString(encryptedPwd);
+		String tempPwd = PasswordUtils.generateRandomePWD();
+		MessageDigest digest;
+		try {
+			digest = MessageDigest.getInstance("SHA-256");
+			digest.reset();
+			digest.update(tempPwd.getBytes());
+			byte[] encryptedPwd = digest.digest();
+			// Use Base64 encoding correctly
+			String encodedPwd = Base64.getEncoder().encodeToString(encryptedPwd);
 
-	        // Update the user's password with the hashed value
-	        UserDtls user = new UserDtls();
-	        user.setFullName(form.getName());
-	        user.setEmailId(form.getEmailId());
-	        user.setMobileNumber(form.getMobileNumber());
-	        user.setPassword(encodedPwd);  // Update the user's password with the hashed value
-	        user.setAccStatus("LOCKED");
+			// Update the user's password with the hashed value
+			UserDtls user = new UserDtls();
+			user.setFullName(form.getName());
+			user.setEmailId(form.getEmailId());
+			user.setMobileNumber(form.getMobileNumber());
+			user.setPassword(encodedPwd); // Update the user's password with the hashed value
+			user.setAccStatus("LOCKED");
 
-	        userRepository.save(user);
+			userRepository.save(user);
 
-	        String to = form.getEmailId();
-	        String subject = "Verification YOUR ACCOUNT";
-	        StringBuffer body = new StringBuffer();
-	        body.append("<h1>OTP for verify your account</h1><br>");
-	        body.append("<h3>" + tempPwd + "</h3>");
-	        emailUtils.sendMail(to, subject, body.toString());
+			String to = form.getEmailId();
+			String subject = "Verification YOUR ACCOUNT";
+			StringBuffer body = new StringBuffer();
+			body.append("<h1>OTP for verify your account</h1><br>");
+			body.append("<h3>" + tempPwd + "</h3>");
+			emailUtils.sendMail(to, subject, body.toString());
 
-	        return true;
-	    } catch (NoSuchAlgorithmException e) {
-	        // Handle the exception appropriately (log, throw, etc.)
-	        e.printStackTrace();
-	        return false;
-	    }
+			return true;
+		} catch (NoSuchAlgorithmException e) {
+			// Handle the exception appropriately (log, throw, etc.)
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
 	public Boolean getOtp(String email, String otp) {
-	    UserDtls user = userRepository.findByEmailId(email);
-	    // Check if the user is found
-	    if (user != null) {
-	    	String pwd=user.getPassword();
-	    	MessageDigest digest;
-		    try {
-		        digest = MessageDigest.getInstance("SHA-256");
-		        digest.reset();
-		        digest.update(otp.getBytes());
-		        byte[] encryptedPwd = digest.digest();
-		        // Use Base64 encoding correctly
-		        String encodedPwd = Base64.getEncoder().encodeToString(encryptedPwd);
+		UserDtls user = userRepository.findByEmailId(email);
+		// Check if the user is found
+		if (user != null) {
+			String pwd = user.getPassword();
+			MessageDigest digest;
+			try {
+				digest = MessageDigest.getInstance("SHA-256");
+				digest.reset();
+				digest.update(otp.getBytes());
+				byte[] encryptedPwd = digest.digest();
+				// Use Base64 encoding correctly
+				String encodedPwd = Base64.getEncoder().encodeToString(encryptedPwd);
 
-	        // Check if the OTP matches the expected OTP (sent to the user)
-	        if (encodedPwd.equals(pwd) && !"".equals(encodedPwd)) {
-	            
-	            // Update account status (if needed)
-	            user.setAccStatus("UNLOCKED");
+				// Check if the OTP matches the expected OTP (sent to the user)
+				if (encodedPwd.equals(pwd) && !"".equals(encodedPwd)) {
 
-	            // Save the updated user entity to the database
-	            userRepository.save(user);
+					// Update account status (if needed)
+					user.setAccStatus("UNLOCKED");
 
-	            return true;
-	        }
-		    } catch (NoSuchAlgorithmException e) {
-		        // Handle the exception appropriately (log, throw, etc.)
-		        e.printStackTrace();
-		        return false;
-		    }
-	    }
+					// Save the updated user entity to the database
+					userRepository.save(user);
 
-	    // If any of the conditions fail, return false
-	    return false;
+					return true;
+				}
+			} catch (NoSuchAlgorithmException e) {
+				// Handle the exception appropriately (log, throw, etc.)
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		// If any of the conditions fail, return false
+		return false;
 	}
 
 	public String setPassword(String email, String password) {
-        UserDtls user = userRepository.findByEmailId(email);
-        if (user != null) {
-        	MessageDigest digest;
-		    try {
-		        digest = MessageDigest.getInstance("SHA-256");
-		        digest.reset();
-		        digest.update(password.getBytes());
-		        byte[] encryptedPwd = digest.digest();
-		        // Use Base64 encoding correctly
-		        String encodedPwd = Base64.getEncoder().encodeToString(encryptedPwd);
+		UserDtls user = userRepository.findByEmailId(email);
+		if (user != null) {
+			MessageDigest digest;
+			try {
+				digest = MessageDigest.getInstance("SHA-256");
+				digest.reset();
+				digest.update(password.getBytes());
+				byte[] encryptedPwd = digest.digest();
+				// Use Base64 encoding correctly
+				String encodedPwd = Base64.getEncoder().encodeToString(encryptedPwd);
 
-            user.setPassword(encodedPwd);
-            userRepository.save(user);
-            return "Password set successfully";
-		    } catch (NoSuchAlgorithmException e) {
-		        // Handle the exception appropriately (log, throw, etc.)
-		        e.printStackTrace();
-		        return "check password";
-		    }
-		    } 
-		    else {
-            return "User not found";
-        }
-    }
+				user.setPassword(encodedPwd);
+				userRepository.save(user);
+				return "Password set successfully";
+			} catch (NoSuchAlgorithmException e) {
+				// Handle the exception appropriately (log, throw, etc.)
+				e.printStackTrace();
+				return "check password";
+			}
+		} else {
+			return "User not found";
+		}
+	}
 
 	@Override
 	public LoginMessage loginEmployee(LoginForm loginForm) {
-	    UserDtls user = userRepository.findByEmailId(loginForm.getEmail());
+		UserDtls user = userRepository.findByEmailId(loginForm.getEmail());
 
-	    if (user != null) {
-	        String password = loginForm.getPassword();
+		if (user != null) {
+			String password = loginForm.getPassword();
 
-	        try {
-	            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-	            digest.reset();
-	            digest.update(password.getBytes());
-	            byte[] encryptedPwd = digest.digest();
-	            // Use Base64 encoding correctly
-	            String encodedPwd = Base64.getEncoder().encodeToString(encryptedPwd);
-	            
-	            // Compare the hashed password with the stored hashed password
-	            if (user.getPassword().equals(encodedPwd)) {
-	                return new LoginMessage("Login Success", true, user.getSrno());
-	            } else {
-	                return new LoginMessage("Password does not match", false, user.getSrno());
-	            }
-	        } catch (NoSuchAlgorithmException e) {
-	            // Handle the exception appropriately (log, throw, etc.)
-	            e.printStackTrace();
-	            return new LoginMessage("Error during login", false, null);
-	        }
-	    } else {
-	        return new LoginMessage("Email does not exist", false, null);
-	    }
+			try {
+				MessageDigest digest = MessageDigest.getInstance("SHA-256");
+				digest.reset();
+				digest.update(password.getBytes());
+				byte[] encryptedPwd = digest.digest();
+				// Use Base64 encoding correctly
+				String encodedPwd = Base64.getEncoder().encodeToString(encryptedPwd);
+
+				// Compare the hashed password with the stored hashed password
+				if (user.getPassword().equals(encodedPwd)) {
+					return new LoginMessage("Login Success", true, user.getSrno());
+				} else {
+					return new LoginMessage("Password does not match", false, user.getSrno());
+				}
+			} catch (NoSuchAlgorithmException e) {
+				// Handle the exception appropriately (log, throw, etc.)
+				e.printStackTrace();
+				return new LoginMessage("Error during login", false, null);
+			}
+		} else {
+			return new LoginMessage("Email does not exist", false, null);
+		}
 	}
 
 	@Override
@@ -336,69 +345,136 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserProfileList> getUserProfileList(int page, int size) {
-	    Sort sort = Sort.by("createdDate").descending();
-	    Pageable pageable = PageRequest.of(page, size, sort);
-	    Page<UserDtls> userProfileListPage = userRepository.findAll(pageable);
+		Sort sort = Sort.by("createdDate").descending();
+		Pageable pageable = PageRequest.of(page, size, sort);
+		Page<UserDtls> userProfileListPage = userRepository.findAll(pageable);
 
-	    // Convert UserDtls entities to UserProfileList objects
-	    List<UserProfileList> userProfileList = convertToUserProfileList(userProfileListPage.getContent());
+		// Convert UserDtls entities to UserProfileList objects
+		List<UserProfileList> userProfileList = convertToUserProfileList(userProfileListPage.getContent());
 
-	    return userProfileList;
+		return userProfileList;
 	}
 
 	private List<UserProfileList> convertToUserProfileList(List<UserDtls> userDtlsList) {
-	    List<UserProfileList> userProfileList = new ArrayList<>();
+		List<UserProfileList> userProfileList = new ArrayList<>();
 
-	    for (UserDtls userDtls : userDtlsList) {
-	        UserProfileList userProfile = new UserProfileList();
-	        userProfile.setFullName(userDtls.getFullName());
-	        userProfile.setSpecialize(userDtls.getSpecialize());
-	        userProfile.setUni(userDtls.getUni());
+		for (UserDtls userDtls : userDtlsList) {
+			UserProfileList userProfile = new UserProfileList();
+			userProfile.setFullName(userDtls.getFullName());
+			userProfile.setSpecialize(userDtls.getSpecialize());
+			userProfile.setUni(userDtls.getUni());
 
-	        userProfileList.add(userProfile);
+			userProfileList.add(userProfile);
+		}
+
+		return userProfileList;
+	}
+
+	
+	private static final String UPLOAD_DIR = "static/images";
+
+	@Override
+	public String addImage(Long profileId, MultipartFile file) {
+	    try {
+	        if (file.isEmpty()) {
+	            return "File is empty";
+	        }
+
+	        Optional<UserDtls> optionalUser = userRepository.findById(profileId);
+	        if (optionalUser.isPresent()) {
+	            UserDtls user = optionalUser.get();
+	            // Generate a unique filename
+	            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+	            user.setImgName(fileName);
+
+	            // Extract file type from the original filename
+	            String fileType = getFileType(file.getOriginalFilename());
+	            user.setImgType(fileType);
+
+	            // Resolve the upload directory
+	            Path uploadPath = Paths.get("src/main/resources/" + UPLOAD_DIR).toAbsolutePath().normalize();
+	            File directory = new File(uploadPath.toString());
+	            if (!directory.exists()) {
+	                if (directory.mkdirs()) {
+	                    System.out.println("Directory created successfully.");
+	                } else {
+	                    System.out.println("Failed to create directory.");
+	                    return "Failed to create directory";
+	                }
+	            }
+
+	            // Save the file to the server
+	            Path filePath = uploadPath.resolve(fileName).normalize();
+	            file.transferTo(filePath.toFile());
+	            System.out.println("File uploaded successfully. Path: " + filePath);
+
+	            // Set the full file path in imgPath
+	            user.setImgPath(filePath.toString());
+
+	            // Save the changes to the UserDtls object
+	            userRepository.save(user);
+
+	            return "File uploaded successfully";
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return "Failed to upload file";
 	    }
 
-	    return userProfileList;
+	    // Return an appropriate message if the user is not present
+	    return "User not found";
+	}
+
+	// Helper method to extract file type from the filename
+	private String getFileType(String filename) {
+	    int dotIndex = filename.lastIndexOf('.');
+	    if (dotIndex > 0 && dotIndex < filename.length() - 1) {
+	        return filename.substring(dotIndex + 1).toLowerCase();
+	    }
+	    return null;
 	}
 
 
-	 @Override
-	    public void uploadImage(Long profileId, MultipartFile file) {
-	        try {
-	            Optional<UserDtls> optionalUser = userRepository.findById(profileId);
 
-	            if (optionalUser.isPresent()) {
-	                UserDtls user = optionalUser.get();
+	@Override
+	public ResponseEntity<Resource> getProfileImage(Long profileId) {
+	    try {
+	        Optional<UserDtls> optionalUser = userRepository.findById(profileId);
+	        if (optionalUser.isPresent()) {
+	            UserDtls user = optionalUser.get();
+	            // Validate or sanitize the file name to prevent directory traversal attacks
+	            String fileName = user.getImgName();
+	            String sanitizedFileName = FilenameUtils.getName(fileName);
+	            Path filePath = Paths.get("src/main/resources/static/images").resolve(sanitizedFileName).normalize();
+	            
+	            // Use FileSystemResource instead of UrlResource
+	            Resource resource = new FileSystemResource(filePath.toFile());
 
-	                // Customize the logic to associate the image with the user profile
-	                // For example, you might store the image in a directory named after the profileId
-	                Path uploadPath = Paths.get("src/main/webapp/images", String.valueOf(profileId));
-	                Files.createDirectories(uploadPath);
+	            // Log the file path for debugging
+	            System.out.println("File Path: " + filePath);
 
-	                // Use a unique name for the file, e.g., user_id_timestamp.ext
-	                String fileName = "user_" + profileId + "_" + System.currentTimeMillis() + getFileExtension(file);
-	                Path filePath = uploadPath.resolve(fileName);
-	                Files.copy(file.getInputStream(), filePath);
+	            // Check if the file exists and is readable
+	            if (resource.exists() && resource.isReadable()) {
+	                // Dynamically determine content type based on file extension
+	                String contentType = Files.probeContentType(filePath);
 
-	                // Update the user with the new image name in the database
-	                user.setProfileImage(fileName);
-	                userRepository.save(user);
+	                HttpHeaders headers = new HttpHeaders();
+	                headers.setContentType(MediaType.parseMediaType(contentType));
 
-	                // Additional logic to associate the image with the user profile in the database
-	                // userService.associateImageWithUserProfile(profileId, fileName);
+	                return ResponseEntity.ok().headers(headers).body(resource);
 	            } else {
-	                // Handle case where the user with the specified ID is not found
-	                // You might throw an exception or handle it according to your application's needs
+	                return ResponseEntity.notFound().build();
 	            }
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	            // Handle exception appropriately
+	        } else {
+	            return ResponseEntity.notFound().build(); // Return 404 if the user is not found
 	        }
-	    }
+	    } catch (IOException e) {
+	        e.printStackTrace(); // Log the error
 
-	    private String getFileExtension(MultipartFile file) {
-	        String originalFileName = file.getOriginalFilename();
-	        return originalFileName.substring(originalFileName.lastIndexOf("."));
+	        // Provide a more informative response for internal server errors
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body(null); // You may consider returning a specific Resource instance here
 	    }
+	}
 
 }
