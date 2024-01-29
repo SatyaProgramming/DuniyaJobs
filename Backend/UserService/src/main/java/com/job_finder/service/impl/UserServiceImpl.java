@@ -28,6 +28,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.job_finder.entity.UserDtls;
+import com.job_finder.exception.EmptyInputException;
+import com.job_finder.exception.ErrorMessage;
 import com.job_finder.helperClass.EducationData;
 import com.job_finder.helperClass.Employment;
 import com.job_finder.helperClass.LoginForm;
@@ -170,10 +172,9 @@ public class UserServiceImpl implements UserService {
 
 					return true;
 				}
-			} catch (NoSuchAlgorithmException e) {
-				// Handle the exception appropriately (log, throw, etc.)
-				e.printStackTrace();
-				return false;
+			} catch (Exception e) {
+				// Handle the exception appropriately (log, throw, etc.) using exception class.
+				throw new ErrorMessage(e);
 			}
 		}
 
@@ -285,18 +286,27 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ProfileData getUserProfile(Long userId) {
 		UserDtls user = userRepository.findBySrno(userId);
-		ProfileData userProf = new ProfileData();
-
-		userProf.setName(user.getFullName());
-		userProf.setEducation(user.getCourse());
-		userProf.setInstitute(user.getUni());
-		userProf.setCompletionPercentage(75);
-		userProf.setDetailsMissing(1);
-		userProf.setSearchAppearances(8);
-		userProf.setRecruiterAction(4);
-		userProf.setBoostMessage("3X Boost to Your Profile Performance. Explore.");
-		userProf.setPaidService("Paid Service");
-		return userProf;
+		if(user.getFullName() != null && ! user.getFullName().isEmpty() && 
+				 user.getCourse().isEmpty()&& user.getCourse()!=null &&
+				 user.getUni().isEmpty()&& user.getUni()!=null){
+					
+					ProfileData userProf = new ProfileData();
+					userProf.setName(user.getFullName());
+					userProf.setEducation(user.getCourse());
+					userProf.setInstitute(user.getUni());
+					userProf.setCompletionPercentage(75);
+					userProf.setDetailsMissing(1);
+					userProf.setSearchAppearances(8);
+					userProf.setRecruiterAction(4);
+					userProf.setBoostMessage("3X Boost to Your Profile Performance. Explore.");
+					userProf.setPaidService("Paid Service");
+					
+			return userProf;
+		   
+		}else {
+		
+		 throw new EmptyInputException(501,"dataNotFoundException");
+		}
 	}
 
 	@Override
@@ -451,6 +461,122 @@ public class UserServiceImpl implements UserService {
 	            Resource resource = new FileSystemResource(filePath.toFile());
 
 	            // Log the file path for debugging
+
+	            // Check if the file exists and is readable
+	            if (resource.exists() && resource.isReadable()) {
+	                // Dynamically determine content type based on file extension
+	                String contentType = Files.probeContentType(filePath);
+
+	                HttpHeaders headers = new HttpHeaders();
+	                headers.setContentType(MediaType.parseMediaType(contentType));
+
+	                return ResponseEntity.ok().headers(headers).body(resource);
+	            } else {
+	                return ResponseEntity.notFound().build();
+	            }
+	        } else {
+	            return ResponseEntity.notFound().build(); // Return 404 if the user is not found
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace(); // Log the error
+
+	        // Provide a more informative response for internal server errors
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body(null); // You may consider returning a specific Resource instance here
+	    }
+	}
+	
+	
+	
+	private static final String UPLOAD_DIR2 = "static/files";
+
+	@Override
+	public String addfile(Long profileId, MultipartFile file) {
+	    try {
+	        if (file.isEmpty()) {
+	            return "File is empty";
+	        }
+
+	        Optional<UserDtls> optionalUser = userRepository.findById(profileId);
+	        if (optionalUser.isPresent()) {
+	            UserDtls user = optionalUser.get();
+	            // Generate a unique filename
+	            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+	            user.setResumeName(fileName);
+
+	            // Extract file type from the original filename
+	            String fileType = getFileType2(file.getOriginalFilename());
+	        
+	           
+	        	
+	            // Resolve the upload directory
+	            Path uploadPath = Paths.get("src/main/resources/" + UPLOAD_DIR2).toAbsolutePath().normalize();
+	            
+	            
+	            
+	            File directory = new File(uploadPath.toString());
+	            if (!directory.exists()) {
+	                if (directory.mkdirs()) {
+	                    System.out.println("Directory created successfully.");
+	                } else {
+	                    System.out.println("Failed to create directory.");
+	                    return "Failed to create directory";
+	                }
+	            }
+
+	            // Save the file to the server
+	            Path filePath = uploadPath.resolve(fileName).normalize();
+	            file.transferTo(filePath.toFile());
+	            System.out.println("File uploaded successfully. Path: " + filePath);
+
+	            // Set the full file path in imgPath
+	            user.setResumePath(filePath.toString());
+
+	            // Save the changes to the UserDtls object
+	            
+	            if(fileType.equals("pdf")) {  
+	                  user.setResumeType(fileType);
+	                  userRepository.save(user);
+	        	  }else {
+	        		throw new EmptyInputException(500,"Only pdf files are accepting...");
+	        	  }
+	            return "File uploaded successfully";
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return "Failed to upload file";
+	    }
+
+	    // Return an appropriate message if the user is not present
+	    return "User not found";
+	}
+
+	// Helper method to extract file type from the filename
+	private String getFileType2(String filename) {
+	    int dotIndex = filename.lastIndexOf('.');
+	    if (dotIndex > 0 && dotIndex < filename.length() - 1) {
+	        return filename.substring(dotIndex + 1).toLowerCase();
+	    }
+	    return null;
+	}
+
+
+
+	@Override
+	public ResponseEntity<Resource> getProfile(Long profileId) {
+	    try {
+	        Optional<UserDtls> optionalUser = userRepository.findById(profileId);
+	        if (optionalUser.isPresent()) {
+	            UserDtls user = optionalUser.get();
+	            // Validate or sanitize the file name to prevent directory traversal attacks
+	            String fileName = user.getImgName();
+	            String sanitizedFileName = FilenameUtils.getName(fileName);
+	            Path filePath = Paths.get("src/main/resources/static/files").resolve(sanitizedFileName).normalize();
+	            
+	            // Use FileSystemResource instead of UrlResource
+	            Resource resource = new FileSystemResource(filePath.toFile());
+
+	            // Log the file path for debugging
 	            System.out.println("File Path: " + filePath);
 
 	            // Check if the file exists and is readable
@@ -476,5 +602,6 @@ public class UserServiceImpl implements UserService {
 	                .body(null); // You may consider returning a specific Resource instance here
 	    }
 	}
+
 
 }

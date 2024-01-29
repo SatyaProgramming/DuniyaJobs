@@ -1,21 +1,12 @@
 package com.job_finder.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,7 +41,7 @@ public class UserController {
 	@Autowired
 	private UserRepository ur;
 
-	private static final String UPLOAD_DIR = "static/images";
+//	private static final String UPLOAD_DIR = "static/images";
 
 	@GetMapping("/get-user-profile/{userId}")
 	public ResponseEntity<ProfileData> getUserData(@PathVariable Long userId) {
@@ -173,73 +164,39 @@ public class UserController {
 
 	
 	@PostMapping("/upload-image/{profileId}")
-	public ResponseEntity<String> uploadImage(@PathVariable Long profileId, @RequestPart("file") MultipartFile file) {
-//		try {
-			// Check if the file is not empty
+	public ResponseEntity<String> uploadimage(@PathVariable Long profileId, @RequestPart("file") MultipartFile file) {
+
 			if (file.isEmpty()) {
 				return new ResponseEntity<>("File is empty", HttpStatus.BAD_REQUEST);
 			}
 			String msg =userService.addImage(profileId,file);
-			// Generate a unique filename
-//			String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 
-			// Resolve the upload directory
-//			Path uploadPath = Paths.get("src/main/resources/" + UPLOAD_DIR).toAbsolutePath().normalize();
-			// Create the directory if it doesn't exist
-//			File directory = new File(uploadPath.toString());
-//			if (!directory.exists()) {
-//				if (directory.mkdirs()) {
-//					System.out.println("Directory created successfully.");
-//				} else {
-//					System.out.println("Failed to create directory.");
-//					return new ResponseEntity<>("Failed to create directory", HttpStatus.INTERNAL_SERVER_ERROR);
-//				}
-//			}
-
-			// Save the file to the server
-//			Path filePath = uploadPath.resolve(fileName).normalize();
-//			file.transferTo(filePath.toFile());
-//
-//			System.out.println("File uploaded successfully. Path: " + filePath);
-//
 			return new ResponseEntity<>(msg, HttpStatus.OK);
 
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			return new ResponseEntity<>(msg, HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
+
 	}
 
 	@GetMapping("/image/{profileId}")
 	public ResponseEntity<Resource> getImage(@PathVariable Long profileId) {
 		ResponseEntity<Resource> msg =userService.getProfileImage(profileId);
-//		try {
-//			// Validate or sanitize the file name to prevent directory traversal attacks
-//			String sanitizedFileName = FilenameUtils.getName(fileName);
-//
-//			// Resolve the file path
-//			Path filePath = Paths.get("src/main/resources/static/images").resolve(sanitizedFileName).normalize();
-//			UrlResource resource = new UrlResource(filePath.toUri());
-//
-//			// Log the file path for debugging
-//			System.out.println("File Path: " + filePath);
-//
-//			// Check if the file exists and is readable
-//			if (resource.exists() && resource.isReadable()) {
-//				// Dynamically determine content type based on file extension
-//				String contentType = Files.probeContentType(filePath);
-//
-//				HttpHeaders headers = new HttpHeaders();
-//				headers.setContentType(MediaType.parseMediaType(contentType));
-//
-//				return ResponseEntity.ok().headers(headers).body(resource);
-//			} else {
-//				return ResponseEntity.notFound().build();
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace(); // Log the error
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//		}
+
+		return msg;
+	}
+	
+	@PostMapping("/upload-file/{profileId}")
+	public ResponseEntity<String> uploadfile(@PathVariable Long profileId, @RequestPart("file") MultipartFile file) {
+
+			if (file.isEmpty()) {
+				return new ResponseEntity<>("File is empty", HttpStatus.BAD_REQUEST);
+			}
+			String msg =userService.addfile(profileId,file);
+			return new ResponseEntity<>(msg, HttpStatus.OK);
+	}
+
+	@GetMapping("/file/{profileId}")
+	public ResponseEntity<Resource> getfile(@PathVariable Long profileId) {
+		ResponseEntity<Resource> msg =userService.getProfile(profileId);
+
 		return msg;
 	}
 }
