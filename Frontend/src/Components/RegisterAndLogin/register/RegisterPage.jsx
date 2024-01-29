@@ -1,3 +1,4 @@
+
 // RegisterPage.js
 import React, { useReducer } from 'react';
 import axios from 'axios';
@@ -13,13 +14,11 @@ import {
   FormLabel,
   VStack,
   Box,
-  Text,
   Container,
   Heading
 } from '@chakra-ui/react';
 import Footer from '../../HomePageFooter/Footer';
 import UniversalNavBar from "../../LandingPage/UniversalNavBar"
-
 
 const initialState = {
   name: '',
@@ -59,17 +58,6 @@ const RegisterPage = () => {
     dispatch({ type: 'SET_LOADING', loading: true });
 
     try {
-      // Client-side validation
-      const errors = ['name', 'emailId', 'mobileNumber'].reduce((acc, field) => {
-        if (!state[field]) acc[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required.`;
-        return acc;
-      }, {});
-
-      if (Object.keys(errors).length > 0) {
-        dispatch({ type: 'SET_ERRORS', errors });
-        throw new Error('Please fill in all required fields.');
-      }
-
       const response = await axios.post(`${API_BASE_URL}/register`, state);
 
       if (response.status === 200) {
@@ -84,8 +72,8 @@ const RegisterPage = () => {
     } catch (error) {
       dispatch({ type: 'SET_STATUS', status: false });
       console.error('Error during registration:', error.message);
-      // Display error message to the user
-      alert(`Error during registration: ${error.message}`);
+      // Display error message next to the form field
+      dispatch({ type: 'SET_ERRORS', errors: { [error.field]: error.message } });
     } finally {
       dispatch({ type: 'SET_LOADING', loading: false });
     }

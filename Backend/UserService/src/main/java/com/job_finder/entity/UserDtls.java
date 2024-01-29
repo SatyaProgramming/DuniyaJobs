@@ -38,6 +38,10 @@ public class UserDtls {
     private String workStatus;
     private String accStatus;
 
+    
+    private String resumeName;
+    private String resumeType;
+    private String resumePath;
     @Lob
     private byte[] resume;
 

@@ -57,6 +57,11 @@ public interface UserService {
 	String addImage(Long profileId, MultipartFile file);
 
 	ResponseEntity<Resource> getProfileImage(Long profileId);
+	
+	String addfile(Long profileId, MultipartFile file);
+
+	ResponseEntity<Resource> getProfile(Long profileId);
+
 
 
 	
