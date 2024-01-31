@@ -32,6 +32,8 @@ import com.job_finder.response.ProfileData;
 import com.job_finder.response.UserProfileList;
 import com.job_finder.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
@@ -41,11 +43,13 @@ public class UserController {
 	@Autowired
 	private UserRepository ur;
 
-//	private static final String UPLOAD_DIR = "static/images";
+
 
 	@GetMapping("/get-user-profile/{userId}")
 	public ResponseEntity<ProfileData> getUserData(@PathVariable Long userId) {
 
+		log.info("get-user-profile with id end point call()" +userId);
+		
 		ProfileData userprofile = userService.getUserProfile(userId);
 		return new ResponseEntity<>(userprofile, HttpStatus.OK);
 	}
